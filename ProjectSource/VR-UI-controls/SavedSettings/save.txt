@@ -1,0 +1,16 @@
+ChimesHeadlockedPosition=(0.001945, 0.037510, 1.153137)
+ChimesHeadlockedRotation=(353.534600, 347.394000, 2.472338)
+chimesIsPlaying=False
+chimesVolume=50.0
+feedbackTabletIsPresent=True
+lastHeadlockedObject=Chimes
+radioFilterBandpassCenterFrequency=87.81359
+radioFilterBandpassIsOn=False
+radioFilterBandpassQFactor=1.0
+radioFilterParamEQCenterFrequency=87.81359
+radioFilterParamEQFrequencyGain=2.0
+radioFilterParamEQIsOn=False
+radioFilterParamEQOctaveRange=1.0
+radioIsPlaying=False
+radioVolume=50.0
+spectatorIsFirstPerson=True

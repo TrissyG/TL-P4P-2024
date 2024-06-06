@@ -1,0 +1,62 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:ScrollView style="width: 297px; padding-bottom: 0; margin-bottom: 0; height: 100%;">
+        <ui:GroupBox style="width: 266px; background-color: rgba(255, 255, 255, 0.57); flex-basis: 100%; padding-bottom: 150px;">
+            <ui:Foldout text="Change Scene" value="false" style="align-items: flex-start; justify-content: flex-start;">
+                <ui:Button text="Tutorial" display-tooltip-when-elided="true" name="buttonSceneTutorial" />
+                <ui:Button text="Blank World" display-tooltip-when-elided="true" name="buttonScene1" />
+                <ui:Button text="Beach World" display-tooltip-when-elided="true" name="buttonScene2" style="margin-left: 3px; margin-right: 3px;" />
+                <ui:Button text="Forest World" display-tooltip-when-elided="true" name="buttonScene3" style="margin-left: 3px; margin-right: 3px; padding-left: 6px;" />
+            </ui:Foldout>
+            <ui:Foldout text="Change Perspective" style="align-items: flex-start;">
+                <ui:Button text="First Person" display-tooltip-when-elided="true" name="buttonCameraFirstPerson" style="padding-left: 20px; width: auto; padding-right: 20px;" />
+                <ui:Button text="Fixed" display-tooltip-when-elided="true" name="buttonCameraFixed" style="padding-left: 20px; padding-right: 20px; width: auto;" />
+            </ui:Foldout>
+            <ui:Toggle label="Play Radio Sound" name="toggleRadioSound" value="false" style="align-items: center; justify-content: space-between;" />
+            <ui:TextField picking-mode="Ignore" label="Volume" text="50%" name="fieldRadioVolume" is-delayed="true" max-length="4" style="align-items: center; justify-content: flex-start;" />
+            <ui:Slider value="50" high-value="100" name="sliderRadioVolume" picking-mode="Ignore" style="padding-bottom: 10px; margin-top: 2px; margin-right: 10px; margin-left: 10px;" />
+            <ui:Foldout text="Radio Sound Filtering" value="false">
+                <ui:Toggle label="Enable Band-pass" name="toggleBandpassEnable" value="false" />
+                <ui:TextField picking-mode="Ignore" label="Center Frequency" text="440Hz" is-delayed="true" name="fieldBandpassFreq" style="align-items: center;" />
+                <ui:Slider picking-mode="Ignore" value="87.8136" high-value="144.2522" name="sliderBandpassFreq" low-value="43" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
+                <ui:TextField picking-mode="Ignore" label="Q (Bandwidth)" text="1.0" max-length="-1" is-delayed="true" name="fieldBandpassQ" style="align-items: center;" />
+                <ui:Slider picking-mode="Ignore" value="1" high-value="10" low-value="1" name="sliderBandpassQ" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
+                <ui:Toggle label="Enable ParamEQ" name="toggleParamEQEnable" value="false" />
+                <ui:TextField picking-mode="Ignore" label="Center Frequency" text="440Hz" is-delayed="true" name="fieldParamEQFreq" style="align-items: center;" />
+                <ui:Slider picking-mode="Ignore" value="87.8136" high-value="144.2522" name="sliderParamEQFreq" low-value="43" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
+                <ui:TextField picking-mode="Ignore" label="Octave Range" text="1.0" max-length="-1" is-delayed="true" name="fieldParamEQRange" style="align-items: center;" />
+                <ui:Slider picking-mode="Ignore" value="1" high-value="5" low-value="0.2" name="sliderParamEQRange" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
+                <ui:TextField picking-mode="Ignore" label="Frequency Gain" text="2.0" max-length="-1" is-delayed="true" name="fieldParamEQGain" style="align-items: center;" />
+                <ui:Slider picking-mode="Ignore" value="2" high-value="3" low-value="0.05" name="sliderParamEQGain" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px; width: auto;" />
+            </ui:Foldout>
+            <ui:Toggle label="Play Chimes Sound" name="toggleChimeSound" value="false" style="align-items: center; justify-content: space-between;" />
+            <ui:TextField picking-mode="Ignore" label="Volume" text="50%" name="fieldChimeVolume" is-delayed="true" max-length="4" style="align-items: center; justify-content: flex-start;" />
+            <ui:Slider value="50" high-value="100" name="sliderChimeVolume" picking-mode="Ignore" style="padding-bottom: 10px; margin-top: 2px; margin-right: 10px; margin-left: 10px;" />
+            <ui:Toggle label="Play Environment Sound" name="toggleEnvironmentSound" value="true" style="align-items: center; justify-content: space-between;" />
+            <ui:TextField picking-mode="Ignore" label="Volume" text="50%" name="fieldEnvironmentVolume" is-delayed="true" max-length="4" style="align-items: center; justify-content: flex-start;" />
+            <ui:Slider value="50" high-value="100" name="sliderEnvironmentVolume" picking-mode="Ignore" style="padding-bottom: 10px; margin-top: 2px; margin-right: 10px; margin-left: 10px;" />
+            <ui:Toggle label="TSNS Rating Tablet" name="toggleShowTSNSTablet" />
+            <ui:Toggle label="Feedback Tablet" value="true" name="toggleShowRatingTablet" />
+            <ui:Toggle label="Use Positioning Assist" value="false" name="toggleDoGhosting" />
+            <ui:Label text="Save or Load Settings" display-tooltip-when-elided="true" />
+            <ui:Label text="New File" display-tooltip-when-elided="true" />
+            <ui:GroupBox style="flex-direction: row; margin-left: 3px; margin-right: 3px; margin-top: 1px; margin-bottom: 3px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; justify-content: space-between;">
+                <ui:GroupBox style="flex-direction: row; flex-basis: 20%; justify-content: space-around; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+                    <ui:RadioButton name="selectorNewFile" />
+                </ui:GroupBox>
+                <ui:TextField picking-mode="Ignore" name="fieldNewFile" style="flex-basis: 80%; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+            </ui:GroupBox>
+            <ui:Label text="Existing file" display-tooltip-when-elided="true" />
+            <ui:GroupBox style="flex-direction: row; justify-content: space-between; margin-left: 3px; margin-right: 3px; margin-top: 1px; margin-bottom: 3px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+                <ui:GroupBox style="flex-direction: row; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-basis: 20%; justify-content: space-around;">
+                    <ui:RadioButton name="selectorExistingFile" />
+                </ui:GroupBox>
+                <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropdownExistingFile" style="flex-basis: 80%; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-grow: 0;" />
+            </ui:GroupBox>
+            <ui:GroupBox style="flex-direction: row; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; justify-content: space-around;">
+                <ui:Button text="Save" display-tooltip-when-elided="true" name="buttonSave" style="flex-basis: 30%; padding-left: 20px; padding-right: 20px; padding-top: 6px; padding-bottom: 6px; margin-left: 3px; margin-right: 3px; margin-top: 1px; margin-bottom: 1px;" />
+                <ui:Button text="Load" display-tooltip-when-elided="true" name="buttonLoad" style="flex-basis: 30%; padding-left: 20px; padding-right: 20px; padding-top: 6px; padding-bottom: 6px; margin-left: 3px; margin-right: 3px; margin-top: 1px; margin-bottom: 1px;" />
+            </ui:GroupBox>
+            <ui:Button text="Restore Headlocked Object" display-tooltip-when-elided="true" name="buttonRestoreHeadlockedObject" />
+        </ui:GroupBox>
+    </ui:ScrollView>
+</ui:UXML>
