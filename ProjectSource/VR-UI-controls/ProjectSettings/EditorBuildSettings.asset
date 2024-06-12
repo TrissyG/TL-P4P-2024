@@ -5,16 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TutorialScene.unity
     guid: 0a96f8a3fd7632642933ffe593dbf9cf
   - enabled: 1
     path: Assets/Scenes/BlankWorld.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/BeachWorld.unity
     guid: 64dad44aaa7e5b24a830fe7d2042dea7
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/ForestWorld.unity
     guid: 0a4242d4142401547a6c60cb0a90409e
   m_configObjects:
