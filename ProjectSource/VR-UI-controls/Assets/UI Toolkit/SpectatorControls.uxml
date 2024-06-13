@@ -11,10 +11,11 @@
                 <ui:Button text="First Person" display-tooltip-when-elided="true" name="buttonCameraFirstPerson" style="padding-left: 20px; width: auto; padding-right: 20px;" />
                 <ui:Button text="Fixed" display-tooltip-when-elided="true" name="buttonCameraFixed" style="padding-left: 20px; padding-right: 20px; width: auto;" />
             </ui:Foldout>
+            <ui:Toggle label="Make Radio Visible" name="toggleRadioVisibility" value="true" style="align-items: center; justify-content: space-between;" />
             <ui:Toggle label="Play Radio Sound" name="toggleRadioSound" value="false" style="align-items: center; justify-content: space-between;" />
             <ui:TextField picking-mode="Ignore" label="Volume" text="50%" name="fieldRadioVolume" is-delayed="true" max-length="4" style="align-items: center; justify-content: flex-start;" />
             <ui:Slider value="50" high-value="100" name="sliderRadioVolume" picking-mode="Ignore" style="padding-bottom: 10px; margin-top: 2px; margin-right: 10px; margin-left: 10px;" />
-            <ui:Foldout text="Radio Sound Filtering" value="false">
+            <ui:Foldout>
                 <ui:Toggle label="Enable Band-pass" name="toggleBandpassEnable" value="false" />
                 <ui:TextField picking-mode="Ignore" label="Center Frequency" text="440Hz" is-delayed="true" name="fieldBandpassFreq" style="align-items: center;" />
                 <ui:Slider picking-mode="Ignore" value="87.8136" high-value="144.2522" name="sliderBandpassFreq" low-value="43" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />

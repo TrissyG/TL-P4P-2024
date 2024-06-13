@@ -141,7 +141,7 @@ public class SpectatorUI : MonoBehaviour
         buttonScene3.RegisterCallback<ClickEvent>(ChangeScene3);
         buttonCameraFirstPerson.RegisterCallback<ClickEvent>(ChangeCameraFirstPerson);
         buttonCameraFixed.RegisterCallback<ClickEvent>(ChangeCameraToFixed);
-        toggleRadioVisibility.RegisterValueChangedCallback<bool>(ToggleRadioVisibility); // TODO - add XML element
+        toggleRadioVisibility.RegisterValueChangedCallback<bool>(ToggleRadioVisibility);
         toggleRadioSound.RegisterValueChangedCallback<bool>(ToggleRadioSound);
         sliderRadioVolume.RegisterValueChangedCallback<float>(ChangeRadioVolumeSlider);
         fieldRadioVolume.RegisterValueChangedCallback<string>(ChangeRadioVolumeField);
