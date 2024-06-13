@@ -14,6 +14,7 @@ public class SpectatorUI : MonoBehaviour
     private Button buttonScene3;
     private Button buttonCameraFirstPerson;
     private Button buttonCameraFixed;
+    private Toggle toggleRadioVisibility;
     private Toggle toggleRadioSound;
     private Slider sliderRadioVolume;
     private TextField fieldRadioVolume;
