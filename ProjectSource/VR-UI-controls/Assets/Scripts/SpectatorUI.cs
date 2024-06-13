@@ -59,6 +59,7 @@ public class SpectatorUI : MonoBehaviour
     // audio source to control
     public GameObject radio;
     private AudioSource radioAudioSource;
+    private Renderer radioRenderer;
     private AudioMixer radioMixer;
     private BandPassFilter bandPassFilter;
 
@@ -182,6 +183,7 @@ public class SpectatorUI : MonoBehaviour
         buttonRestoreHeadlockedObject.RegisterCallback<ClickEvent>(TryRestoreHeadlockedObject);
 
         radioAudioSource = radio.GetComponent<AudioSource>();
+        radioRenderer = radio.GetComponent<Renderer>();
         radioMixer = radioAudioSource.outputAudioMixerGroup.audioMixer;
         bandPassFilter = radio.GetComponent<BandPassFilter>();
 
@@ -213,9 +215,6 @@ public class SpectatorUI : MonoBehaviour
         }
         if (RatingTablet == null) {
             toggleShowRatingTablet.SetEnabled(false);
-        }
-        if (radio == null){
-            toggleRadioVisibility.SetEnabled(false);
         }
 
         if (ghosts == null) {
@@ -254,6 +253,17 @@ public class SpectatorUI : MonoBehaviour
             ChangeCameraToFixed(null);
         }
 
+        // bool radioIsVisible;
+        // if (settings.Contains("radioIsVisible")) {
+        //     settings.GetValue("radioIsVisible", out radioIsVisible);
+        // } else {
+        //     radioIsVisible = true;
+        // }
+        // if (radioIsVisible){
+        //     radioRenderer.enabled = true;
+        // } else {
+        //     radioRenderer.enabled = false;
+        // }
 
         // Radio settings
         bool radioIsPlaying;
@@ -458,10 +468,12 @@ public class SpectatorUI : MonoBehaviour
     }
 
 private void ToggleRadioVisibility(ChangeEvent<bool> evt)
-{
-    // make radio GameObject visible/invisible
-    radio.GetComponent<Renderer>().enabled = !radio.GetComponent<Renderer>().enabled;
-    toggleRadioVisibility.value = radio.GetComponent<Renderer>().enabled;
+{   
+    if (toggleRadioVisibility.value == true) {
+        radioRenderer.enabled = true;
+    } else if (toggleRadioVisibility.value == false) {
+        radioRenderer.enabled = false;
+    }
     Settings.Instance.SetValue("radioIsVisible", toggleRadioVisibility.value);
 }
 

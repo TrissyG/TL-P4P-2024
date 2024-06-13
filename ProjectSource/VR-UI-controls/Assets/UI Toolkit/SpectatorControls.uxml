@@ -15,7 +15,7 @@
             <ui:Toggle label="Play Radio Sound" name="toggleRadioSound" value="false" style="align-items: center; justify-content: space-between;" />
             <ui:TextField picking-mode="Ignore" label="Volume" text="50%" name="fieldRadioVolume" is-delayed="true" max-length="4" style="align-items: center; justify-content: flex-start;" />
             <ui:Slider value="50" high-value="100" name="sliderRadioVolume" picking-mode="Ignore" style="padding-bottom: 10px; margin-top: 2px; margin-right: 10px; margin-left: 10px;" />
-            <ui:Foldout>
+            <ui:Foldout text="Sound Settings">
                 <ui:Toggle label="Enable Band-pass" name="toggleBandpassEnable" value="false" />
                 <ui:TextField picking-mode="Ignore" label="Center Frequency" text="440Hz" is-delayed="true" name="fieldBandpassFreq" style="align-items: center;" />
                 <ui:Slider picking-mode="Ignore" value="87.8136" high-value="144.2522" name="sliderBandpassFreq" low-value="43" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
@@ -28,6 +28,14 @@
                 <ui:Slider picking-mode="Ignore" value="1" high-value="5" low-value="0.2" name="sliderParamEQRange" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
                 <ui:TextField picking-mode="Ignore" label="Frequency Gain" text="2.0" max-length="-1" is-delayed="true" name="fieldParamEQGain" style="align-items: center;" />
                 <ui:Slider picking-mode="Ignore" value="2" high-value="3" low-value="0.05" name="sliderParamEQGain" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px; width: auto;" />
+            </ui:Foldout>
+            <ui:Foldout text="Sound Location">
+                <ui:TextField picking-mode="Ignore" label="Radius" text="0" is-delayed="true" name="fieldSoundLocationRadius" style="align-items: center;" />
+                <ui:Slider picking-mode="Ignore" value="0" high-value="10" name="sliderSoundLocationRadius" low-value="0" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
+                <ui:TextField picking-mode="Ignore" label="Theta" text="0" is-delayed="true" name="fieldSoundLocationTheta" style="align-items: center;" />
+                <ui:Slider picking-mode="Ignore" value="0" high-value="360" name="sliderSoundLocationTheta" low-value="0" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
+                <ui:TextField picking-mode="Ignore" label="Phi" text="0" is-delayed="true" name="fieldSoundLocationPhi" style="align-items: center;" />
+                <ui:Slider picking-mode="Ignore" value="0" high-value="360" name="sliderSoundLocationPhi" low-value="0" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
             </ui:Foldout>
             <ui:Toggle label="Play Chimes Sound" name="toggleChimeSound" value="false" style="align-items: center; justify-content: space-between;" />
             <ui:TextField picking-mode="Ignore" label="Volume" text="50%" name="fieldChimeVolume" is-delayed="true" max-length="4" style="align-items: center; justify-content: flex-start;" />
