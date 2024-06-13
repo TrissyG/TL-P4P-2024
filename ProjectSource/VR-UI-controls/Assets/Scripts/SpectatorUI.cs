@@ -460,15 +460,8 @@ public class SpectatorUI : MonoBehaviour
 private void ToggleRadioVisibility(ChangeEvent<bool> evt)
 {
     // make radio GameObject visible/invisible
-    if (toggleRadioVisibility.value == true) {
-        if (!radio.activeSelf) {
-            radio.SetActive(true);
-        }
-    } else {
-        if (radio.activeSelf) {
-            radio.SetActive(false);
-        }
-    }
+    radio.GetComponent<Renderer>().enabled = !radio.GetComponent<Renderer>().enabled;
+    toggleRadioVisibility.value = radio.GetComponent<Renderer>().enabled;
     Settings.Instance.SetValue("radioIsVisible", toggleRadioVisibility.value);
 }
 
