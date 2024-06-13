@@ -96,6 +96,7 @@ public class SpectatorUI : MonoBehaviour
         buttonScene3 = root.Q("buttonScene3") as Button;
         buttonCameraFirstPerson = root.Q("buttonCameraFirstPerson") as Button;
         buttonCameraFixed = root.Q("buttonCameraFixed") as Button;
+        toggleRadioVisibility = root.Q("toggleRadioVisibility") as Toggle;
         toggleRadioSound = root.Q("toggleRadioSound") as Toggle;
         sliderRadioVolume = root.Q("sliderRadioVolume") as Slider;
         fieldRadioVolume = root.Q("fieldRadioVolume") as TextField;
@@ -140,6 +141,7 @@ public class SpectatorUI : MonoBehaviour
         buttonScene3.RegisterCallback<ClickEvent>(ChangeScene3);
         buttonCameraFirstPerson.RegisterCallback<ClickEvent>(ChangeCameraFirstPerson);
         buttonCameraFixed.RegisterCallback<ClickEvent>(ChangeCameraToFixed);
+        toggleRadioVisibility.RegisterValueChangedCallback<bool>(ToggleRadioVisibility); // TODO - add XML element
         toggleRadioSound.RegisterValueChangedCallback<bool>(ToggleRadioSound);
         sliderRadioVolume.RegisterValueChangedCallback<float>(ChangeRadioVolumeSlider);
         fieldRadioVolume.RegisterValueChangedCallback<string>(ChangeRadioVolumeField);
@@ -211,6 +213,9 @@ public class SpectatorUI : MonoBehaviour
         }
         if (RatingTablet == null) {
             toggleShowRatingTablet.SetEnabled(false);
+        }
+        if (radio == null){
+            toggleRadioVisibility.SetEnabled(false);
         }
 
         if (ghosts == null) {
@@ -451,6 +456,21 @@ public class SpectatorUI : MonoBehaviour
         spectator.ToFixedPerspective();
         Settings.Instance.SetValue("spectatorIsFirstPerson", false);
     }
+
+private void ToggleRadioVisibility(ChangeEvent<bool> evt)
+{
+    // make radio GameObject visible/invisible
+    if (toggleRadioVisibility.value == true) {
+        if (!radio.activeSelf) {
+            radio.SetActive(true);
+        }
+    } else {
+        if (radio.activeSelf) {
+            radio.SetActive(false);
+        }
+    }
+    Settings.Instance.SetValue("radioIsVisible", toggleRadioVisibility.value);
+}
 
     private void ToggleRadioSound(ChangeEvent<bool> evt)
     {
