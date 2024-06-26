@@ -29,6 +29,7 @@
                 <ui:TextField picking-mode="Ignore" label="Frequency Gain" text="2.0" max-length="-1" is-delayed="true" name="fieldParamEQGain" style="align-items: center;" />
                 <ui:Slider picking-mode="Ignore" value="2" high-value="3" low-value="0.05" name="sliderParamEQGain" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px; width: auto;" />
             </ui:Foldout>
+            <ui:ListView focusable="true" name="SoundObjectPositionListView" />
             <ui:Foldout text="Sound Location">
                 <ui:TextField picking-mode="Ignore" label="Radius" text="0" is-delayed="true" name="fieldSoundLocationRadius" style="align-items: center;" />
                 <ui:Slider picking-mode="Ignore" value="0" high-value="10" name="sliderSoundLocationRadius" low-value="0" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />

@@ -84,6 +84,11 @@ public class SpectatorUI : MonoBehaviour
 
     // spectator camera
     private SpectatorCamera spectator;
+    private ListView listSoundPosition;
+
+    public class SoundPosition{
+    public string Name { get; set; }
+    }
 
     private void OnEnable()
     {
@@ -120,7 +125,7 @@ public class SpectatorUI : MonoBehaviour
         fieldParamEQRange = root.Q("fieldParamEQRange") as TextField;
         sliderParamEQGain = root.Q("sliderParamEQGain") as Slider;
         fieldParamEQGain = root.Q("fieldParamEQGain") as TextField;
-
+        listSoundPosition = root.Q("SoundObjectPositionListView") as ListView;
         toggleShowTSNSTablet = root.Q("toggleShowTSNSTablet") as Toggle;
         toggleShowRatingTablet = root.Q("toggleShowRatingTablet") as Toggle;
 
@@ -169,7 +174,21 @@ public class SpectatorUI : MonoBehaviour
         fieldParamEQRange.RegisterValueChangedCallback<string>(ChangeParamEQRangeField);
         sliderParamEQGain.RegisterValueChangedCallback<float>(ChangeParamEQGainSlider);
         fieldParamEQGain.RegisterValueChangedCallback<string>(ChangeParamEQGainField);
+            // Create and populate the list of positions
+        var items = new List<SoundPosition>
+        {
+            new SoundPosition { Name = "Position 1"},
+            new SoundPosition { Name = "Position 2"},
+            new SoundPosition { Name = "Position 3"},
+            new SoundPosition { Name = "Position 4"},
+            new SoundPosition { Name = "Position 5"},
+            new SoundPosition { Name = "Position 6"},
+        };
 
+        listSoundPosition.makeItem = MakeItem;
+        listSoundPosition.bindItem = BindItem;
+        listSoundPosition.itemsSource = items;
+        listSoundPosition.fixedItemHeight = 30; // Set an appropriate item height
 
         toggleShowTSNSTablet.RegisterValueChangedCallback<bool>(ToggleTSNSTablet);
         toggleShowRatingTablet.RegisterValueChangedCallback<bool>(ToggleRatingTablet);
@@ -230,13 +249,18 @@ public class SpectatorUI : MonoBehaviour
 
         // subscribe to event: RetrieveSettings is called when new settings are loaded.
         Settings.onLoad += RetrieveSettings;
+        
     }
 
     private void RetrieveSettings()
     {
         // Change values to the ones present in Settings, or to a fallback/default value.
         // Called everytime new settings are loaded.
-
+        if (Settings.Instance == null)
+            {
+                Debug.LogError("Settings.Instance is null. Ensure Settings is properly initialized.");
+                return;
+            }
         Settings settings = Settings.Instance;
 
 
@@ -436,7 +460,25 @@ public class SpectatorUI : MonoBehaviour
         toggleShowRatingTablet.UnregisterValueChangedCallback<bool>(ToggleRatingTablet);
         */
     }
+    VisualElement MakeItem()
+    {
+        // Create a new button or any other VisualElement as the item template
+        var button = new Button();
+        button.AddToClassList("list-item-button"); // Add a USS class for styling
+        return button;
+    }
 
+    void BindItem(VisualElement element, int index)
+    {   
+        var button = (Button)element;
+        var item = (SoundPosition)listSoundPosition.itemsSource[index];
+        button.text = item.Name;
+        // Here you can also set the image for the button based on item.ImagePath
+        Debug.Log($"listSoundPosition count: {listSoundPosition.itemsSource.Count}");
+        foreach (var position in listSoundPosition.itemsSource) {
+        Debug.Log($"Position: {position}");
+}
+    }
 
     private void ChangeSceneTutorial(ClickEvent evt)
     {
