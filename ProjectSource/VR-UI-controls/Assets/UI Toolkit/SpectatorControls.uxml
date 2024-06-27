@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/SpectatorControls.uss?fileID=7433441132597879392&amp;guid=88b7461b96ff95d46bf683e147e44f0f&amp;type=3#SpectatorControls" />
     <ui:ScrollView style="width: 297px; padding-bottom: 0; margin-bottom: 0; height: 100%;">
         <ui:GroupBox style="width: 266px; background-color: rgba(255, 255, 255, 0.57); flex-basis: 100%; padding-bottom: 150px;">
             <ui:Foldout text="Change Scene" value="false" style="align-items: flex-start; justify-content: flex-start;">
@@ -29,8 +30,10 @@
                 <ui:TextField picking-mode="Ignore" label="Frequency Gain" text="2.0" max-length="-1" is-delayed="true" name="fieldParamEQGain" style="align-items: center;" />
                 <ui:Slider picking-mode="Ignore" value="2" high-value="3" low-value="0.05" name="sliderParamEQGain" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px; width: auto;" />
             </ui:Foldout>
-            <ui:ListView focusable="true" name="SoundObjectPositionListView" />
-            <ui:Foldout text="Sound Location">
+            <ui:Foldout text="Sound Object Location">
+                <ui:ScrollView name="SoundObjectPositionList" verticalScrollerVisibility="Hidden" class="grid-container" />
+            </ui:Foldout>
+            <ui:Foldout text="Sound Offset">
                 <ui:TextField picking-mode="Ignore" label="Radius" text="0" is-delayed="true" name="fieldSoundLocationRadius" style="align-items: center;" />
                 <ui:Slider picking-mode="Ignore" value="0" high-value="10" name="sliderSoundLocationRadius" low-value="0" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
                 <ui:TextField picking-mode="Ignore" label="Theta" text="0" is-delayed="true" name="fieldSoundLocationTheta" style="align-items: center;" />

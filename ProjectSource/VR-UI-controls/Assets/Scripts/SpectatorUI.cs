@@ -84,10 +84,11 @@ public class SpectatorUI : MonoBehaviour
 
     // spectator camera
     private SpectatorCamera spectator;
-    private ListView listSoundPosition;
+    private ScrollView listSoundPosition;
 
     public class SoundPosition{
     public string Name { get; set; }
+    public string ImagePath { get; set; }
     }
 
     private void OnEnable()
@@ -125,7 +126,7 @@ public class SpectatorUI : MonoBehaviour
         fieldParamEQRange = root.Q("fieldParamEQRange") as TextField;
         sliderParamEQGain = root.Q("sliderParamEQGain") as Slider;
         fieldParamEQGain = root.Q("fieldParamEQGain") as TextField;
-        listSoundPosition = root.Q("SoundObjectPositionListView") as ListView;
+        listSoundPosition = root.Q("SoundObjectPositionList") as ScrollView;
         toggleShowTSNSTablet = root.Q("toggleShowTSNSTablet") as Toggle;
         toggleShowRatingTablet = root.Q("toggleShowRatingTablet") as Toggle;
 
@@ -177,19 +178,24 @@ public class SpectatorUI : MonoBehaviour
             // Create and populate the list of positions
         var items = new List<SoundPosition>
         {
-            new SoundPosition { Name = "Position 1"},
-            new SoundPosition { Name = "Position 2"},
-            new SoundPosition { Name = "Position 3"},
-            new SoundPosition { Name = "Position 4"},
-            new SoundPosition { Name = "Position 5"},
-            new SoundPosition { Name = "Position 6"},
+            new SoundPosition { Name = "Position 1", ImagePath = "Assets/Images/position0.png"},
+            new SoundPosition { Name = "Position 2", ImagePath = "Assets/Images/position30.png"},
+            new SoundPosition { Name = "Position 2", ImagePath = "Assets/Images/position60.png"},
+            new SoundPosition { Name = "Position 3", ImagePath = "Assets/Images/position90.png"},
+            new SoundPosition { Name = "Position 4", ImagePath = "Assets/Images/position120.png"},
+            new SoundPosition { Name = "Position 5", ImagePath = "Assets/Images/position150.png"},
+            new SoundPosition { Name = "Position 6", ImagePath = "Assets/Images/position180.png"},
         };
 
-        listSoundPosition.makeItem = MakeItem;
-        listSoundPosition.bindItem = BindItem;
-        listSoundPosition.itemsSource = items;
-        listSoundPosition.fixedItemHeight = 30; // Set an appropriate item height
-
+        foreach (var item in items)
+        {
+            var button = new Button(() => Debug.Log(item.Name)) // Assuming you want to log the name when clicked
+            {
+                text = item.Name
+            };
+            listSoundPosition.Add(button);
+        }
+        listSoundPosition.AddToClassList("grid-container"); 
         toggleShowTSNSTablet.RegisterValueChangedCallback<bool>(ToggleTSNSTablet);
         toggleShowRatingTablet.RegisterValueChangedCallback<bool>(ToggleRatingTablet);
         toggleDoGhosting.RegisterValueChangedCallback<bool>(ToggleDoGhosting);
@@ -460,25 +466,25 @@ public class SpectatorUI : MonoBehaviour
         toggleShowRatingTablet.UnregisterValueChangedCallback<bool>(ToggleRatingTablet);
         */
     }
-    VisualElement MakeItem()
-    {
-        // Create a new button or any other VisualElement as the item template
-        var button = new Button();
-        button.AddToClassList("list-item-button"); // Add a USS class for styling
-        return button;
-    }
+//     VisualElement MakeItem()
+//     {
+//         // Create a new button or any other VisualElement as the item template
+//         var button = new Button();
+//         button.AddToClassList("list-item-button"); // Add a USS class for styling
+//         return button;
+//     }
 
-    void BindItem(VisualElement element, int index)
-    {   
-        var button = (Button)element;
-        var item = (SoundPosition)listSoundPosition.itemsSource[index];
-        button.text = item.Name;
-        // Here you can also set the image for the button based on item.ImagePath
-        Debug.Log($"listSoundPosition count: {listSoundPosition.itemsSource.Count}");
-        foreach (var position in listSoundPosition.itemsSource) {
-        Debug.Log($"Position: {position}");
-}
-    }
+//     void BindItem(VisualElement element, int index)
+//     {   
+//         var button = (Button)element;
+//         var item = (SoundPosition)listSoundPosition.itemsSource[index];
+//         button.text = item.Name;
+//         // Here you can also set the image for the button based on item.ImagePath
+//         Debug.Log($"listSoundPosition count: {listSoundPosition.itemsSource.Count}");
+//         foreach (var position in listSoundPosition.itemsSource) {
+//         Debug.Log($"Position: {position}");
+// }
+//     }
 
     private void ChangeSceneTutorial(ClickEvent evt)
     {

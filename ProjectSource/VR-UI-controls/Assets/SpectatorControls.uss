@@ -1,0 +1,13 @@
+.grid-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    vertical-scrolling: hidden;
+}
+
+.grid-item {
+    width: 50%; /* Adjust based on the container size to fit 2 items per row */
+    height: 100px; /* Adjust based on your needs */
+    /* Add any additional styling here */
+}
