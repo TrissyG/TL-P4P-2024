@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using System;
+using UnityEditor;
 
 public class SpectatorUI : MonoBehaviour
 {
@@ -193,6 +194,18 @@ public class SpectatorUI : MonoBehaviour
             {
                 text = item.Name
             };
+                    // Create an Image element and set its source
+            var image = new Image();
+            image.image = AssetDatabase.LoadAssetAtPath<Texture2D>(item.ImagePath); // Make sure to include using UnityEditor;
+            image.scaleMode = ScaleMode.ScaleToFit; // Adjust scale mode as needed
+
+            // Optionally, set the USS class for the image for further styling
+            image.AddToClassList("button-image");
+
+            // Add the Image element to the button
+            button.Add(image);
+
+            // Add the button to the container
             listSoundPosition.Add(button);
         }
         listSoundPosition.AddToClassList("grid-container"); 

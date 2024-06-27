@@ -6,8 +6,8 @@
     vertical-scrolling: hidden;
 }
 
-.grid-item {
-    width: 50%; /* Adjust based on the container size to fit 2 items per row */
-    height: 100px; /* Adjust based on your needs */
-    /* Add any additional styling here */
+
+.button-image {
+    width: 100%;
+    height: 50%;
 }
