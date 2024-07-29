@@ -18,6 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/ForestWorld.unity
     guid: 0a4242d4142401547a6c60cb0a90409e
   m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 309757611e4f49c49b26fe9e13bc560a, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 3fe18cfcadf85b64b9e9d8d679b7fa56, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 1c717763babd9a44db4689a0236a4717, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 5dcb22b18bf25e647b5b7f8de6fac83d, type: 2}
