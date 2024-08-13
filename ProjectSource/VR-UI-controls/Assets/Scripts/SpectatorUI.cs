@@ -86,7 +86,6 @@ public class SpectatorUI : MonoBehaviour
     // spectator camera
     private SpectatorCamera spectator;
     private ScrollView listSoundPosition;
-
     public class SoundPosition{
     public string Name { get; set; }
     public string ImagePath { get; set; }
@@ -130,7 +129,6 @@ public class SpectatorUI : MonoBehaviour
         listSoundPosition = root.Q("SoundObjectPositionList") as ScrollView;
         toggleShowTSNSTablet = root.Q("toggleShowTSNSTablet") as Toggle;
         toggleShowRatingTablet = root.Q("toggleShowRatingTablet") as Toggle;
-
         toggleDoGhosting = root.Q("toggleDoGhosting") as Toggle;
 
 
@@ -176,31 +174,30 @@ public class SpectatorUI : MonoBehaviour
         fieldParamEQRange.RegisterValueChangedCallback<string>(ChangeParamEQRangeField);
         sliderParamEQGain.RegisterValueChangedCallback<float>(ChangeParamEQGainSlider);
         fieldParamEQGain.RegisterValueChangedCallback<string>(ChangeParamEQGainField);
+        
             // Create and populate the list of positions
         var items = new List<SoundPosition>
         {
-            new SoundPosition { Name = "Position 1", ImagePath = "Assets/Images/position0.png"},
-            new SoundPosition { Name = "Position 2", ImagePath = "Assets/Images/position30.png"},
-            new SoundPosition { Name = "Position 2", ImagePath = "Assets/Images/position60.png"},
-            new SoundPosition { Name = "Position 3", ImagePath = "Assets/Images/position90.png"},
-            new SoundPosition { Name = "Position 4", ImagePath = "Assets/Images/position120.png"},
-            new SoundPosition { Name = "Position 5", ImagePath = "Assets/Images/position150.png"},
-            new SoundPosition { Name = "Position 6", ImagePath = "Assets/Images/position180.png"},
+            new SoundPosition { Name = "Position 2", ImagePath = "Assets/Resources/position30.png"},
+            new SoundPosition { Name = "Position 3", ImagePath = "Assets/Resources/position60.png"},
+            new SoundPosition { Name = "Position 4", ImagePath = "Assets/Resources/position90.png"},
+            new SoundPosition { Name = "Position 5", ImagePath = "Assets/Resources/position120.png"},
+            new SoundPosition { Name = "Position 6", ImagePath = "Assets/Resources/position150.png"},
         };
 
         foreach (var item in items)
         {
             var button = new Button(() => Debug.Log(item.Name)) // Assuming you want to log the name when clicked
             {
-                text = item.Name
+                text = string.Empty
             };
                     // Create an Image element and set its source
             var image = new Image();
-            image.image = AssetDatabase.LoadAssetAtPath<Texture2D>(item.ImagePath); // Make sure to include using UnityEditor;
+            image.image = Resources.Load<Texture2D>(item.ImagePath); // Load image from Resources folder
             image.scaleMode = ScaleMode.ScaleToFit; // Adjust scale mode as needed
 
             // Optionally, set the USS class for the image for further styling
-            image.AddToClassList("button-image");
+            image.AddToClassList("button");
 
             // Add the Image element to the button
             button.Add(image);
@@ -208,7 +205,16 @@ public class SpectatorUI : MonoBehaviour
             // Add the button to the container
             listSoundPosition.Add(button);
         }
-        listSoundPosition.AddToClassList("grid-container"); 
+        listSoundPosition.AddToClassList("grid-container");
+
+        private void MoveObjectToPosition(Vector3 position){
+            if (targetObject != null)
+            {
+                targetObject.transform.position = position;
+            }
+        }
+
+
         toggleShowTSNSTablet.RegisterValueChangedCallback<bool>(ToggleTSNSTablet);
         toggleShowRatingTablet.RegisterValueChangedCallback<bool>(ToggleRatingTablet);
         toggleDoGhosting.RegisterValueChangedCallback<bool>(ToggleDoGhosting);
