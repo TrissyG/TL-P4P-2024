@@ -207,12 +207,6 @@ public class SpectatorUI : MonoBehaviour
         }
         listSoundPosition.AddToClassList("grid-container");
 
-        private void MoveObjectToPosition(Vector3 position){
-            if (targetObject != null)
-            {
-                targetObject.transform.position = position;
-            }
-        }
 
 
         toggleShowTSNSTablet.RegisterValueChangedCallback<bool>(ToggleTSNSTablet);
@@ -276,6 +270,14 @@ public class SpectatorUI : MonoBehaviour
         Settings.onLoad += RetrieveSettings;
         
     }
+
+    private void MoveObjectToPosition(Vector3 position, GameObject targetObject){
+        if (targetObject != null)
+        {
+                targetObject.transform.position = position;
+        }
+    }
+
 
     private void RetrieveSettings()
     {
