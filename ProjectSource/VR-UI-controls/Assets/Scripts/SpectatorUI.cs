@@ -85,12 +85,20 @@ public class SpectatorUI : MonoBehaviour
 
     // spectator camera
     private SpectatorCamera spectator;
-    private ScrollView listSoundPosition;
-    public class SoundPosition{
+    private ScrollView listSoundObjectPosition;
+    public class SoundObjectPosition{
     public string Name { get; set; }
     public string ImagePath { get; set; }
     }
+    public SoundObjectManager soundObjectManager;
 
+    private Slider radiusSlider;
+    private Slider inclinationSlider;
+    private Slider azimuthSlider;
+    private TextField radiusField;
+    private TextField inclinationField;
+    private TextField azimuthField;
+    private Button applyButton;
     private void OnEnable()
     {
         // The UXML is already instantiated by the UIDocument component
@@ -126,10 +134,14 @@ public class SpectatorUI : MonoBehaviour
         fieldParamEQRange = root.Q("fieldParamEQRange") as TextField;
         sliderParamEQGain = root.Q("sliderParamEQGain") as Slider;
         fieldParamEQGain = root.Q("fieldParamEQGain") as TextField;
-        listSoundPosition = root.Q("SoundObjectPositionList") as ScrollView;
+        listSoundObjectPosition = root.Q("SoundObjectPositionList") as ScrollView;
         toggleShowTSNSTablet = root.Q("toggleShowTSNSTablet") as Toggle;
         toggleShowRatingTablet = root.Q("toggleShowRatingTablet") as Toggle;
         toggleDoGhosting = root.Q("toggleDoGhosting") as Toggle;
+        radiusSlider = root.Q("radiusSlider") as Slider;
+        inclinationSlider = root.Q("inclinationSlider") as Slider;
+        azimuthSlider = root.Q("azimuthSlider") as Slider;
+        applyButton = root.Q("applyButton") as Button;
 
 
         selectorNewFile = root.Q("selectorNewFile") as RadioButton;
@@ -176,13 +188,13 @@ public class SpectatorUI : MonoBehaviour
         fieldParamEQGain.RegisterValueChangedCallback<string>(ChangeParamEQGainField);
         
             // Create and populate the list of positions
-        var items = new List<SoundPosition>
+        var items = new List<SoundObjectPosition>
         {
-            new SoundPosition { Name = "Position 2", ImagePath = "Assets/Resources/position30.png"},
-            new SoundPosition { Name = "Position 3", ImagePath = "Assets/Resources/position60.png"},
-            new SoundPosition { Name = "Position 4", ImagePath = "Assets/Resources/position90.png"},
-            new SoundPosition { Name = "Position 5", ImagePath = "Assets/Resources/position120.png"},
-            new SoundPosition { Name = "Position 6", ImagePath = "Assets/Resources/position150.png"},
+            new SoundObjectPosition { Name = "Position 2", ImagePath = "Assets/Resources/position30.png"},
+            new SoundObjectPosition { Name = "Position 3", ImagePath = "Assets/Resources/position60.png"},
+            new SoundObjectPosition { Name = "Position 4", ImagePath = "Assets/Resources/position90.png"},
+            new SoundObjectPosition { Name = "Position 5", ImagePath = "Assets/Resources/position120.png"},
+            new SoundObjectPosition { Name = "Position 6", ImagePath = "Assets/Resources/position150.png"},
         };
 
         foreach (var item in items)
@@ -203,9 +215,9 @@ public class SpectatorUI : MonoBehaviour
             button.Add(image);
 
             // Add the button to the container
-            listSoundPosition.Add(button);
+            listSoundObjectPosition.Add(button);
         }
-        listSoundPosition.AddToClassList("grid-container");
+        listSoundObjectPosition.AddToClassList("grid-container");
 
 
 
@@ -232,13 +244,14 @@ public class SpectatorUI : MonoBehaviour
         // Force limits and init starting values
         sliderRadioVolume.lowValue = 0;
         sliderRadioVolume.highValue = 100;
-
+        // 
+        applyButton.clicked += OnApplyButtonClicked;
         // Get a reference to the spectator camera
         spectator = GameObject.Find("Spectator Camera").GetComponent<SpectatorCamera>();
         if (spectator == null) {
             Debug.LogError("Failed to find the spectator camera!");
         }
-
+        
         RetrieveSettings();
         
         if (chimes == null) {
@@ -277,7 +290,15 @@ public class SpectatorUI : MonoBehaviour
                 targetObject.transform.position = position;
         }
     }
+    // For spherical coordinates sound offset
+    private void OnApplyButtonClicked()
+    {
+        float radius = radiusSlider.value;
+        float inclination = inclinationSlider.value;
+        float azimuth = azimuthSlider.value;
 
+        soundObjectManager.SetSphericalCoordinates(radius, inclination, azimuth);
+    }
 
     private void RetrieveSettings()
     {

@@ -36,9 +36,11 @@
             <ui:Foldout text="Sound Offset">
                 <ui:TextField picking-mode="Ignore" label="Radius" text="0" is-delayed="true" name="fieldSoundLocationRadius" style="align-items: center;" />
                 <ui:Slider picking-mode="Ignore" value="0" high-value="10" name="sliderSoundLocationRadius" low-value="0" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
-                <ui:TextField picking-mode="Ignore" label="Theta" text="0" is-delayed="true" name="fieldSoundLocationTheta" style="align-items: center;" />
-                <ui:Slider picking-mode="Ignore" value="0" high-value="360" name="sliderSoundLocationTheta" low-value="0" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
-                <ui:TextField picking-mode="Ignore" label="Phi" text="0" is-delayed="true" name="fieldSoundLocationPhi" style="align-items: center;" />
+
+                <ui:TextField picking-mode="Ignore" label="Inclination (Theta)" text="0" is-delayed="true" name="fieldSoundLocationTheta" style="align-items: center;" />
+                <ui:Slider picking-mode="Ignore" value="0" high-value="180" name="sliderSoundLocationTheta" low-value="0" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
+
+                <ui:TextField picking-mode="Ignore" label="Azimuth (Phi)" text="0" is-delayed="true" name="fieldSoundLocationPhi" style="align-items: center;" />
                 <ui:Slider picking-mode="Ignore" value="0" high-value="360" name="sliderSoundLocationPhi" low-value="0" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px;" />
             </ui:Foldout>
             <ui:Toggle label="Play Chimes Sound" name="toggleChimeSound" value="false" style="align-items: center; justify-content: space-between;" />
