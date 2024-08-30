@@ -741,11 +741,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 1
-  cloudProjectId: 
+  cloudProjectId: 0fa67a2d-6e85-4b71-b6c8-c4502ed6f701
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: VR-UI-controls 2024-08-30_23-34-45
+  organizationId: leas022
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
