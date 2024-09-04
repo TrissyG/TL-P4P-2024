@@ -6,8 +6,8 @@ public class SpectatorCamera : MonoBehaviour
 {
     /*
      * The spectator camera moves between a fixed perspective (its starting
-     * position) and a first person perspective (matching the perspective of 
-     * the VR display).
+     * position), a locationing mode perspective (only in the Blank World, ) and a first person perspective 
+     * (matching the perspective of the VR display).
      */
     enum CameraState
     {

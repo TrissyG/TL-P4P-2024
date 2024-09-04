@@ -56,6 +56,8 @@ public class SpectatorUI : MonoBehaviour
     private Button buttonSave;
     private Button buttonLoad;
     private Button buttonRestoreHeadlockedObject;
+    
+    private Button buttonLocationingMode;
 
     private Button buttonExitApplication;
 
@@ -72,6 +74,9 @@ public class SpectatorUI : MonoBehaviour
     public GameObject chimes;
     private AudioMixer chimeMixer;
 
+    public GameObject locationingChair;
+
+    public GameObject flagPrefab;
 
 
     // Position where RatingTabletToggleable appears
@@ -87,7 +92,7 @@ public class SpectatorUI : MonoBehaviour
 
     public AudioMixer EnvironmentAudioMixer;
 
-    // spectator camera
+    // spectator cameras
     private SpectatorCamera spectator;
 
     private void OnEnable()
@@ -141,6 +146,8 @@ public class SpectatorUI : MonoBehaviour
 
         buttonRestoreHeadlockedObject = root.Q("buttonRestoreHeadlockedObject") as Button;
 
+        buttonLocationingMode = root.Q("buttonLocationingMode") as Button;
+
         buttonExitApplication = root.Q("buttonExitApplication") as Button;
 
         buttonSceneTutorial.RegisterCallback<ClickEvent>(ChangeSceneTutorial);
@@ -189,6 +196,8 @@ public class SpectatorUI : MonoBehaviour
 
         buttonRestoreHeadlockedObject.RegisterCallback<ClickEvent>(TryRestoreHeadlockedObject);
 
+        buttonLocationingMode.RegisterCallback<ClickEvent>(ActivateLocationingMode);
+
         buttonExitApplication.RegisterCallback<ClickEvent>(ExitApplication);
 
         // Get the mesh renderer of the radio, which allows us to toggle visibility without disabling the object.
@@ -213,6 +222,18 @@ public class SpectatorUI : MonoBehaviour
         if (spectator == null) {
             Debug.LogError("Failed to find the spectator camera!");
         }
+
+        
+        if (SceneManager.GetActiveScene().name == "BlankWorld") {
+        // Register locationing mode assets
+        locationingChair = GameObject.Find("LocationingChair");
+        if (locationingChair == null) {
+            Debug.LogError("Failed to find the locationing chair!");
+        } else {
+            locationingChair.SetActive(false);
+        }
+        }
+
 
         RetrieveSettings();
         
@@ -1023,6 +1044,45 @@ public class SpectatorUI : MonoBehaviour
             }
         }
     }
+
+    private void ActivateLocationingMode(ClickEvent evt)
+    {
+        if (locationingChair != null) {
+            locationingChair.SetActive(true);
+            // relocate fixed spectator camera to locationing position 
+            ChangeCameraToLocationing();
+            // generate a 120 degree arc of flags around the locationing chair with a 3m radius
+            GenerateFlags();
+            
+            
+        }
+    }
+
+    private void ChangeCameraToLocationing(){
+        spectator.ToLocationingPerspective();
+        Settings.Instance.SetValue("spectatorIsFirstPerson", false);
+    }
+
+private void GenerateFlags(){
+    // generate a 120 degree arc of flags around the locationing chair with a 3m radius
+    float radius = 3.0f;
+    int numberOfFlags = 5; // Number of flags to generate
+    float angleStep = 120.0f / (numberOfFlags - 1); // Angle between each flag
+
+    for (int i = 0; i < numberOfFlags; i++) {
+        float angle = -60.0f + (i * angleStep); // Start from -60 degrees to 60 degrees
+        float radian = angle * Mathf.Deg2Rad;
+        Vector3 flagPosition = new Vector3(
+            locationingChair.transform.position.x + radius * Mathf.Cos(radian),
+            locationingChair.transform.position.y,
+            locationingChair.transform.position.z + radius * Mathf.Sin(radian)
+        );
+
+        // Instantiate the flag at the calculated position
+        GameObject flag = Instantiate(flagPrefab, flagPosition, Quaternion.identity);
+        flag.transform.LookAt(locationingChair.transform); // Optional: Make the flag face the chair
+    }
+}
 
     private void ExitApplication(ClickEvent evt)
     {
