@@ -166,9 +166,9 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 11400000, guid: 3fe18cfcadf85b64b9e9d8d679b7fa56, type: 2}
-  - {fileID: -767348002423331437, guid: 5dcb22b18bf25e647b5b7f8de6fac83d, type: 2}
-  - {fileID: 11400000, guid: b47eb58d55caf564d9ae44ed316a6a0f, type: 2}
   - {fileID: -1430888799567565699, guid: 1c717763babd9a44db4689a0236a4717, type: 2}
+  - {fileID: 11400000, guid: b47eb58d55caf564d9ae44ed316a6a0f, type: 2}
+  - {fileID: -767348002423331437, guid: 5dcb22b18bf25e647b5b7f8de6fac83d, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -766,11 +766,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: 0fa67a2d-6e85-4b71-b6c8-c4502ed6f701
+  cloudProjectId: 2162704e-9b1b-4d12-9cc3-b027311f08de
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: VR-UI-controls 2024-08-30_23-34-45
-  organizationId: leas022
+  projectName: VR-UI-controls
+  organizationId: presttheg
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

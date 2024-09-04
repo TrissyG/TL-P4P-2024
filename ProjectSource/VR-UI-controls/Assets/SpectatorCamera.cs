@@ -25,6 +25,12 @@ public class SpectatorCamera : MonoBehaviour
     {
         // Get a reference to the VR camera
         VRCamera = GameObject.Find("Main Camera");
+        Camera mainCamera = VRCamera.GetComponent<Camera>();
+        if (mainCamera != null)
+        {
+            mainCamera.depthTextureMode = DepthTextureMode.Depth;
+        }
+        
     }
 
     // Update is called once per frame
