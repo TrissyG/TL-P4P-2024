@@ -12,12 +12,15 @@ public class SpectatorCamera : MonoBehaviour
     enum CameraState
     {
         fixedPerspective,
+        locationingPerspective,
         firstPersonPerspective
     }
 
     private CameraState state = CameraState.fixedPerspective;
     private Vector3 fixedPerspectivePosition;
     private Quaternion fixedPerspectiveRotation;
+    private Vector3 locationingPerspectivePosition;
+    private Quaternion locationingPerspectiveRotation;
     public GameObject VRCamera;
 
     // Start is called before the first frame update
@@ -53,6 +56,14 @@ public class SpectatorCamera : MonoBehaviour
         // Restore the camera to the fixed position/rotation
         gameObject.transform.position = fixedPerspectivePosition;
         gameObject.transform.rotation = fixedPerspectiveRotation;
+    }
+
+    public void ToLocationingPerspective()
+    {
+        if (state == CameraState.locationingPerspective) return;// do nothing if in wrong state
+
+        gameObject.transform.position = locationingPerspectivePosition;
+        gameObject.transform.rotation = locationingPerspectiveRotation;
     }
 
     public void ToFirstPersonPerspective()

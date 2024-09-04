@@ -190,7 +190,7 @@ public class SpectatorUI : MonoBehaviour
         buttonRestoreHeadlockedObject.RegisterCallback<ClickEvent>(TryRestoreHeadlockedObject);
 
         buttonExitApplication.RegisterCallback<ClickEvent>(ExitApplication);
-        
+
         // Get the mesh renderer of the radio, which allows us to toggle visibility without disabling the object.
         // meshrenderer of parent object, not the audio source "Radio" in this script
         radioPolygon = GameObject.Find("Radio");
