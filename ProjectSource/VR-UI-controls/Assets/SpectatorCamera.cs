@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpectatorCamera : MonoBehaviour
 {
@@ -21,6 +22,10 @@ public class SpectatorCamera : MonoBehaviour
     private Quaternion fixedPerspectiveRotation;
     private Vector3 locationingPerspectivePosition;
     private Quaternion locationingPerspectiveRotation;
+    
+    private float defaultPerspectiveFieldOfView = 60f;
+    private float locationingPerspectiveFieldOfView = 130f;
+    
     public GameObject VRCamera;
 
     // Start is called before the first frame update
@@ -33,7 +38,6 @@ public class SpectatorCamera : MonoBehaviour
         {
             mainCamera.depthTextureMode = DepthTextureMode.Depth;
         }
-        
     }
 
     // Update is called once per frame
@@ -62,8 +66,19 @@ public class SpectatorCamera : MonoBehaviour
     {
         if (state == CameraState.locationingPerspective) return;// do nothing if in wrong state
 
-        gameObject.transform.position = locationingPerspectivePosition;
-        gameObject.transform.rotation = locationingPerspectiveRotation;
+        if (SceneManager.GetActiveScene().name == "BlankWorld")
+        {
+            // Set the locationing perspective position and rotation
+            locationingPerspectivePosition = new Vector3(-0.36f, 3.44f, -1.5f);
+            locationingPerspectiveRotation = Quaternion.Euler(160f, 0f, 180f);
+
+            gameObject.transform.position = locationingPerspectivePosition;
+            gameObject.transform.rotation = locationingPerspectiveRotation;
+            gameObject.GetComponent<Camera>().fieldOfView = locationingPerspectiveFieldOfView;
+        }
+        else {
+            Debug.Log("Locationing Perspective only available in the Blank World scene.");
+        }
     }
 
     public void ToFirstPersonPerspective()
@@ -73,6 +88,7 @@ public class SpectatorCamera : MonoBehaviour
         // Save the fixed perspective position and rotation as the camera's current position
         fixedPerspectivePosition = gameObject.transform.position;
         fixedPerspectiveRotation = gameObject.transform.rotation;
+        gameObject.GetComponent<Camera>().fieldOfView = defaultPerspectiveFieldOfView;
 
         // Start tracking the VR camera
         state = CameraState.firstPersonPerspective;

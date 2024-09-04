@@ -58,6 +58,7 @@ public class SpectatorUI : MonoBehaviour
     private Button buttonRestoreHeadlockedObject;
     
     private Button buttonLocationingMode;
+    // private Button buttonFreeRoamMode;
 
     private Button buttonExitApplication;
 
@@ -149,6 +150,7 @@ public class SpectatorUI : MonoBehaviour
         buttonRestoreHeadlockedObject = root.Q("buttonRestoreHeadlockedObject") as Button;
 
         buttonLocationingMode = root.Q("buttonLocationingMode") as Button;
+        // buttonFreeRoamMode = root.Q("buttonFreeRoamMode") as Button;
 
         buttonExitApplication = root.Q("buttonExitApplication") as Button;
 
@@ -199,6 +201,7 @@ public class SpectatorUI : MonoBehaviour
         buttonRestoreHeadlockedObject.RegisterCallback<ClickEvent>(TryRestoreHeadlockedObject);
 
         buttonLocationingMode.RegisterCallback<ClickEvent>(ActivateLocationingMode);
+        // buttonFreeRoamMode.RegisterCallback<ClickEvent>(DeactivateLocationingMode);
 
         buttonExitApplication.RegisterCallback<ClickEvent>(ExitApplication);
 
@@ -1066,26 +1069,26 @@ public class SpectatorUI : MonoBehaviour
         Settings.Instance.SetValue("spectatorIsFirstPerson", false);
     }
 
-private void GenerateLocations(){
-    // collect a 120 degree arc of 5 positions around the locationing chair with a 3m radius
-    float radius = 3.0f;
-    int numberOfLocations = 5;
-    // angle between each position = 120 / (n - 1)
-    float angleStep = 120.0f / (numberOfLocations - 1); 
+    private void GenerateLocations(){
+        // collect a 120 degree arc of 5 positions around the locationing chair with a 3m radius
+        float radius = 3.0f;
+        int numberOfLocations = 5;
+        // angle between each position = 120 / (n - 1)
+        float angleStep = 120.0f / (numberOfLocations - 1); 
 
-    locationingPositions = new Vector3[numberOfLocations];
+        locationingPositions = new Vector3[numberOfLocations];
 
-    for (int i = 0; i < numberOfLocations; i++) {
-        float angle = -60.0f + (i * angleStep); // start from -60 degrees to 60 degrees
-        float radian = angle * Mathf.Deg2Rad;
-        Vector3 locationingPosition = new Vector3(
-            locationingChair.transform.position.x + radius * Mathf.Cos(radian),
-            1.0f, // fixed height
-            locationingChair.transform.position.z + radius * Mathf.Sin(radian)
-        );
-        locationingPositions[i] = locationingPosition;
+        for (int i = 0; i < numberOfLocations; i++) {
+            float angle = -60.0f + (i * angleStep); // start from -60 degrees to 60 degrees
+            float radian = angle * Mathf.Deg2Rad;
+            Vector3 locationingPosition = new Vector3(
+                locationingChair.transform.position.x + radius * Mathf.Cos(radian),
+                1.0f, // fixed height
+                locationingChair.transform.position.z + radius * Mathf.Sin(radian)
+            );
+            locationingPositions[i] = locationingPosition;
+        }
     }
-}
 
     private void ExitApplication(ClickEvent evt)
     {
