@@ -78,6 +78,8 @@ public class SpectatorUI : MonoBehaviour
 
     public GameObject flagPrefab;
 
+    Vector3[] locationingPositions;
+
 
     // Position where RatingTabletToggleable appears
     public Transform RatingTabletToggleableSpawnpoint;
@@ -1051,9 +1053,10 @@ public class SpectatorUI : MonoBehaviour
             locationingChair.SetActive(true);
             // relocate fixed spectator camera to locationing position 
             ChangeCameraToLocationing();
-            // generate a 120 degree arc of flags around the locationing chair with a 3m radius
-            GenerateFlags();
-            
+            // collect a 120 degree arc of 5 positions around the locationing chair with a 3m radius
+            GenerateLocations();
+            // relocate the radio to the middle flag
+            radio.transform.position = locationingPositions[2];
             
         }
     }
@@ -1063,24 +1066,24 @@ public class SpectatorUI : MonoBehaviour
         Settings.Instance.SetValue("spectatorIsFirstPerson", false);
     }
 
-private void GenerateFlags(){
-    // generate a 120 degree arc of flags around the locationing chair with a 3m radius
+private void GenerateLocations(){
+    // collect a 120 degree arc of 5 positions around the locationing chair with a 3m radius
     float radius = 3.0f;
-    int numberOfFlags = 5; // Number of flags to generate
-    float angleStep = 120.0f / (numberOfFlags - 1); // Angle between each flag
+    int numberOfLocations = 5;
+    // angle between each position = 120 / (n - 1)
+    float angleStep = 120.0f / (numberOfLocations - 1); 
 
-    for (int i = 0; i < numberOfFlags; i++) {
-        float angle = -60.0f + (i * angleStep); // Start from -60 degrees to 60 degrees
+    locationingPositions = new Vector3[numberOfLocations];
+
+    for (int i = 0; i < numberOfLocations; i++) {
+        float angle = -60.0f + (i * angleStep); // start from -60 degrees to 60 degrees
         float radian = angle * Mathf.Deg2Rad;
-        Vector3 flagPosition = new Vector3(
+        Vector3 locationingPosition = new Vector3(
             locationingChair.transform.position.x + radius * Mathf.Cos(radian),
-            locationingChair.transform.position.y,
+            1.0f, // fixed height
             locationingChair.transform.position.z + radius * Mathf.Sin(radian)
         );
-
-        // Instantiate the flag at the calculated position
-        GameObject flag = Instantiate(flagPrefab, flagPosition, Quaternion.identity);
-        flag.transform.LookAt(locationingChair.transform); // Optional: Make the flag face the chair
+        locationingPositions[i] = locationingPosition;
     }
 }
 
