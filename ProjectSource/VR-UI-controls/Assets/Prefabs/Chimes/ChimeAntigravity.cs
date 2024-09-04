@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+
 
 public class ChimeAntigravity : MonoBehaviour
 {
@@ -59,7 +59,7 @@ public class ChimeAntigravity : MonoBehaviour
             bell.transform.parent = this.transform;
         }
         // Enable physics on the bells base (but don't interfere if being controlled by XR)
-        if (bellsBase.GetComponent<XRGrabInteractable>().isSelected == false) {
+        if (bellsBase.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>().isSelected == false) {
             bellsBase.isKinematic = false;
         }
         
