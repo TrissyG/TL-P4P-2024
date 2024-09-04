@@ -57,7 +57,7 @@ public class SpectatorUI : MonoBehaviour
     private Button buttonLoad;
     private Button buttonRestoreHeadlockedObject;
     
-    private Button buttonLocationingMode;
+    private Button buttonLocationingModeOn;
     // private Button buttonFreeRoamMode;
     private Button buttonSetRadioPosition1;
     private Button buttonSetRadioPosition2;
@@ -110,6 +110,7 @@ public class SpectatorUI : MonoBehaviour
         var uiDocument = GetComponent<UIDocument>();
         VisualElement root = uiDocument.rootVisualElement;
 
+
         buttonSceneTutorial = root.Q("buttonSceneTutorial") as Button;
         buttonScene1 = root.Q("buttonScene1") as Button;
         buttonScene2 = root.Q("buttonScene2") as Button;
@@ -155,8 +156,19 @@ public class SpectatorUI : MonoBehaviour
 
         buttonRestoreHeadlockedObject = root.Q("buttonRestoreHeadlockedObject") as Button;
 
-        buttonLocationingMode = root.Q("buttonLocationingMode") as Button;
+        buttonLocationingModeOn = root.Q("buttonLocationingModeOn") as Button;
         // buttonFreeRoamMode = root.Q("buttonFreeRoamMode") as Button;
+        var image = root.Q<Image>("locationingPosition1Image");
+        // if (image == null)
+        // {
+        //     Debug.LogError("Image element not found");
+        // }
+        // else
+        // {
+        //     Debug.Log("Image element found: " + image.name);
+        //     Debug.Log("Image source: " + image.source);
+        // }
+
         buttonSetRadioPosition1 = root.Q<Button>("buttonSetRadioPosition1");
         buttonSetRadioPosition2 = root.Q<Button>("buttonSetRadioPosition2");
         buttonSetRadioPosition3 = root.Q<Button>("buttonSetRadioPosition3");
@@ -211,7 +223,7 @@ public class SpectatorUI : MonoBehaviour
 
         buttonRestoreHeadlockedObject.RegisterCallback<ClickEvent>(TryRestoreHeadlockedObject);
 
-        buttonLocationingMode.RegisterCallback<ClickEvent>(ActivateLocationingMode);
+        buttonLocationingModeOn.RegisterCallback<ClickEvent>(ActivateLocationingMode);
         // buttonFreeRoamMode.RegisterCallback<ClickEvent>(DeactivateLocationingMode);
         buttonSetRadioPosition1.clicked += () => changeRadioLocation(4);
         buttonSetRadioPosition2.clicked += () => changeRadioLocation(3);
@@ -1075,7 +1087,7 @@ public class SpectatorUI : MonoBehaviour
             GenerateLocations();
             // relocate the radio to the middle flag
             radioPolygon.GetComponent<Rigidbody>().useGravity = false;
-            radioPolygon.transform.position = locationingPositions[0];
+            radioPolygon.transform.position = locationingPositions[2];
             radioPolygon.transform.LookAt(locationingChair.transform.position);
             radio.transform.LookAt(locationingChair.transform.position);
             // relocate the user to the chair
@@ -1096,7 +1108,7 @@ public class SpectatorUI : MonoBehaviour
     //         radioPolygon.transform.position = locationingPositions[0];
     //         radioPolygon.transform.LookAt(locationingChair.transform.position);
     //         radio.transform.LookAt(locationingChair.transform.position);
-    //         // relocate the user to the chair
+    //         // TODO - relocate user??
     //     }
     // }
 
