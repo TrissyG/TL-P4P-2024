@@ -16,7 +16,7 @@ Shader "Hidden/ConvertDepth" {
 	};
 		
 	sampler2D _MainTex;
-	sampler2D_float _CameraDepthTexture;
+	UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);;
 		
 	v2f vert( appdata_img v ) 
 	{
