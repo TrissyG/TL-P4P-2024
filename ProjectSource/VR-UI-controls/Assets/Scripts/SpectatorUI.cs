@@ -89,19 +89,25 @@ public class SpectatorUI : MonoBehaviour
     public class SoundObjectPosition{
     public string Name { get; set; }
     public string ImagePath { get; set; }
+    public Vector3 Position { get; set; }
     }
     public SoundObjectManager soundObjectManager;
 
     private Slider radiusSlider;
+    private float radius;
     private Slider inclinationSlider;
+    private float inclination;
     private Slider azimuthSlider;
+    private float azimuth;
     private TextField radiusField;
     private TextField inclinationField;
     private TextField azimuthField;
-    private Button applyButton;
+    private Button applyOffsetButton;
+
+
+
     private void OnEnable()
     {
-        // The UXML is already instantiated by the UIDocument component
         var uiDocument = GetComponent<UIDocument>();
         VisualElement root = uiDocument.rootVisualElement;
 
@@ -141,7 +147,7 @@ public class SpectatorUI : MonoBehaviour
         radiusSlider = root.Q("radiusSlider") as Slider;
         inclinationSlider = root.Q("inclinationSlider") as Slider;
         azimuthSlider = root.Q("azimuthSlider") as Slider;
-        applyButton = root.Q("applyButton") as Button;
+        applyOffsetButton = root.Q("applyOffsetButton") as Button;
 
 
         selectorNewFile = root.Q("selectorNewFile") as RadioButton;
@@ -159,6 +165,7 @@ public class SpectatorUI : MonoBehaviour
         buttonScene3.RegisterCallback<ClickEvent>(ChangeScene3);
         buttonCameraFirstPerson.RegisterCallback<ClickEvent>(ChangeCameraFirstPerson);
         buttonCameraFixed.RegisterCallback<ClickEvent>(ChangeCameraToFixed);
+        applyOffsetButton.RegisterCallback<ClickEvent>(OnApplyOffsetButtonClicked);
         toggleRadioVisibility.RegisterValueChangedCallback<bool>(ToggleRadioVisibility);
         toggleRadioSound.RegisterValueChangedCallback<bool>(ToggleRadioSound);
         sliderRadioVolume.RegisterValueChangedCallback<float>(ChangeRadioVolumeSlider);
@@ -186,37 +193,39 @@ public class SpectatorUI : MonoBehaviour
         fieldParamEQRange.RegisterValueChangedCallback<string>(ChangeParamEQRangeField);
         sliderParamEQGain.RegisterValueChangedCallback<float>(ChangeParamEQGainSlider);
         fieldParamEQGain.RegisterValueChangedCallback<string>(ChangeParamEQGainField);
+        radiusSlider.RegisterValueChangedCallback(OnRadiusSliderValueChanged);
+        inclinationSlider.RegisterValueChangedCallback(OnInclinationSliderValueChanged);
+        azimuthSlider.RegisterValueChangedCallback(OnAzimuthSliderValueChanged);
+
         
+
             // Create and populate the list of positions
         var items = new List<SoundObjectPosition>
         {
-            new SoundObjectPosition { Name = "Position 2", ImagePath = "Assets/Resources/position30.png"},
-            new SoundObjectPosition { Name = "Position 3", ImagePath = "Assets/Resources/position60.png"},
-            new SoundObjectPosition { Name = "Position 4", ImagePath = "Assets/Resources/position90.png"},
-            new SoundObjectPosition { Name = "Position 5", ImagePath = "Assets/Resources/position120.png"},
-            new SoundObjectPosition { Name = "Position 6", ImagePath = "Assets/Resources/position150.png"},
+            new SoundObjectPosition { Name = "Position 2", ImagePath = "position30.png", Position = new Vector3(0, 0, 0)},
+            new SoundObjectPosition { Name = "Position 3", ImagePath = "position60.png", Position = new Vector3(0, 0, 0)},
+            new SoundObjectPosition { Name = "Position 4", ImagePath = "position90.png", Position = new Vector3(0, 0, 0)},
+            new SoundObjectPosition { Name = "Position 5", ImagePath = "position120.png", Position = new Vector3(0, 0, 0)},
+            new SoundObjectPosition { Name = "Position 6", ImagePath = "position150.png", Position = new Vector3(0, 0, 0)},
         };
 
-        foreach (var item in items)
-        {
-            var button = new Button(() => Debug.Log(item.Name)) // Assuming you want to log the name when clicked
-            {
-                text = string.Empty
-            };
-                    // Create an Image element and set its source
-            var image = new Image();
-            image.image = Resources.Load<Texture2D>(item.ImagePath); // Load image from Resources folder
-            image.scaleMode = ScaleMode.ScaleToFit; // Adjust scale mode as needed
+foreach (var item in items)
+{
+    var button = new Button
+    {
+        text = string.Empty
+    };
+    button.clicked += () => MoveObjectToPosition(item.Position, radio);
 
-            // Optionally, set the USS class for the image for further styling
-            image.AddToClassList("button");
+    var image = new Image();
+    image.image = Resources.Load<Texture2D>(item.ImagePath); // Load image from Resources folder
+    image.scaleMode = ScaleMode.ScaleToFit;
 
-            // Add the Image element to the button
-            button.Add(image);
+    image.AddToClassList("button");
 
-            // Add the button to the container
-            listSoundObjectPosition.Add(button);
-        }
+    button.Add(image);
+    listSoundObjectPosition.Add(button); // Add the button to the ScrollView
+}
         listSoundObjectPosition.AddToClassList("grid-container");
 
 
@@ -237,15 +246,15 @@ public class SpectatorUI : MonoBehaviour
         radioMixer = radioAudioSource.outputAudioMixerGroup.audioMixer;
         bandPassFilter = radio.GetComponent<BandPassFilter>();
 
+
         if (chimes != null) {
             chimeMixer = chimes.GetComponent<ChimeConfiguration>().audioMixerGroup.audioMixer;
         }
 
-        // Force limits and init starting values
         sliderRadioVolume.lowValue = 0;
         sliderRadioVolume.highValue = 100;
-        // 
-        applyButton.clicked += OnApplyButtonClicked;
+
+        
         // Get a reference to the spectator camera
         spectator = GameObject.Find("Spectator Camera").GetComponent<SpectatorCamera>();
         if (spectator == null) {
@@ -282,23 +291,22 @@ public class SpectatorUI : MonoBehaviour
         // subscribe to event: RetrieveSettings is called when new settings are loaded.
         Settings.onLoad += RetrieveSettings;
         
-    }
-
-    private void MoveObjectToPosition(Vector3 position, GameObject targetObject){
-        if (targetObject != null)
-        {
-                targetObject.transform.position = position;
-        }
+        applyOffsetButton.clicked += OnApplyOffsetButtonClicked;
     }
     // For spherical coordinates sound offset
-    private void OnApplyButtonClicked()
+    private void OnApplyOffsetButtonClicked()
     {
-        float radius = radiusSlider.value;
-        float inclination = inclinationSlider.value;
-        float azimuth = azimuthSlider.value;
-
+        // Use the updated slider values
         soundObjectManager.SetSphericalCoordinates(radius, inclination, azimuth);
     }
+    private void MoveObjectToPosition(Vector3 position, GameObject targetObject)
+    {
+        if (targetObject != null)
+        {
+            targetObject.transform.position = position;
+        }
+    }
+
 
     private void RetrieveSettings()
     {
@@ -556,7 +564,21 @@ public class SpectatorUI : MonoBehaviour
         spectator.ToFixedPerspective();
         Settings.Instance.SetValue("spectatorIsFirstPerson", false);
     }
+// Callback methods to handle slider value changes
+private void OnRadiusSliderValueChanged(ChangeEvent<float> evt)
+{
+    radius = evt.newValue;
+}
 
+private void OnInclinationSliderValueChanged(ChangeEvent<float> evt)
+{
+    inclination = evt.newValue;
+}
+
+private void OnAzimuthSliderValueChanged(ChangeEvent<float> evt)
+{
+    azimuth = evt.newValue;
+}
 private void ToggleRadioVisibility(ChangeEvent<bool> evt)
 {   
     if (toggleRadioVisibility.value == true) {
