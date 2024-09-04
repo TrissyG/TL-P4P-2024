@@ -70,8 +70,8 @@ public class SpectatorUI : MonoBehaviour
 
 
     // audio source to control
-    public GameObject radioPolygon;
-    public GameObject radio;
+    public GameObject radioPolygon; // the rendered radio object 'Radio'
+    public GameObject radio; // the 'Audio Source' GameObject child of the rendered object
     private AudioSource radioAudioSource;
     private AudioMixer radioMixer;
     private BandPassFilter bandPassFilter;
