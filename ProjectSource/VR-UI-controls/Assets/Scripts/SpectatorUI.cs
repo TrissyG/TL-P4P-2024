@@ -14,6 +14,8 @@ public class SpectatorUI : MonoBehaviour
     private Button buttonScene3;
     private Button buttonCameraFirstPerson;
     private Button buttonCameraFixed;
+
+    private Toggle toggleRadioVisible;
     private Toggle toggleRadioSound;
     private Slider sliderRadioVolume;
     private TextField fieldRadioVolume;
@@ -59,11 +61,13 @@ public class SpectatorUI : MonoBehaviour
 
 
     // audio source to control
+    public GameObject radioPolygon;
     public GameObject radio;
     private AudioSource radioAudioSource;
     private AudioMixer radioMixer;
     private BandPassFilter bandPassFilter;
 
+    private MeshRenderer radioMeshRenderer;
     
     public GameObject chimes;
     private AudioMixer chimeMixer;
@@ -98,6 +102,7 @@ public class SpectatorUI : MonoBehaviour
         buttonScene3 = root.Q("buttonScene3") as Button;
         buttonCameraFirstPerson = root.Q("buttonCameraFirstPerson") as Button;
         buttonCameraFixed = root.Q("buttonCameraFixed") as Button;
+        toggleRadioVisible = root.Q("toggleRadioVisible") as Toggle;
         toggleRadioSound = root.Q("toggleRadioSound") as Toggle;
         sliderRadioVolume = root.Q("sliderRadioVolume") as Slider;
         fieldRadioVolume = root.Q("fieldRadioVolume") as TextField;
@@ -144,6 +149,7 @@ public class SpectatorUI : MonoBehaviour
         buttonScene3.RegisterCallback<ClickEvent>(ChangeScene3);
         buttonCameraFirstPerson.RegisterCallback<ClickEvent>(ChangeCameraFirstPerson);
         buttonCameraFixed.RegisterCallback<ClickEvent>(ChangeCameraToFixed);
+        toggleRadioVisible.RegisterValueChangedCallback<bool>(ToggleRadioVisible);
         toggleRadioSound.RegisterValueChangedCallback<bool>(ToggleRadioSound);
         sliderRadioVolume.RegisterValueChangedCallback<float>(ChangeRadioVolumeSlider);
         fieldRadioVolume.RegisterValueChangedCallback<string>(ChangeRadioVolumeField);
@@ -184,6 +190,11 @@ public class SpectatorUI : MonoBehaviour
         buttonRestoreHeadlockedObject.RegisterCallback<ClickEvent>(TryRestoreHeadlockedObject);
 
         buttonExitApplication.RegisterCallback<ClickEvent>(ExitApplication);
+        
+        // Get the mesh renderer of the radio, which allows us to toggle visibility without disabling the object.
+        // meshrenderer of parent object, not the audio source "Radio" in this script
+        radioPolygon = GameObject.Find("Radio");
+        radioMeshRenderer = radioPolygon.GetComponent<MeshRenderer>();
 
         radioAudioSource = radio.GetComponent<AudioSource>();
         radioMixer = radioAudioSource.outputAudioMixerGroup.audioMixer;
@@ -456,6 +467,17 @@ public class SpectatorUI : MonoBehaviour
     {
         spectator.ToFixedPerspective();
         Settings.Instance.SetValue("spectatorIsFirstPerson", false);
+    }
+
+    private void ToggleRadioVisible(ChangeEvent<bool> evt){
+
+        // toggle radio visibility - if the radio isn't active, default to visible when it is activated.
+        if (toggleRadioVisible.value == true) {
+            radioMeshRenderer.enabled = true;
+        } else if (toggleRadioVisible.value == false) {
+            radioMeshRenderer.enabled = false;
+        }
+        Settings.Instance.SetValue("radioIsVisible", toggleRadioVisible.value);
     }
 
     private void ToggleRadioSound(ChangeEvent<bool> evt)
