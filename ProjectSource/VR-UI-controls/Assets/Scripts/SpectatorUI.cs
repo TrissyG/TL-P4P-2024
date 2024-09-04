@@ -59,6 +59,12 @@ public class SpectatorUI : MonoBehaviour
     
     private Button buttonLocationingMode;
     // private Button buttonFreeRoamMode;
+    private Button buttonSetRadioPosition1;
+    private Button buttonSetRadioPosition2;
+    private Button buttonSetRadioPosition3;
+    private Button buttonSetRadioPosition4;
+    private Button buttonSetRadioPosition5;
+
 
     private Button buttonExitApplication;
 
@@ -151,6 +157,11 @@ public class SpectatorUI : MonoBehaviour
 
         buttonLocationingMode = root.Q("buttonLocationingMode") as Button;
         // buttonFreeRoamMode = root.Q("buttonFreeRoamMode") as Button;
+        buttonSetRadioPosition1 = root.Q<Button>("buttonSetRadioPosition1");
+        buttonSetRadioPosition2 = root.Q<Button>("buttonSetRadioPosition2");
+        buttonSetRadioPosition3 = root.Q<Button>("buttonSetRadioPosition3");
+        buttonSetRadioPosition4 = root.Q<Button>("buttonSetRadioPosition4");
+        buttonSetRadioPosition5 = root.Q<Button>("buttonSetRadioPosition5");
 
         buttonExitApplication = root.Q("buttonExitApplication") as Button;
 
@@ -202,7 +213,11 @@ public class SpectatorUI : MonoBehaviour
 
         buttonLocationingMode.RegisterCallback<ClickEvent>(ActivateLocationingMode);
         // buttonFreeRoamMode.RegisterCallback<ClickEvent>(DeactivateLocationingMode);
-
+        buttonSetRadioPosition1.clicked += () => changeRadioLocation(4);
+        buttonSetRadioPosition2.clicked += () => changeRadioLocation(3);
+        buttonSetRadioPosition3.clicked += () => changeRadioLocation(2);
+        buttonSetRadioPosition4.clicked += () => changeRadioLocation(1);
+        buttonSetRadioPosition5.clicked += () => changeRadioLocation(0);
         buttonExitApplication.RegisterCallback<ClickEvent>(ExitApplication);
 
         // Get the mesh renderer of the radio, which allows us to toggle visibility without disabling the object.
@@ -1067,6 +1082,29 @@ public class SpectatorUI : MonoBehaviour
 
             
         }
+    }
+    // private void DeactivateLocationingMode(ClickEvent evt)
+    // {
+    //     if (locationingChair != null) {
+    //         locationingChair.SetActive(false);
+    //         // relocate fixed spectator camera to locationing position 
+    //         spectator.ToFixedPerspective();
+    //         Settings.Instance.SetValue("spectatorIsFirstPerson", false);
+    //         // relocate the radio to the middle flag
+    //         radioPolygon.GetComponent<Rigidbody>().useGravity = true;
+    //         radioPolygon.transform.position = locationingPositions[0];
+    //         radioPolygon.transform.LookAt(locationingChair.transform.position);
+    //         radio.transform.LookAt(locationingChair.transform.position);
+    //         // relocate the user to the chair
+    //     }
+    // }
+
+    private void changeRadioLocation(int locationIndex){
+        radioPolygon.transform.position = locationingPositions[locationIndex];
+        radio.transform.position = locationingPositions[locationIndex];
+        // rotate the radio to face the user's intended position
+        radioPolygon.transform.LookAt(locationingChair.transform.position);
+        radio.transform.LookAt(locationingChair.transform.position);
     }
 
     private void ChangeCameraToLocationing(){
