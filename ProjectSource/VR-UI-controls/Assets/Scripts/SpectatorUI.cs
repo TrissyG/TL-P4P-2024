@@ -1059,7 +1059,12 @@ public class SpectatorUI : MonoBehaviour
             // collect a 120 degree arc of 5 positions around the locationing chair with a 3m radius
             GenerateLocations();
             // relocate the radio to the middle flag
-            radio.transform.position = locationingPositions[2];
+            radioPolygon.GetComponent<Rigidbody>().useGravity = false;
+            radioPolygon.transform.position = locationingPositions[0];
+            radioPolygon.transform.LookAt(locationingChair.transform.position);
+            radio.transform.LookAt(locationingChair.transform.position);
+            // relocate the user to the chair
+
             
         }
     }
@@ -1070,16 +1075,16 @@ public class SpectatorUI : MonoBehaviour
     }
 
     private void GenerateLocations(){
-        // collect a 120 degree arc of 5 positions around the locationing chair with a 3m radius
-        float radius = 3.0f;
+        // collect a 150 degree arc of 5 positions around the locationing chair with a 3m radius
+        float radius = 5.0f;
         int numberOfLocations = 5;
         // angle between each position = 120 / (n - 1)
-        float angleStep = 120.0f / (numberOfLocations - 1); 
+        float angleStep = 150.0f / (numberOfLocations - 1); 
 
         locationingPositions = new Vector3[numberOfLocations];
 
         for (int i = 0; i < numberOfLocations; i++) {
-            float angle = -60.0f + (i * angleStep); // start from -60 degrees to 60 degrees
+            float angle = -165.0f + (i * angleStep);
             float radian = angle * Mathf.Deg2Rad;
             Vector3 locationingPosition = new Vector3(
                 locationingChair.transform.position.x + radius * Mathf.Cos(radian),

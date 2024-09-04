@@ -34,6 +34,8 @@ public class SpectatorCamera : MonoBehaviour
         // Get a reference to the VR camera
         VRCamera = GameObject.Find("Main Camera");
         Camera mainCamera = VRCamera.GetComponent<Camera>();
+        fixedPerspectivePosition = gameObject.transform.position;
+        fixedPerspectiveRotation = gameObject.transform.rotation;
         if (mainCamera != null)
         {
             mainCamera.depthTextureMode = DepthTextureMode.Depth;
