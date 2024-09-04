@@ -55,6 +55,9 @@ public class SpectatorUI : MonoBehaviour
     private Button buttonLoad;
     private Button buttonRestoreHeadlockedObject;
 
+    private Button buttonExitApplication;
+
+
     // audio source to control
     public GameObject radio;
     private AudioSource radioAudioSource;
@@ -133,6 +136,8 @@ public class SpectatorUI : MonoBehaviour
 
         buttonRestoreHeadlockedObject = root.Q("buttonRestoreHeadlockedObject") as Button;
 
+        buttonExitApplication = root.Q("buttonExitApplication") as Button;
+
         buttonSceneTutorial.RegisterCallback<ClickEvent>(ChangeSceneTutorial);
         buttonScene1.RegisterCallback<ClickEvent>(ChangeScene1);
         buttonScene2.RegisterCallback<ClickEvent>(ChangeScene2);
@@ -177,6 +182,8 @@ public class SpectatorUI : MonoBehaviour
         buttonLoad.RegisterCallback<ClickEvent>(LoadSettings);
 
         buttonRestoreHeadlockedObject.RegisterCallback<ClickEvent>(TryRestoreHeadlockedObject);
+
+        buttonExitApplication.RegisterCallback<ClickEvent>(ExitApplication);
 
         radioAudioSource = radio.GetComponent<AudioSource>();
         radioMixer = radioAudioSource.outputAudioMixerGroup.audioMixer;
@@ -993,6 +1000,11 @@ public class SpectatorUI : MonoBehaviour
                 headlock.TryRestoreLastHeadlock();
             }
         }
+    }
+
+    private void ExitApplication(ClickEvent evt)
+    {
+        Application.Quit();
     }
 
     private void Update()
