@@ -57,15 +57,16 @@ public class SpectatorUI : MonoBehaviour
     private Button buttonLoad;
     private Button buttonRestoreHeadlockedObject;
     
+    // Locationing mode buttons
     private Button buttonLocationingModeOn;
-    // private Button buttonFreeRoamMode;
+    private Button buttonLocationingModeOff;
     private Button buttonSetRadioPosition1;
     private Button buttonSetRadioPosition2;
     private Button buttonSetRadioPosition3;
     private Button buttonSetRadioPosition4;
     private Button buttonSetRadioPosition5;
 
-
+    // Exit application button
     private Button buttonExitApplication;
 
 
@@ -85,6 +86,7 @@ public class SpectatorUI : MonoBehaviour
 
     public GameObject flagPrefab;
 
+    public Transform RadioSpawnpoint;
     Vector3[] locationingPositions;
 
 
@@ -157,17 +159,7 @@ public class SpectatorUI : MonoBehaviour
         buttonRestoreHeadlockedObject = root.Q("buttonRestoreHeadlockedObject") as Button;
 
         buttonLocationingModeOn = root.Q("buttonLocationingModeOn") as Button;
-        // buttonFreeRoamMode = root.Q("buttonFreeRoamMode") as Button;
-        var image = root.Q<Image>("locationingPosition1Image");
-        // if (image == null)
-        // {
-        //     Debug.LogError("Image element not found");
-        // }
-        // else
-        // {
-        //     Debug.Log("Image element found: " + image.name);
-        //     Debug.Log("Image source: " + image.source);
-        // }
+        buttonLocationingModeOff = root.Q("buttonLocationingModeOff") as Button;
 
         buttonSetRadioPosition1 = root.Q<Button>("buttonSetRadioPosition1");
         buttonSetRadioPosition2 = root.Q<Button>("buttonSetRadioPosition2");
@@ -224,7 +216,8 @@ public class SpectatorUI : MonoBehaviour
         buttonRestoreHeadlockedObject.RegisterCallback<ClickEvent>(TryRestoreHeadlockedObject);
 
         buttonLocationingModeOn.RegisterCallback<ClickEvent>(ActivateLocationingMode);
-        // buttonFreeRoamMode.RegisterCallback<ClickEvent>(DeactivateLocationingMode);
+        buttonLocationingModeOff.RegisterCallback<ClickEvent>(DeactivateLocationingMode);
+
         buttonSetRadioPosition1.clicked += () => changeRadioLocation(4);
         buttonSetRadioPosition2.clicked += () => changeRadioLocation(3);
         buttonSetRadioPosition3.clicked += () => changeRadioLocation(2);
@@ -257,7 +250,9 @@ public class SpectatorUI : MonoBehaviour
 
         
         if (SceneManager.GetActiveScene().name == "BlankWorld") {
-        // Register locationing mode assets
+        // // Register locationing mode assets
+        // RadioSpawnpoint.position = new Vector3(0.51f, 0.766f, 1.744f);
+        // RadioSpawnpoint.rotation = Quaternion.Euler(0.0f, 212.06f, 0.0f);
         locationingChair = GameObject.Find("LocationingChair");
         if (locationingChair == null) {
             Debug.LogError("Failed to find the locationing chair!");
@@ -1092,25 +1087,25 @@ public class SpectatorUI : MonoBehaviour
             radio.transform.LookAt(locationingChair.transform.position);
             // relocate the user to the chair
             // TODO / Just get user to navigate and adjust fixed radio height to headset
-
-            
         }
     }
-    // private void DeactivateLocationingMode(ClickEvent evt)
-    // {
-    //     if (locationingChair != null) {
-    //         locationingChair.SetActive(false);
-    //         // relocate fixed spectator camera to locationing position 
-    //         spectator.ToFixedPerspective();
-    //         Settings.Instance.SetValue("spectatorIsFirstPerson", false);
-    //         // relocate the radio to the middle flag
-    //         radioPolygon.GetComponent<Rigidbody>().useGravity = true;
-    //         radioPolygon.transform.position = locationingPositions[0];
-    //         radioPolygon.transform.LookAt(locationingChair.transform.position);
-    //         radio.transform.LookAt(locationingChair.transform.position);
-    //         // TODO - relocate user??
-    //     }
-    // }
+
+    private void DeactivateLocationingMode(ClickEvent evt)
+    {   
+        
+        if (locationingChair != null) {
+            locationingChair.SetActive(false);
+            // relocate fixed spectator camera to locationing position 
+            spectator.ToFixedPerspective();
+            Settings.Instance.SetValue("spectatorIsFirstPerson", false);
+            
+            radioPolygon.GetComponent<Rigidbody>().useGravity = true;
+            // respawn the radio back to the spawnpoint
+            radioPolygon.transform.position = RadioSpawnpoint.position;
+            radioPolygon.transform.rotation = RadioSpawnpoint.rotation;
+            // TODO - relocate user??
+        }
+    }
 
     
     private void changeRadioLocation(int locationIndex){

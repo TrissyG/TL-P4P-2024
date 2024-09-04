@@ -18,6 +18,8 @@ public class SpectatorCamera : MonoBehaviour
     }
 
     private CameraState state = CameraState.fixedPerspective;
+    private Vector3 initialFixedPerspectivePosition;
+    private Quaternion initialFixedPerspectiveRotation;
     private Vector3 fixedPerspectivePosition;
     private Quaternion fixedPerspectiveRotation;
     private Vector3 locationingPerspectivePosition;
@@ -34,6 +36,10 @@ public class SpectatorCamera : MonoBehaviour
         // Get a reference to the VR camera
         VRCamera = GameObject.Find("Main Camera");
         Camera mainCamera = VRCamera.GetComponent<Camera>();
+
+        initialFixedPerspectivePosition = gameObject.transform.position;
+        initialFixedPerspectiveRotation = gameObject.transform.rotation;
+        // activate the fixed spectator perspective on start
         fixedPerspectivePosition = gameObject.transform.position;
         fixedPerspectiveRotation = gameObject.transform.rotation;
         if (mainCamera != null)
@@ -60,8 +66,9 @@ public class SpectatorCamera : MonoBehaviour
         state = CameraState.fixedPerspective;
 
         // Restore the camera to the fixed position/rotation
-        gameObject.transform.position = fixedPerspectivePosition;
-        gameObject.transform.rotation = fixedPerspectiveRotation;
+        // TODO - add a locationing mode check here
+        gameObject.transform.position = initialFixedPerspectivePosition;
+        gameObject.transform.rotation = initialFixedPerspectiveRotation;
     }
 
     public void ToLocationingPerspective()
