@@ -1079,6 +1079,7 @@ public class SpectatorUI : MonoBehaviour
             radioPolygon.transform.LookAt(locationingChair.transform.position);
             radio.transform.LookAt(locationingChair.transform.position);
             // relocate the user to the chair
+            // TODO / Just get user to navigate and adjust fixed radio height to headset
 
             
         }
@@ -1099,6 +1100,7 @@ public class SpectatorUI : MonoBehaviour
     //     }
     // }
 
+    
     private void changeRadioLocation(int locationIndex){
         radioPolygon.transform.position = locationingPositions[locationIndex];
         radio.transform.position = locationingPositions[locationIndex];
