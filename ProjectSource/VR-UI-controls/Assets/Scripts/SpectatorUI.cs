@@ -16,6 +16,7 @@ public class SpectatorUI : MonoBehaviour
     private Button buttonCameraFixed;
 
     private Toggle toggleRadioVisible;
+    private Toggle toggleAudioSourceVisible;
     private Toggle toggleRadioSound;
     private Slider sliderRadioVolume;
     private TextField fieldRadioVolume;
@@ -73,7 +74,9 @@ public class SpectatorUI : MonoBehaviour
     // audio source to control
     public GameObject radioPolygon; // the rendered radio object 'Radio'
     public GameObject radio; // the 'Audio Source' GameObject child of the rendered object
+    private MeshRenderer radioAudioSourceRenderer; // if we want to toggle visibility of the audio source
     private AudioSource radioAudioSource;
+    
     private AudioMixer radioMixer;
     private BandPassFilter bandPassFilter;
 
@@ -120,6 +123,7 @@ public class SpectatorUI : MonoBehaviour
         buttonCameraFirstPerson = root.Q("buttonCameraFirstPerson") as Button;
         buttonCameraFixed = root.Q("buttonCameraFixed") as Button;
         toggleRadioVisible = root.Q("toggleRadioVisible") as Toggle;
+        toggleAudioSourceVisible = root.Q("toggleAudioSourceVisible") as Toggle;
         toggleRadioSound = root.Q("toggleRadioSound") as Toggle;
         sliderRadioVolume = root.Q("sliderRadioVolume") as Slider;
         fieldRadioVolume = root.Q("fieldRadioVolume") as TextField;
@@ -176,6 +180,7 @@ public class SpectatorUI : MonoBehaviour
         buttonCameraFirstPerson.RegisterCallback<ClickEvent>(ChangeCameraFirstPerson);
         buttonCameraFixed.RegisterCallback<ClickEvent>(ChangeCameraToFixed);
         toggleRadioVisible.RegisterValueChangedCallback<bool>(ToggleRadioVisible);
+        toggleAudioSourceVisible.RegisterValueChangedCallback<bool>(ToggleAudioSourceVisible);
         toggleRadioSound.RegisterValueChangedCallback<bool>(ToggleRadioSound);
         sliderRadioVolume.RegisterValueChangedCallback<float>(ChangeRadioVolumeSlider);
         fieldRadioVolume.RegisterValueChangedCallback<string>(ChangeRadioVolumeField);
@@ -229,8 +234,9 @@ public class SpectatorUI : MonoBehaviour
         // meshrenderer of parent object, not the audio source "Radio" in this script
         radioPolygon = GameObject.Find("Radio");
         radioMeshRenderer = radioPolygon.GetComponent<MeshRenderer>();
-
+        
         radioAudioSource = radio.GetComponent<AudioSource>();
+        radioAudioSourceRenderer = radio.GetComponent<MeshRenderer>();
         radioMixer = radioAudioSource.outputAudioMixerGroup.audioMixer;
         bandPassFilter = radio.GetComponent<BandPassFilter>();
 
@@ -526,6 +532,17 @@ public class SpectatorUI : MonoBehaviour
             radioMeshRenderer.enabled = false;
         }
         Settings.Instance.SetValue("radioIsVisible", toggleRadioVisible.value);
+    }
+
+    private void ToggleAudioSourceVisible(ChangeEvent<bool> evt)
+    {   
+        // toggle audio source visibility - if the radio isn't active, default to visible when it is activated.
+        if (toggleAudioSourceVisible.value == true) {
+            radioAudioSourceRenderer.enabled = true;
+        } else if (toggleAudioSourceVisible.value == false) {
+            radioAudioSourceRenderer.enabled = false;
+        }
+        Settings.Instance.SetValue("audioSourceIsVisible", toggleAudioSourceVisible.value);
     }
 
     private void ToggleRadioSound(ChangeEvent<bool> evt)

@@ -13,6 +13,7 @@
             </ui:Foldout>
 
             <ui:Toggle label="Show Radio" name="toggleRadioVisible" value="true" style="align-items: center; justify-content: space-between;" />
+            <ui:Toggle label="Show Audio Source" name="toggleAudioSourceVisible" value="false" style="align-items: center; justify-content: space-between;" />
             <ui:Toggle label="Play Radio Sound" name="toggleRadioSound" value="false" style="align-items: center; justify-content: space-between;" />
             <ui:TextField picking-mode="Ignore" label="Volume" text="50%" name="fieldRadioVolume" is-delayed="true" max-length="4" style="align-items: center; justify-content: flex-start;" />
             <ui:Slider value="50" high-value="100" name="sliderRadioVolume" picking-mode="Ignore" style="padding-bottom: 10px; margin-top: 2px; margin-right: 10px; margin-left: 10px;" />
