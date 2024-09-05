@@ -70,6 +70,8 @@ public class SpectatorUI : MonoBehaviour
 
     private Slider sliderSoundOffsetRadius;
     private readonly int[] steps = { 0, 1, 2, 4, 8 };
+
+
     // Exit application button
     private Button buttonExitApplication;
 
