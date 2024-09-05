@@ -70,6 +70,26 @@ public class SpectatorUI : MonoBehaviour
 
     private Slider sliderSoundOffsetRadius;
     private readonly int[] steps = { 0, 1, 2, 4, 8 };
+    // Inclination buttons
+    private Button buttonYZ_0;
+    private Button buttonYZ_45;
+    private Button buttonYZ_90;
+    private Button buttonYZ_135;
+    private Button buttonYZ_180;
+    private Button buttonYZ_225;
+    private Button buttonYZ_270;
+    private Button buttonYZ_315;
+    // Azimuth buttons
+    private Button buttonXZ_0;
+    private Button buttonXZ_45;
+    private Button buttonXZ_90;
+    private Button buttonXZ_135;
+    private Button buttonXZ_180;
+    private Button buttonXZ_225;
+    private Button buttonXZ_270;
+    private Button buttonXZ_315;
+
+
 
 
     // Exit application button
@@ -179,6 +199,23 @@ public class SpectatorUI : MonoBehaviour
         buttonSetRadioPosition5 = root.Q<Button>("buttonSetRadioPosition5");
 
         sliderSoundOffsetRadius = root.Q<Slider>("sliderSoundOffsetRadius");
+        buttonYZ_0 = root.Q<Button>("buttonYZ_0");
+        buttonYZ_45 = root.Q<Button>("buttonYZ_45");
+        buttonYZ_90 = root.Q<Button>("buttonYZ_90");
+        buttonYZ_135 = root.Q<Button>("buttonYZ_135");
+        buttonYZ_180 = root.Q<Button>("buttonYZ_180");
+        buttonYZ_225 = root.Q<Button>("buttonYZ_225");
+        buttonYZ_270 = root.Q<Button>("buttonYZ_270");
+        buttonYZ_315 = root.Q<Button>("buttonYZ_315");
+        buttonXZ_0 = root.Q<Button>("buttonXZ_0");
+        buttonXZ_45 = root.Q<Button>("buttonXZ_45");
+        buttonXZ_90 = root.Q<Button>("buttonXZ_90");
+        buttonXZ_135 = root.Q<Button>("buttonXZ_135");
+        buttonXZ_180 = root.Q<Button>("buttonXZ_180");
+        buttonXZ_225 = root.Q<Button>("buttonXZ_225");
+        buttonXZ_270 = root.Q<Button>("buttonXZ_270");
+        buttonXZ_315 = root.Q<Button>("buttonXZ_315");
+
 
         buttonExitApplication = root.Q("buttonExitApplication") as Button;
 
@@ -237,6 +274,11 @@ public class SpectatorUI : MonoBehaviour
         buttonSetRadioPosition3.clicked += () => changeRadioLocation(2);
         buttonSetRadioPosition4.clicked += () => changeRadioLocation(1);
         buttonSetRadioPosition5.clicked += () => changeRadioLocation(0);
+
+        
+        // azimuth buttons
+        
+
         buttonExitApplication.RegisterCallback<ClickEvent>(ExitApplication);
 
         // Get the mesh renderer of the radio, which allows us to toggle visibility without disabling the object.
