@@ -67,6 +67,8 @@ public class SpectatorUI : MonoBehaviour
     private Button buttonSetRadioPosition4;
     private Button buttonSetRadioPosition5;
 
+    private Slider sliderSoundOffsetRadius;
+    private readonly int[] steps = { 0, 1, 2, 4, 8 };
     // Exit application button
     private Button buttonExitApplication;
 
@@ -171,6 +173,8 @@ public class SpectatorUI : MonoBehaviour
         buttonSetRadioPosition4 = root.Q<Button>("buttonSetRadioPosition4");
         buttonSetRadioPosition5 = root.Q<Button>("buttonSetRadioPosition5");
 
+        sliderSoundOffsetRadius = root.Q<Slider>("sliderSoundOffsetRadius");
+
         buttonExitApplication = root.Q("buttonExitApplication") as Button;
 
         buttonSceneTutorial.RegisterCallback<ClickEvent>(ChangeSceneTutorial);
@@ -232,8 +236,10 @@ public class SpectatorUI : MonoBehaviour
 
         // Get the mesh renderer of the radio, which allows us to toggle visibility without disabling the object.
         // meshrenderer of parent object, not the audio source "Radio" in this script
-        radioPolygon = GameObject.Find("Radio");
-        radioMeshRenderer = radioPolygon.GetComponent<MeshRenderer>();
+        if (SceneManager.GetActiveScene().name != "TutorialScene") { // Tutorial scene doesn't have a radio
+            radioPolygon = GameObject.Find("Radio");
+            radioMeshRenderer = radioPolygon.GetComponent<MeshRenderer>();
+        }
         
         radioAudioSource = radio.GetComponent<AudioSource>();
         radioAudioSourceRenderer = radio.GetComponent<MeshRenderer>();
@@ -242,6 +248,14 @@ public class SpectatorUI : MonoBehaviour
 
         if (chimes != null) {
             chimeMixer = chimes.GetComponent<ChimeConfiguration>().audioMixerGroup.audioMixer;
+        }
+
+        if (sliderSoundOffsetRadius != null)
+        {
+            sliderSoundOffsetRadius.RegisterValueChangedCallback(evt =>
+            {
+                sliderSoundOffsetRadius.value = GetNearestRadiusStep(evt.newValue);
+            });
         }
 
         // Force limits and init starting values
@@ -1157,6 +1171,24 @@ public class SpectatorUI : MonoBehaviour
             );
             locationingPositions[i] = locationingPosition;
         }
+    }
+
+    private float GetNearestRadiusStep(float value)
+    {
+        float nearestStep = steps[0];
+        float minDifference = Mathf.Abs(value - steps[0]);
+
+        foreach (var step in steps)
+        {
+            float difference = Mathf.Abs(value - step);
+            if (difference < minDifference)
+            {
+                minDifference = difference;
+                nearestStep = step;
+            }
+        }
+
+        return nearestStep;
     }
 
     private void ExitApplication(ClickEvent evt)
