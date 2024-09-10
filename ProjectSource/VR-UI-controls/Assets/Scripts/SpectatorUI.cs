@@ -70,6 +70,9 @@ public class SpectatorUI : MonoBehaviour
 
     private Slider sliderSoundOffsetRadius;
     private readonly int[] steps = { 0, 1, 2, 4, 8 };
+    private float radius = 0.0f;
+    private float azimuth = 0.0f;
+    private float inclination = 0.0f;
     // Inclination buttons
     private Button buttonYZ_0;
     private Button buttonYZ_45;
@@ -275,20 +278,53 @@ public class SpectatorUI : MonoBehaviour
         buttonSetRadioPosition4.clicked += () => changeRadioLocation(1);
         buttonSetRadioPosition5.clicked += () => changeRadioLocation(0);
 
-        
-        // azimuth buttons
-        
+        buttonYZ_0.clicked += () => SetInclination(0);
+        buttonYZ_45.clicked += () => SetInclination(45);
+        buttonYZ_90.clicked += () => SetInclination(90);
+        buttonYZ_135.clicked += () => SetInclination(135);
+        buttonYZ_180.clicked += () => SetInclination(180);
+        buttonYZ_225.clicked += () => SetInclination(225);
+        buttonYZ_270.clicked += () => SetInclination(270);
+        buttonYZ_315.clicked += () => SetInclination(315);
+
+        buttonXZ_0.clicked += () => SetAzimuth(0);
+        buttonXZ_45.clicked += () => SetAzimuth(45);
+        buttonXZ_90.clicked += () => SetAzimuth(90);
+        buttonXZ_135.clicked += () => SetAzimuth(135);
+        buttonXZ_180.clicked += () => SetAzimuth(180);
+        buttonXZ_225.clicked += () => SetAzimuth(225);
+        buttonXZ_270.clicked += () => SetAzimuth(270);
+        buttonXZ_315.clicked += () => SetAzimuth(315);
+
+
+        if (audioSourceManager == null)
+        {
+            Debug.LogWarning("AudioSourceManager not found in the scene.");
+            return;
+        }
+        SetSphericalCoordinates(radius, inclination, azimuth); // should be zero
 
         buttonExitApplication.RegisterCallback<ClickEvent>(ExitApplication);
 
         // Get the mesh renderer of the radio, which allows us to toggle visibility without disabling the object.
         // meshrenderer of parent object, not the audio source "Radio" in this script
         if (SceneManager.GetActiveScene().name != "TutorialScene") { // Tutorial scene doesn't have a radio
-            radioPolygon = GameObject.Find("Radio");
+            GameObject radioPolygon = GameObject.Find("Radio");
+            if (radioPolygon == null)
+            {
+                Debug.LogError("Radio GameObject not found.");
+                return;
+            }
             radioMeshRenderer = radioPolygon.GetComponent<MeshRenderer>();
+            
         }
         
         radioAudioSource = radio.GetComponent<AudioSource>();
+        if (radioAudioSource == null)
+        {
+            Debug.LogError("AudioSource component not found on the Audio Source GameObject.");
+            return;
+        }
         radioAudioSourceRenderer = radio.GetComponent<MeshRenderer>();
         radioMixer = radioAudioSource.outputAudioMixerGroup.audioMixer;
         bandPassFilter = radio.GetComponent<BandPassFilter>();
@@ -302,6 +338,7 @@ public class SpectatorUI : MonoBehaviour
             sliderSoundOffsetRadius.RegisterValueChangedCallback(evt =>
             {
                 sliderSoundOffsetRadius.value = GetNearestRadiusStep(evt.newValue);
+
             });
         }
 
@@ -1239,9 +1276,25 @@ public class SpectatorUI : MonoBehaviour
         return nearestStep;
     }
 
-    private void setSoundOffset(float radius, float inclination, float azimuth)
+
+    private void SetInclination(float newInclination)
     {
-        audioSourceManager.SetSphericalCoordinates(radius, inclination, azimuth);
+        inclination = newInclination;
+        SetSphericalCoordinates(radius, inclination, azimuth);
+    }
+
+    private void SetAzimuth(float newAzimuth)
+    {
+        azimuth = newAzimuth;
+        SetSphericalCoordinates(radius, inclination, azimuth);
+    }
+
+    public void SetSphericalCoordinates(float radius, float inclination, float azimuth)
+    {
+        if (audioSourceManager != null)
+        {
+            audioSourceManager.SetSphericalCoordinates(radius, inclination, azimuth);
+        }
     }
 
     private void ExitApplication(ClickEvent evt)
@@ -1266,50 +1319,45 @@ public class SpectatorUI : MonoBehaviour
 
 namespace AudioSourceManagement {
     public class AudioSourceManager : MonoBehaviour
-    {   
-        public GameObject radioPolygon; // the rendered radio object 'Radio', around which the sound object will be placed
-        public GameObject radio; // the 'Audio Source' GameObject child of the rendered object, to be offset
-        public AudioSource audioSource;
-        private Polar polarOffset; // (radius, inclination, azimuth) of the sound object relative to the radioPolygon
+{
+    public GameObject radioPolygon; // the rendered radio object 'Radio', around which the sound object will be placed
+    public GameObject radio; // the 'Audio Source' GameObject child of the rendered object, to be offset
+    public AudioSource audioSource;
+    private Polar polarOffset; // (radius, inclination, azimuth) of the sound object relative to the radioPolygon
 
-        private void Start()
-        {   
-            radioPolygon = GameObject.Find("Radio");
-            radio = radioPolygon.transform.Find("Audio Source").gameObject;
-            audioSource = radio.GetComponent<AudioSource>();
+    // Constructor to initialize the AudioSourceManager with required objects
+    public AudioSourceManager(GameObject radioPolygon, GameObject radio, AudioSource audioSource)
+    {
+        this.radioPolygon = radioPolygon;
+        this.radio = radio;
+        this.audioSource = audioSource;
+        polarOffset = new Polar(0f, 0f, 0f);  // Initialize with some default values
 
-            if (radio != null)
-            {
-                Debug.LogWarning("No GameObject found for radio");
-                return;
-            }
-            polarOffset = new Polar(0f, 0f, 0f);  // Initialize with some default values
-            
-            // Ensure soundObject and parentObject are set before updating position
-            if (radioPolygon != null && radio != null)
-            {
-                UpdateSoundObjectPosition();
-            }
-            else
-            {
-                Debug.LogWarning("soundObject or parentObject is not assigned.");
-            }
-        }
-
-        public void SetSphericalCoordinates(float radius, float inclination, float azimuth)
+        // Ensure soundObject and parentObject are set before updating position
+        if (this.radioPolygon != null && this.radio != null)
         {
-            polarOffset.radius = radius;
-            polarOffset.inclination = inclination;
-            polarOffset.azimuth = azimuth;
             UpdateSoundObjectPosition();
         }
-
-        private void UpdateSoundObjectPosition()
+        else
         {
-            Vector3 offset = polarOffset.ToCartesian();
-            radio.transform.position = radioPolygon.transform.position + offset;
+            Debug.LogWarning("soundObject or parentObject is not assigned.");
         }
     }
+
+    public void SetSphericalCoordinates(float radius, float inclination, float azimuth)
+    {
+        polarOffset.radius = radius;
+        polarOffset.inclination = inclination;
+        polarOffset.azimuth = azimuth;
+        UpdateSoundObjectPosition();
+    }
+
+    private void UpdateSoundObjectPosition()
+    {
+        Vector3 offset = polarOffset.ToCartesian();
+        radio.transform.position = radioPolygon.transform.position + offset;
+    }
+}
 
     
     public class Polar : MonoBehaviour
