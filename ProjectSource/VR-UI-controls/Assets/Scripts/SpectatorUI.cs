@@ -103,6 +103,7 @@ public class SpectatorUI : MonoBehaviour
     public GameObject radioPolygon; // the rendered radio object 'Radio'
     public GameObject radio; // the 'Audio Source' GameObject child of the rendered object
 
+    public GameObject audioSourceManagerPrefab;
     private AudioSourceManager audioSourceManager;
     private MeshRenderer radioAudioSourceRenderer; // if we want to toggle visibility of the audio source
     private AudioSource radioAudioSource;
@@ -116,8 +117,6 @@ public class SpectatorUI : MonoBehaviour
     private AudioMixer chimeMixer;
 
     public GameObject locationingChair;
-
-    public GameObject flagPrefab;
 
     public Transform RadioSpawnpoint;
     Vector3[] locationingPositions;
@@ -296,7 +295,8 @@ public class SpectatorUI : MonoBehaviour
         buttonXZ_270.clicked += () => SetAzimuth(270);
         buttonXZ_315.clicked += () => SetAzimuth(315);
 
-
+        // GameObject audioSourceManager = Instantiate(audioSourceManager, new Vector3(0, 0, 0), Quaternion.identity);
+        audioSourceManager = Instantiate(audioSourceManagerPrefab).GetComponent<AudioSourceManager>();
         if (audioSourceManager == null)
         {
             Debug.LogWarning("AudioSourceManager not found in the scene.");
@@ -309,7 +309,6 @@ public class SpectatorUI : MonoBehaviour
         // Get the mesh renderer of the radio, which allows us to toggle visibility without disabling the object.
         // meshrenderer of parent object, not the audio source "Radio" in this script
         if (SceneManager.GetActiveScene().name != "TutorialScene") { // Tutorial scene doesn't have a radio
-            GameObject radioPolygon = GameObject.Find("Radio");
             if (radioPolygon == null)
             {
                 Debug.LogError("Radio GameObject not found.");
@@ -338,7 +337,8 @@ public class SpectatorUI : MonoBehaviour
             sliderSoundOffsetRadius.RegisterValueChangedCallback(evt =>
             {
                 sliderSoundOffsetRadius.value = GetNearestRadiusStep(evt.newValue);
-
+                radius = steps[Convert.ToInt32(sliderSoundOffsetRadius.value)];
+                SetSphericalCoordinates(radius, inclination, azimuth);
             });
         }
 
@@ -1315,73 +1315,4 @@ public class SpectatorUI : MonoBehaviour
     }
 
 
-}
-
-namespace AudioSourceManagement {
-    public class AudioSourceManager : MonoBehaviour
-{
-    public GameObject radioPolygon; // the rendered radio object 'Radio', around which the sound object will be placed
-    public GameObject radio; // the 'Audio Source' GameObject child of the rendered object, to be offset
-    public AudioSource audioSource;
-    private Polar polarOffset; // (radius, inclination, azimuth) of the sound object relative to the radioPolygon
-
-    // Constructor to initialize the AudioSourceManager with required objects
-    public AudioSourceManager(GameObject radioPolygon, GameObject radio, AudioSource audioSource)
-    {
-        this.radioPolygon = radioPolygon;
-        this.radio = radio;
-        this.audioSource = audioSource;
-        polarOffset = new Polar(0f, 0f, 0f);  // Initialize with some default values
-
-        // Ensure soundObject and parentObject are set before updating position
-        if (this.radioPolygon != null && this.radio != null)
-        {
-            UpdateSoundObjectPosition();
-        }
-        else
-        {
-            Debug.LogWarning("soundObject or parentObject is not assigned.");
-        }
-    }
-
-    public void SetSphericalCoordinates(float radius, float inclination, float azimuth)
-    {
-        polarOffset.radius = radius;
-        polarOffset.inclination = inclination;
-        polarOffset.azimuth = azimuth;
-        UpdateSoundObjectPosition();
-    }
-
-    private void UpdateSoundObjectPosition()
-    {
-        Vector3 offset = polarOffset.ToCartesian();
-        radio.transform.position = radioPolygon.transform.position + offset;
-    }
-}
-
-    
-    public class Polar : MonoBehaviour
-    {
-        public float radius, inclination, azimuth;
-
-        public static Vector3 ToCartesian(float radius, float inclination, float azimuth)
-        {
-            float x = radius * Mathf.Sin(inclination * Mathf.Deg2Rad) * Mathf.Cos(azimuth * Mathf.Deg2Rad);
-            float y = radius * Mathf.Cos(inclination * Mathf.Deg2Rad);
-            float z = radius * Mathf.Sin(inclination * Mathf.Deg2Rad) * Mathf.Sin(azimuth * Mathf.Deg2Rad);
-            return new Vector3(x, y, z);
-        }
-
-        public Polar(float radius, float inclination, float azimuth)
-        {
-            this.radius = radius;
-            this.inclination = inclination;
-            this.azimuth = azimuth;
-        }
-
-        public Vector3 ToCartesian()
-        {
-            return Polar.ToCartesian(radius, inclination, azimuth);
-        }
-    }
 }
