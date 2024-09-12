@@ -87,71 +87,71 @@
             </ui:VisualElement>
                 <ui:Foldout text="Sound Offsets" value="false" style="margin-top: 10px; margin-bottom: 5px;">
                 <ui:Label text="Radius(m)" style="margin-top: 10px; margin-bottom: 5px; unity-text-align: center;"/>
-                <ui:Slider text="Radius" value="0" high-value="10" name="sliderSoundOffsetRadius" style="padding-bottom: 2px; margin-top: 2px; margin-right: 10px; margin-left: 10px;" />
+                <ui:Slider text="Radius" value="0" high-value="4" name="sliderSoundOffsetRadius" style="padding-bottom: 2px; margin-top: 2px; margin-right: 10px; margin-left: 10px;" />
                     <ui:VisualElement style="flex-direction: row; margin-top: -10px;">
                         <ui:Label text="0" />
                         <ui:Label text="1" style="margin-left: 5%;" />
                         <ui:Label text="2" style="margin-left: 5%;" />
-                        <ui:Label text="4" style="margin-left: 10%;" />
-                        <ui:Label text="8" style="margin-left: 20%;" />
+                        <ui:Label text="3" style="margin-left: 10%;" />
+                        <ui:Label text="4" style="margin-left: 20%;" />
                     </ui:VisualElement>
                     <ui:Label text="YZ-Rotation (Perpendicular)" style="margin-top: 10px; margin-bottom: 5px; unity-text-align: center;"/>
                     <ui:ScrollView name="scroll-view-YZ-Offset" style="width: 100%; height: 300px;"> 
                     <ui:VisualElement style="display: flex; flex-direction: row; flex-wrap: wrap; grid-gap: 5px;">
-                        <ui:Button name="buttonYZ_135" style="width: 50px; height: 50px; padding: 0;">
-                            <ui:Image style="--unity-image: url(../Images/arrow135.png); width: 100%; height: 100%;" name="inclination_135"/>
-                        </ui:Button>
-                        <ui:Button name="buttonYZ_90" style="width: 50px; height: 50px; padding: 0;">
-                            <ui:Image style="--unity-image: url(../Images/arrow90.png); width: 100%; height: 100%;" name="inclination_90"/>
-                        </ui:Button>
                         <ui:Button name="buttonYZ_45" style="width: 50px; height: 50px; padding: 0;">
                             <ui:Image style="--unity-image: url(../Images/arrow45.png); width: 100%; height: 100%;" name="inclination_45"/>
                         </ui:Button>
-                        <ui:Button name="buttonYZ_180" style="width: 50px; height: 50px; padding: 0;">
-                            <ui:Image style="--unity-image: url(../Images/arrow180.png); width: 100%; height: 100%;" name="inclination_180"/>
-                        </ui:Button>
-                        <ui:Button name="buttonYZ_null" style="width: 50px; height: 50px; padding: 0;"/>
                         <ui:Button name="buttonYZ_0" style="width: 50px; height: 50px; padding: 0;">
                             <ui:Image style="--unity-image: url(../Images/arrow0.png); width: 100%; height: 100%;" name="inclination_0"/>
-                        </ui:Button>
-                        <ui:Button name="buttonYZ_225" style="width: 50px; height: 50px; padding: 0;">
-                            <ui:Image style="--unity-image: url(../Images/arrow225.png); width: 100%; height: 100%;" name="inclination_225"/>
-                        </ui:Button>
-                        <ui:Button name="buttonYZ_270" style="width: 50px; height: 50px; padding: 0;">
-                            <ui:Image style="--unity-image: url(../Images/arrow270.png); width: 100%; height: 100%;" name="inclination_270"/>
                         </ui:Button>
                         <ui:Button name="buttonYZ_315" style="width: 50px; height: 50px; padding: 0;">
                             <ui:Image style="--unity-image: url(../Images/arrow315.png); width: 100%; height: 100%;" name="inclination_315"/>
                         </ui:Button>
-                    </ui:VisualElement>
+                        <ui:Button name="buttonYZ_90" style="width: 50px; height: 50px; padding: 0;">
+                            <ui:Image style="--unity-image: url(../Images/arrow90.png); width: 100%; height: 100%;" name="inclination_90"/>
+                        </ui:Button>
+                        <ui:Button name="buttonYZ_null" style="width: 50px; height: 50px; padding: 0;"/>
+                        <ui:Button name="buttonYZ_270" style="width: 50px; height: 50px; padding: 0;">
+                            <ui:Image style="--unity-image: url(../Images/arrow270.png); width: 100%; height: 100%;" name="inclination_270"/>
+                        </ui:Button>
+                        <ui:Button name="buttonYZ_135" style="width: 50px; height: 50px; padding: 0;">
+                            <ui:Image style="--unity-image: url(../Images/arrow135.png); width: 100%; height: 100%;" name="inclination_135"/>
+                        </ui:Button>
+                        <ui:Button name="buttonYZ_180" style="width: 50px; height: 50px; padding: 0;">
+                            <ui:Image style="--unity-image: url(../Images/arrow180.png); width: 100%; height: 100%;" name="inclination_180"/>
+                        </ui:Button>
+                        <ui:Button name="buttonYZ_225" style="width: 50px; height: 50px; padding: 0;">
+                            <ui:Image style="--unity-image: url(../Images/arrow225.png); width: 100%; height: 100%;" name="inclination_225"/>
+                        </ui:Button>
+                        </ui:VisualElement>
                 </ui:ScrollView>
                     <ui:Label text= "XZ-Rotation (Top-Down)" style="margin-top: 10px; margin-bottom: 5px; unity-text-align: center;"/>
                     <ui:ScrollView name="scroll-view-XZ-offset" style="width: 100%; height: 300px;"> 
                     <ui:VisualElement style="display: flex; flex-direction: row; flex-wrap: wrap; grid-gap: 5px;">
-                        <ui:Button name="buttonXZ_135" style="width: 50px; height: 50px; padding: 0;">
-                            <ui:Image style="--unity-image: url(../Images/arrow135.png); width: 100%; height: 100%;" name="azimuth_135"/>
+                        <ui:Button name="buttonXZ_45" style="width: 50px; height: 50px; padding: 0;">
+                            <ui:Image style="--unity-image: url(../Images/arrow45.png); width: 100%; height: 100%;" name="azimuth_45"/>
+                        </ui:Button>
+                        <ui:Button name="buttonXZ_0" style="width: 50px; height: 50px; padding: 0;">
+                            <ui:Image style="--unity-image: url(../Images/arrow0.png); width: 100%; height: 100%;" name="azimuth_0"/>
+                        </ui:Button>
+                        <ui:Button name="buttonXZ_315" style="width: 50px; height: 50px; padding: 0;">
+                            <ui:Image style="--unity-image: url(../Images/arrow315.png); width: 100%; height: 100%;" name="azimuth_315"/>
                         </ui:Button>
                         <ui:Button name="buttonXZ_90" style="width: 50px; height: 50px; padding: 0;">
                             <ui:Image style="--unity-image: url(../Images/arrow90.png); width: 100%; height: 100%;" name="azimuth_90"/>
                         </ui:Button>
-                        <ui:Button name="buttonXZ_45" style="width: 50px; height: 50px; padding: 0;">
-                            <ui:Image style="--unity-image: url(../Images/arrow45.png); width: 100%; height: 100%;" name="azimuth_45"/>
+                        <ui:Button name="buttonXZ_null" style="width: 50px; height: 50px; padding: 0;"/>
+                        <ui:Button name="buttonXZ_270" style="width: 50px; height: 50px; padding: 0;">
+                            <ui:Image style="--unity-image: url(../Images/arrow270.png); width: 100%; height: 100%;" name="azimuth_270"/>
+                        </ui:Button>
+                        <ui:Button name="buttonXZ_135" style="width: 50px; height: 50px; padding: 0;">
+                            <ui:Image style="--unity-image: url(../Images/arrow135.png); width: 100%; height: 100%;" name="azimuth_135"/>
                         </ui:Button>
                         <ui:Button name="buttonXZ_180" style="width: 50px; height: 50px; padding: 0;">
                             <ui:Image style="--unity-image: url(../Images/arrow180.png); width: 100%; height: 100%;" name="azimuth_180"/>
                         </ui:Button>
-                        <ui:Button name="buttonXZ_null" style="width: 50px; height: 50px; padding: 0;"/>
-                        <ui:Button name="buttonXZ_0" style="width: 50px; height: 50px; padding: 0;">
-                            <ui:Image style="--unity-image: url(../Images/arrow0.png); width: 100%; height: 100%;" name="azimuth_0"/>
-                        </ui:Button>
                         <ui:Button name="buttonXZ_225" style="width: 50px; height: 50px; padding: 0;">
                             <ui:Image style="--unity-image: url(../Images/arrow225.png); width: 100%; height: 100%;" name="azimuth_225"/>
-                        </ui:Button>
-                        <ui:Button name="buttonXZ_270" style="width: 50px; height: 50px; padding: 0;">
-                            <ui:Image style="--unity-image: url(../Images/arrow270.png); width: 100%; height: 100%;" name="azimuth_270"/>
-                        </ui:Button>
-                        <ui:Button name="buttonXZ_315" style="width: 50px; height: 50px; padding: 0;">
-                            <ui:Image style="--unity-image: url(../Images/arrow315.png); width: 100%; height: 100%;" name="azimuth_315"/>
                         </ui:Button>
                     </ui:VisualElement>
                 </ui:ScrollView>

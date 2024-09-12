@@ -69,7 +69,7 @@ public class SpectatorUI : MonoBehaviour
     private Button buttonSetRadioPosition5;
 
     private Slider sliderSoundOffsetRadius;
-    private readonly int[] steps = { 0, 1, 2, 4, 8 };
+    private readonly int[] steps = { 0, 1, 2, 3, 4 };
     private float radius = 0.0f;
     private float azimuth = 0.0f;
     private float inclination = 0.0f;
@@ -201,6 +201,7 @@ public class SpectatorUI : MonoBehaviour
         buttonSetRadioPosition5 = root.Q<Button>("buttonSetRadioPosition5");
 
         sliderSoundOffsetRadius = root.Q<Slider>("sliderSoundOffsetRadius");
+        // YZ rotation buttons (inclination - perpendicular to upright radio)
         buttonYZ_0 = root.Q<Button>("buttonYZ_0");
         buttonYZ_45 = root.Q<Button>("buttonYZ_45");
         buttonYZ_90 = root.Q<Button>("buttonYZ_90");
@@ -209,6 +210,7 @@ public class SpectatorUI : MonoBehaviour
         buttonYZ_225 = root.Q<Button>("buttonYZ_225");
         buttonYZ_270 = root.Q<Button>("buttonYZ_270");
         buttonYZ_315 = root.Q<Button>("buttonYZ_315");
+        // XZ rotation buttons (azimuth - parallel to upright radio)
         buttonXZ_0 = root.Q<Button>("buttonXZ_0");
         buttonXZ_45 = root.Q<Button>("buttonXZ_45");
         buttonXZ_90 = root.Q<Button>("buttonXZ_90");
@@ -1197,9 +1199,7 @@ public class SpectatorUI : MonoBehaviour
             GenerateLocations();
             // relocate the radio to the middle flag
             radioPolygon.GetComponent<Rigidbody>().useGravity = false;
-            radioPolygon.transform.position = locationingPositions[2];
-            radioPolygon.transform.LookAt(locationingChair.transform.position);
-            radio.transform.LookAt(locationingChair.transform.position);
+            changeRadioLocation(2);
             // relocate the user to the chair
             // TODO / Just get user to navigate and adjust fixed radio height to headset
         }
@@ -1229,6 +1229,9 @@ public class SpectatorUI : MonoBehaviour
         // rotate the radio to face the user's intended position
         radioPolygon.transform.LookAt(locationingChair.transform.position);
         radio.transform.LookAt(locationingChair.transform.position);
+        // set the x rotation to 0
+        radioPolygon.transform.rotation = Quaternion.Euler(0, radioPolygon.transform.rotation.eulerAngles.y, radioPolygon.transform.rotation.eulerAngles.z);
+        radio.transform.rotation = Quaternion.Euler(0, radio.transform.rotation.eulerAngles.y, radio.transform.rotation.eulerAngles.z);
     }
 
     private void ChangeCameraToLocationing(){
