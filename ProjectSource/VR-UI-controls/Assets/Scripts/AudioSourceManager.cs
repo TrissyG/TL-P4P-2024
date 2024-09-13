@@ -43,7 +43,7 @@ namespace AudioSourceManagement {
                 Debug.LogWarning("radioPolygon or radio is not assigned.");
                 return;
             }
-            Debug.Log("Setting " + polarOffset + " spherical coordinates to: " + radius + ", " + inclination + ", " + azimuth);
+            // Debug.Log("Setting " + polarOffset + " spherical coordinates to: " + radius + ", " + inclination + ", " + azimuth);
             this.polarOffset.radius = radius;
             this.polarOffset.inclination = inclination;
             this.polarOffset.azimuth = azimuth;
@@ -59,7 +59,8 @@ namespace AudioSourceManagement {
             }
 
             Vector3 offset = polarOffset.ToCartesian();
-            radio.transform.position = radioPolygon.transform.position + offset;
+            Vector3 rotatedOffset = radioPolygon.transform.TransformDirection(offset);
+            radio.transform.position = radioPolygon.transform.position + rotatedOffset;
         }
     }
 
