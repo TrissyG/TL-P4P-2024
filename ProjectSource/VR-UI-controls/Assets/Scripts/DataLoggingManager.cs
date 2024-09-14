@@ -205,4 +205,8 @@ public class DataLoggingManager : MonoBehaviour
         grabbedRatingTablet = false;
         writeEventToFile("grabExited", ObjectName.RatingTablet);
     }
+    // // locationing mode - when the user aims and clicks the x button, record the distance between the radio and 
+    // public void {
+
+    // }
 }

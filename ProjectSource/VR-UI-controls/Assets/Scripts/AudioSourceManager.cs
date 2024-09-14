@@ -64,7 +64,7 @@ namespace AudioSourceManagement {
         }
     }
 
-    public class Polar : MonoBehaviour
+    public class Polar
     {
         public float radius, inclination, azimuth;
 
