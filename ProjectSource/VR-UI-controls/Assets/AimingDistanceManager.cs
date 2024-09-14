@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AimingDistanceManager : MonoBehaviour
 {
-private OVRPointerVisualizer pointerVisualizer;
+    public GameObject rightHandController;
+    public GameObject leftHandController;
     public GameObject targetObject;
 
     void Start()
@@ -30,18 +31,18 @@ private OVRPointerVisualizer pointerVisualizer;
         // }
     }
 
-    private void MeasureDistanceToTarget()
-    {
-        Ray ray = new Ray(pointerVisualizer.rayTransform.position, pointerVisualizer.rayTransform.forward);
-        Vector3 closestPoint = GetClosestPointOnRay(ray, targetObject.transform.position);
-        float distance = Vector3.Distance(closestPoint, targetObject.transform.position);
-        Debug.Log("Distance to target object: " + distance);
-    }
+    // private void MeasureDistanceToTarget()
+    // {
+    //     Ray ray = new Ray(pointerVisualizer.rayTransform.position, pointerVisualizer.rayTransform.forward);
+    //     Vector3 closestPoint = GetClosestPointOnRay(ray, targetObject.transform.position);
+    //     float distance = Vector3.Distance(closestPoint, targetObject.transform.position);
+    //     Debug.Log("Distance to target object: " + distance);
+    // }
 
-    private Vector3 GetClosestPointOnRay(Ray ray, Vector3 point)
-    {
-        Vector3 rayToPoint = point - ray.origin;
-        float projectionLength = Vector3.Dot(rayToPoint, ray.direction);
-        return ray.origin + ray.direction * projectionLength;
-    }
+    // private Vector3 GetClosestPointOnRay(Ray ray, Vector3 point)
+    // {
+    //     Vector3 rayToPoint = point - ray.origin;
+    //     float projectionLength = Vector3.Dot(rayToPoint, ray.direction);
+    //     return ray.origin + ray.direction * projectionLength;
+    // }
 }
