@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Oculus.Interaction.Surfaces;
 using UnityEngine;
 
 public class AimingDistanceManager : MonoBehaviour
@@ -7,42 +8,68 @@ public class AimingDistanceManager : MonoBehaviour
     public GameObject rightHandController;
     public GameObject leftHandController;
     public GameObject targetObject;
+    public PointablePlane pointablePlane;
+    public UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor rightHandRayInteractor;
+
 
     void Start()
     {
-        // // Get the OVRPointerVisualizer component
-        // pointerVisualizer = GetComponent<OVRPointerVisualizer>();
-        // Debug.Log("Pointer Visualizer: " + pointerVisualizer);
-        // if (pointerVisualizer == null)
-        // {
-        //     Debug.LogError("OVRPointerVisualizer component not found on this GameObject.");
-        // }
+        // Get the PointablePlane component from the target object
+        if (targetObject != null)
+        {
+            pointablePlane = targetObject.GetComponent<PointablePlane>();
+            if (pointablePlane == null)
+            {
+                Debug.LogError("PointablePlane component not found on the target object.");
+            }
+            Debug.Log("PointablePlane component found on the target object.");
+        }
+
+        // Find the right-hand controller's XRRayInteractor
+        rightHandRayInteractor = FindObjectOfType<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>();
+        if (rightHandRayInteractor == null)
+        {
+            Debug.LogError("XRRayInteractor component not found for the right-hand controller.");
+        }
+        Debug.Log("XRRayInteractor component found for the right-hand controller.");
+        // show which parent object the ray interactor is attached to
+        Debug.Log("Right hand ray interactor parent object: " + rightHandRayInteractor.transform.parent.gameObject.name);
+        // show which object the ray interactor is attached to
+        Debug.Log("Right hand ray interactor object: " + rightHandRayInteractor.gameObject.name);
+        
     }
 
     void Update()
     {
-        // if (pointerVisualizer != null && targetObject != null)
-        // {
-        //     // Check if the A button is pressed
-        //     if (OVRInput.GetDown(OVRInput.Button.One))
-        //     {
-        //         MeasureDistanceToTarget();
-        //     }
-        // }
+        if (rightHandRayInteractor != null && targetObject != null && pointablePlane != null)
+        {   
+            // Check if the A button is pressed on the right-handed controller
+            if (OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch))
+            {
+                MeasureDistanceToTarget();
+            }
+        }
     }
 
-    // private void MeasureDistanceToTarget()
-    // {
-    //     Ray ray = new Ray(pointerVisualizer.rayTransform.position, pointerVisualizer.rayTransform.forward);
-    //     Vector3 closestPoint = GetClosestPointOnRay(ray, targetObject.transform.position);
-    //     float distance = Vector3.Distance(closestPoint, targetObject.transform.position);
-    //     Debug.Log("Distance to target object: " + distance);
-    // }
-
-    // private Vector3 GetClosestPointOnRay(Ray ray, Vector3 point)
-    // {
-    //     Vector3 rayToPoint = point - ray.origin;
-    //     float projectionLength = Vector3.Dot(rayToPoint, ray.direction);
-    //     return ray.origin + ray.direction * projectionLength;
-    // }
+    private void MeasureDistanceToTarget()
+    {
+        Ray ray;
+        if (rightHandRayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
+        {
+            ray = new Ray(hit.point, hit.normal);
+            if (pointablePlane.Raycast(ray, out SurfaceHit surfaceHit, Mathf.Infinity))
+            {
+                float distance = Vector3.Distance(surfaceHit.Point, targetObject.transform.position);
+                Debug.Log("Distance to target object: " + distance);
+            }
+            else
+            {
+                Debug.Log("Raycast did not hit the PointablePlane.");
+            }
+        }
+        else
+        {
+            Debug.Log("Raycast did not hit any object.");
+        }
+    }
 }
