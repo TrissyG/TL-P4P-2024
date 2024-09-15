@@ -16664,8 +16664,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 891017767}
-  m_LocalRotation: {x: -0, y: -0.5040181, z: -0, w: 0.86369306}
-  m_LocalPosition: {x: -8.79, y: 1.383, z: -8.78}
+  m_LocalRotation: {x: 0, y: -0.9269221, z: 0, w: 0.3752538}
+  m_LocalPosition: {x: -24.4, y: 1.383, z: -8.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16674,7 +16674,7 @@ Transform:
   - {fileID: 544277873}
   m_Father: {fileID: 0}
   m_RootOrder: 33
-  m_LocalEulerAnglesHint: {x: 0, y: -60.532, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -135.92, z: 0}
 --- !u!4 &892243341 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 442488, guid: ec78ebca7517fb745a45a931cb06d2bd, type: 3}
@@ -17435,8 +17435,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 954944516}
-  m_LocalRotation: {x: -0, y: -0.5040181, z: -0, w: 0.86369306}
-  m_LocalPosition: {x: -9.8, y: 1.383, z: -18.84}
+  m_LocalRotation: {x: -0, y: -0.9270859, z: 0, w: -0.37484917}
+  m_LocalPosition: {x: -13.1, y: 1.383, z: -18.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17445,7 +17445,7 @@ Transform:
   - {fileID: 362415365}
   m_Father: {fileID: 0}
   m_RootOrder: 34
-  m_LocalEulerAnglesHint: {x: 0, y: -60.532, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -224.03, z: 0}
 --- !u!1 &958086046
 GameObject:
   m_ObjectHideFlags: 0
@@ -17799,7 +17799,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Look up at the tree
+  m_text: What can you see in the trees?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -24397,7 +24397,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Listen to the sounds around you
+  m_text: What sounds can you hear around you?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -25052,7 +25052,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284508640}
   m_LocalRotation: {x: -0, y: -0.5040181, z: -0, w: 0.86369306}
-  m_LocalPosition: {x: -42.2, y: 1.383, z: 0}
+  m_LocalPosition: {x: -3.85, y: 1.383, z: 14.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -29653,8 +29653,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662560574}
-  m_LocalRotation: {x: -0, y: -0.5040181, z: -0, w: 0.86369306}
-  m_LocalPosition: {x: 0, y: 1.383, z: 25.14}
+  m_LocalRotation: {x: 0, y: 0.80437565, z: 0, w: 0.5941211}
+  m_LocalPosition: {x: 19.9, y: 1.383, z: -20.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -29663,7 +29663,7 @@ Transform:
   - {fileID: 527179797}
   m_Father: {fileID: 0}
   m_RootOrder: 32
-  m_LocalEulerAnglesHint: {x: 0, y: -60.532, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 107.1, z: 0}
 --- !u!4 &1664622914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 429508, guid: 9c74caa742791864f9c678287121e6c9, type: 3}
