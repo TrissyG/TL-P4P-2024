@@ -10,17 +10,17 @@ public class AimingDistanceManager : MonoBehaviour
     public GameObject rightHandController;
     public GameObject leftHandController;
     public GameObject targetObject;
-    public PointablePlane pointablePlane;
+    // public PointablePlane pointablePlane;
     public UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor rightHandRayInteractor;
     // public GameObject inputActionManager;
     private InputData _inputData;
 
-    // Cooldown duration in seconds
+    // Cooldown duration in seconds for the MeasureDistanceToTarget method
     public float cooldownDuration = 2.0f;
     // Time when MeasureDistanceToTarget was last called
     private float lastCallTime = 0.0f;
 
-
+    // Plane properties for debugging
     private Vector3 planeNormal;
     private Vector3 planePoint;
 
@@ -28,17 +28,6 @@ public class AimingDistanceManager : MonoBehaviour
 
     void Start()
     {
-        // Get the PointablePlane component from the target object
-        if (targetObject != null)
-        {
-            pointablePlane = targetObject.GetComponent<PointablePlane>();
-            if (pointablePlane == null)
-            {
-                Debug.LogError("PointablePlane component not found on the target object.");
-            }
-
-        }
-
         // Find the right-hand controller's XRRayInteractor
         rightHandRayInteractor = FindObjectOfType<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>();
         if (rightHandRayInteractor == null)
@@ -56,7 +45,7 @@ public class AimingDistanceManager : MonoBehaviour
 
     void Update()
     {
-        if (rightHandRayInteractor != null && targetObject != null && pointablePlane != null)
+        if (rightHandRayInteractor != null && targetObject != null)
         {
             if (_inputData._rightController.TryGetFeatureValue(CommonUsages.primaryButton, out bool primaryButtonValue) && primaryButtonValue)
             {
@@ -74,25 +63,6 @@ public class AimingDistanceManager : MonoBehaviour
 
     private void MeasureDistanceToTarget()
     {
-        // Ray ray;
-        // if (rightHandRayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
-        // {
-        //     ray = new Ray(hit.point, hit.normal);
-        //     if (pointablePlane.Raycast(ray, out SurfaceHit surfaceHit, Mathf.Infinity))
-        //     {
-        //         float distance = Vector3.Distance(surfaceHit.Point, targetObject.transform.position);
-        //         Debug.Log("Distance to target object: " + distance);
-        //     }
-        //     else
-        //     {
-        //         Debug.Log("Raycast did not hit the PointablePlane.");
-        //     }
-        // }
-        // else
-        // {
-        //     Debug.Log("Raycast did not hit any object.");
-        // }
-
         // Create a ray from the controller or camera's position and forward direction
         Ray ray = new Ray(rightHandController.transform.position, rightHandController.transform.forward);
 

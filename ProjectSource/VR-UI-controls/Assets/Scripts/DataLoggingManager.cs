@@ -15,14 +15,30 @@ public class DataLoggingManager : MonoBehaviour
     private string ratingTabletPath;
     private string cameraPath;
     private string radioPath;
+
+    private string locationingPath;
+
     private bool grabbedRatingTablet;
     private bool grabbedRadio;
     private bool headlocked;
+    // LocationingMode data captured
+    private bool activatedLocationingMode;
+    private bool pressedLocationingButton;
+    private int RadioPositionIndex;
+    private bool RadioVisible;
+    private bool AudioSourceVisible;
+    private float offsetRadius;
+    private float offsetAzimuth;
+    private float offsetInclination;
+    private float distanceFromAudioSource;
+
 
     private enum ObjectName
     {
         Radio,
         RatingTablet,
+        RightHandController,
+
     }
 
     // Start is called before the first frame update
@@ -30,7 +46,7 @@ public class DataLoggingManager : MonoBehaviour
     {
         radio = GameObject.Find("Radio");
         camera = Camera.main.transform;
-        
+
         initiateCsvFile();
 
         // calls logPositions every half second
@@ -102,7 +118,8 @@ public class DataLoggingManager : MonoBehaviour
         if (objectName == ObjectName.Radio)
         {
             position = camera.InverseTransformPoint(radio.transform.position);
-        } else if (objectName == ObjectName.RatingTablet)
+        }
+        else if (objectName == ObjectName.RatingTablet)
         {
             position = camera.InverseTransformPoint(ratingTablet.transform.position);
         }
@@ -133,6 +150,7 @@ public class DataLoggingManager : MonoBehaviour
         ratingTabletPath = Path.Combine(LOGGING_DIRECTORY, "rating-tablet-" + ExperimentData.ExperimentStartTime + ".csv");
         radioPath = Path.Combine(LOGGING_DIRECTORY, "radio-" + ExperimentData.ExperimentStartTime + ".csv");
         cameraPath = Path.Combine(LOGGING_DIRECTORY, "camera-" + ExperimentData.ExperimentStartTime + ".csv");
+        locationingPath = Path.Combine(LOGGING_DIRECTORY, "locationing-" + ExperimentData.ExperimentStartTime + ".csv");
 
         if (!ExperimentData.loggingFileHeader)
         {
@@ -171,6 +189,15 @@ public class DataLoggingManager : MonoBehaviour
                 cameraWriter.Flush();
                 cameraWriter.Close();
             }
+
+            using (StreamWriter locationingWriter = new StreamWriter(locationingPath, true))
+            {
+                string lineToWrite = "Scenario,activatedLocationingMode,PressedLocationingButton,RadioPositionIndex,RadioVisible,AudioSourceVisible,offsetRadius,offsetAzimuth,offsetInclination,distanceFromAudioSource,positionX,positionY,positionZ,rotationX,rotationY,rotationZ,rotationW,Time";
+
+                locationingWriter.WriteLine(lineToWrite);
+                locationingWriter.Flush();
+                locationingWriter.Close();
+            }
             ExperimentData.loggingFileHeader = true;
         }
 
@@ -206,7 +233,22 @@ public class DataLoggingManager : MonoBehaviour
         writeEventToFile("grabExited", ObjectName.RatingTablet);
     }
     // // locationing mode - when the user aims and clicks the x button, record the distance between the radio and 
-    // public void {
+    public void pressLocationingButton()
+    {
+        pressedLocationingButton = true;
 
-    // }
+    }
+
+    public void releaseLocationingButton()
+    {
+        pressedLocationingButton = false;
+    }
+
+    public void activateLocationingMode()
+    {
+        activatedLocationingMode = !activatedLocationingMode;
+        writeEventToFile("activateLocationingMode", ObjectName.RightHandController);
+    }
+
+
 }
