@@ -58,7 +58,7 @@ public class SpectatorUI : MonoBehaviour
     private Button buttonSave;
     private Button buttonLoad;
     private Button buttonRestoreHeadlockedObject;
-    
+
     // Locationing mode buttons
     private Button buttonLocationingModeOn;
     private Button buttonLocationingModeOff;
@@ -107,18 +107,19 @@ public class SpectatorUI : MonoBehaviour
     private AudioSourceManager audioSourceManager;
     private MeshRenderer radioAudioSourceRenderer; // if we want to toggle visibility of the audio source
     private AudioSource radioAudioSource;
-    
+
     private AudioMixer radioMixer;
     private BandPassFilter bandPassFilter;
 
     private MeshRenderer radioMeshRenderer;
-    
+
     public GameObject chimes;
     private AudioMixer chimeMixer;
 
     public GameObject locationingChair;
 
     public Transform RadioSpawnpoint;
+    public Transform SpectatorLocationingSpawnpoint;
     Vector3[] locationingPositions;
 
 
@@ -234,17 +235,19 @@ public class SpectatorUI : MonoBehaviour
         toggleRadioSound.RegisterValueChangedCallback<bool>(ToggleRadioSound);
         sliderRadioVolume.RegisterValueChangedCallback<float>(ChangeRadioVolumeSlider);
         fieldRadioVolume.RegisterValueChangedCallback<string>(ChangeRadioVolumeField);
-        if (EnvironmentAudioMixer != null) {
+        if (EnvironmentAudioMixer != null)
+        {
             toggleEnvironmentSound.RegisterValueChangedCallback<bool>(ToggleEnvironmentSound);
             sliderEnvironmentVolume.RegisterValueChangedCallback<float>(ChangeEnvironmentVolumeSlider);
             fieldEnvironmentVolume.RegisterValueChangedCallback<string>(ChangeEnvironmentVolumeField);
         }
-        if (chimes != null) {
+        if (chimes != null)
+        {
             toggleChimeSound.RegisterValueChangedCallback<bool>(ToggleChimeSound);
             sliderChimeVolume.RegisterValueChangedCallback<float>(ChangeChimeVolumeSlider);
             fieldChimeVolume.RegisterValueChangedCallback<string>(ChangeChimeVolumeField);
         }
-        
+
         toggleBandpassEnable.RegisterValueChangedCallback<bool>(ToggleBandpass);
         sliderBandpassFreq.RegisterValueChangedCallback<float>(ChangeBandpassFreqSlider);
         fieldBandpassFreq.RegisterValueChangedCallback<string>(ChangeBandpassFreqField);
@@ -310,16 +313,17 @@ public class SpectatorUI : MonoBehaviour
 
         // Get the mesh renderer of the radio, which allows us to toggle visibility without disabling the object.
         // meshrenderer of parent object, not the audio source "Radio" in this script
-        if (SceneManager.GetActiveScene().name != "TutorialScene") { // Tutorial scene doesn't have a radio
+        if (SceneManager.GetActiveScene().name != "TutorialScene")
+        { // Tutorial scene doesn't have a radio
             if (radioPolygon == null)
             {
                 Debug.LogError("Radio GameObject not found.");
                 return;
             }
             radioMeshRenderer = radioPolygon.GetComponent<MeshRenderer>();
-            
+
         }
-        
+
         radioAudioSource = radio.GetComponent<AudioSource>();
         if (radioAudioSource == null)
         {
@@ -330,7 +334,8 @@ public class SpectatorUI : MonoBehaviour
         radioMixer = radioAudioSource.outputAudioMixerGroup.audioMixer;
         bandPassFilter = radio.GetComponent<BandPassFilter>();
 
-        if (chimes != null) {
+        if (chimes != null)
+        {
             chimeMixer = chimes.GetComponent<ChimeConfiguration>().audioMixerGroup.audioMixer;
         }
 
@@ -350,41 +355,50 @@ public class SpectatorUI : MonoBehaviour
 
         // Get a reference to the spectator camera
         spectator = GameObject.Find("Spectator Camera").GetComponent<SpectatorCamera>();
-        if (spectator == null) {
+        if (spectator == null)
+        {
             Debug.LogError("Failed to find the spectator camera!");
         }
 
-        
-        if (SceneManager.GetActiveScene().name == "BlankWorld") {
-        // // Register locationing mode assets
-        // RadioSpawnpoint.position = new Vector3(0.51f, 0.766f, 1.744f);
-        // RadioSpawnpoint.rotation = Quaternion.Euler(0.0f, 212.06f, 0.0f);
-        locationingChair = GameObject.Find("LocationingChair");
-        if (locationingChair == null) {
-            Debug.LogError("Failed to find the locationing chair!");
-        } else {
-            locationingChair.SetActive(false);
-        }
+
+        if (SceneManager.GetActiveScene().name == "BlankWorld")
+        {
+            // // Register locationing mode assets
+            // RadioSpawnpoint.position = new Vector3(0.51f, 0.766f, 1.744f);
+            // RadioSpawnpoint.rotation = Quaternion.Euler(0.0f, 212.06f, 0.0f);
+            locationingChair = GameObject.Find("LocationingChair");
+            if (locationingChair == null)
+            {
+                Debug.LogError("Failed to find the locationing chair!");
+            }
+            else
+            {
+                locationingChair.SetActive(false);
+            }
         }
 
 
         RetrieveSettings();
-        
-        if (chimes == null) {
+
+        if (chimes == null)
+        {
             toggleChimeSound.SetEnabled(false);
             sliderChimeVolume.SetEnabled(false);
             fieldChimeVolume.SetEnabled(false);
         }
-        if (EnvironmentAudioMixer == null) {
+        if (EnvironmentAudioMixer == null)
+        {
             toggleEnvironmentSound.SetEnabled(false);
             sliderEnvironmentVolume.SetEnabled(false);
             fieldEnvironmentVolume.SetEnabled(false);
         }
-        if (RatingTablet == null) {
+        if (RatingTablet == null)
+        {
             toggleShowRatingTablet.SetEnabled(false);
         }
 
-        if (ghosts == null) {
+        if (ghosts == null)
+        {
             ghosts = new List<PositioningAssistGhost>();
         }
         ToggleDoGhosting(null);
@@ -409,32 +423,44 @@ public class SpectatorUI : MonoBehaviour
 
         // Perspective setting
         bool spectatorIsFirstPerson;
-        if (settings.Contains("spectatorIsFirstPerson")) {
+        if (settings.Contains("spectatorIsFirstPerson"))
+        {
             settings.GetValue("spectatorIsFirstPerson", out spectatorIsFirstPerson);
-        } else {
+        }
+        else
+        {
             spectatorIsFirstPerson = false;
         }
-        if (spectatorIsFirstPerson) {
+        if (spectatorIsFirstPerson)
+        {
             ChangeCameraFirstPerson(null);
-        } else {
+        }
+        else
+        {
             ChangeCameraToFixed(null);
         }
 
 
         // Radio settings
         bool radioIsPlaying;
-        if (settings.Contains("radioIsPlaying")) {
+        if (settings.Contains("radioIsPlaying"))
+        {
             settings.GetValue("radioIsPlaying", out radioIsPlaying);
-        } else {
+        }
+        else
+        {
             radioIsPlaying = false;
         }
         toggleRadioSound.value = radioIsPlaying;
         ToggleRadioSound(null);
 
         float radioVolume;
-        if (settings.Contains("radioVolume")) {
+        if (settings.Contains("radioVolume"))
+        {
             settings.GetValue("radioVolume", out radioVolume);
-        } else {
+        }
+        else
+        {
             radioVolume = 50.0f;
         }
         sliderRadioVolume.value = radioVolume;
@@ -443,63 +469,84 @@ public class SpectatorUI : MonoBehaviour
 
         // Radio noise filter settings
         bool radioFilterBandpassIsOn;
-        if (settings.Contains("radioFilterBandpassIsOn")) {
+        if (settings.Contains("radioFilterBandpassIsOn"))
+        {
             settings.GetValue("radioFilterBandpassIsOn", out radioFilterBandpassIsOn);
-        } else {
+        }
+        else
+        {
             radioFilterBandpassIsOn = false;
         }
         toggleBandpassEnable.value = radioFilterBandpassIsOn;
         ToggleBandpass(null);
 
         float radioFilterBandpassCenterFrequency;
-        if (settings.Contains("radioFilterBandpassCenterFrequency")) {
+        if (settings.Contains("radioFilterBandpassCenterFrequency"))
+        {
             settings.GetValue("radioFilterBandpassCenterFrequency", out radioFilterBandpassCenterFrequency);
-        } else {
+        }
+        else
+        {
             radioFilterBandpassCenterFrequency = 87.8136f;
         }
         sliderBandpassFreq.value = radioFilterBandpassCenterFrequency;
         ChangeBandpassFreqSlider(null);
 
         float radioFilterBandpassQFactor;
-        if (settings.Contains("radioFilterBandpassQFactor")) {
+        if (settings.Contains("radioFilterBandpassQFactor"))
+        {
             settings.GetValue("radioFilterBandpassQFactor", out radioFilterBandpassQFactor);
-        } else {
+        }
+        else
+        {
             radioFilterBandpassQFactor = 1.0f;
         }
         sliderBandpassQ.value = radioFilterBandpassQFactor;
         ChangeBandpassQSlider(null);
 
         float radioFilterParamEQCenterFrequency;
-        if (settings.Contains("radioFilterParamEQCenterFrequency")) {
+        if (settings.Contains("radioFilterParamEQCenterFrequency"))
+        {
             settings.GetValue("radioFilterParamEQCenterFrequency", out radioFilterParamEQCenterFrequency);
-        } else {
+        }
+        else
+        {
             radioFilterParamEQCenterFrequency = 87.8136f;
         }
         sliderParamEQFreq.value = radioFilterParamEQCenterFrequency;
         ChangeParamEQFreqSlider(null);
 
         float radioFilterParamEQOctaveRange;
-        if (settings.Contains("radioFilterParamEQOctaveRange")) {
+        if (settings.Contains("radioFilterParamEQOctaveRange"))
+        {
             settings.GetValue("radioFilterParamEQOctaveRange", out radioFilterParamEQOctaveRange);
-        } else {
+        }
+        else
+        {
             radioFilterParamEQOctaveRange = 1.0f;
         }
         sliderParamEQRange.value = radioFilterParamEQOctaveRange;
         ChangeParamEQRangeSlider(null);
 
         float radioFilterParamEQFrequencyGain;
-        if (settings.Contains("radioFilterParamEQFrequencyGain")) {
+        if (settings.Contains("radioFilterParamEQFrequencyGain"))
+        {
             settings.GetValue("radioFilterParamEQFrequencyGain", out radioFilterParamEQFrequencyGain);
-        } else {
+        }
+        else
+        {
             radioFilterParamEQFrequencyGain = 2.0f;
         }
         sliderParamEQGain.value = radioFilterParamEQFrequencyGain;
         ChangeParamEQGainSlider(null);
 
         bool radioFilterParamEQIsOn;
-        if (settings.Contains("radioFilterParamEQIsOn")) {
+        if (settings.Contains("radioFilterParamEQIsOn"))
+        {
             settings.GetValue("radioFilterParamEQIsOn", out radioFilterParamEQIsOn);
-        } else {
+        }
+        else
+        {
             radioFilterParamEQIsOn = false;
         }
         toggleParamEQEnable.value = radioFilterParamEQIsOn;
@@ -508,18 +555,24 @@ public class SpectatorUI : MonoBehaviour
 
         // Chimes settings
         bool chimesIsPlaying;
-        if (settings.Contains("chimesIsPlaying")) {
+        if (settings.Contains("chimesIsPlaying"))
+        {
             settings.GetValue("chimesIsPlaying", out chimesIsPlaying);
-        } else {
+        }
+        else
+        {
             chimesIsPlaying = false;
         }
         toggleChimeSound.value = chimesIsPlaying;
         if (chimes != null) ToggleChimeSound(null);
 
         float chimesVolume;
-        if (settings.Contains("chimesVolume")) {
+        if (settings.Contains("chimesVolume"))
+        {
             settings.GetValue("chimesVolume", out chimesVolume);
-        } else {
+        }
+        else
+        {
             chimesVolume = 50.0f;
         }
         sliderChimeVolume.value = chimesVolume;
@@ -528,9 +581,12 @@ public class SpectatorUI : MonoBehaviour
 
         // Environment settings
         bool environmentIsPlaying;
-        if (settings.Contains("environmentIsPlaying")) {
+        if (settings.Contains("environmentIsPlaying"))
+        {
             settings.GetValue("environmentIsPlaying", out environmentIsPlaying);
-        } else {
+        }
+        else
+        {
             environmentIsPlaying = false;
             settings.SetValue("environmentIsPlaying", false);
         }
@@ -538,9 +594,12 @@ public class SpectatorUI : MonoBehaviour
         if (EnvironmentAudioMixer != null) ToggleEnvironmentSound(null);
 
         float environmentVolume;
-        if (settings.Contains("environmentVolume")) {
+        if (settings.Contains("environmentVolume"))
+        {
             settings.GetValue("environmentVolume", out environmentVolume);
-        } else {
+        }
+        else
+        {
             environmentVolume = 50.0f;
         }
         sliderEnvironmentVolume.value = environmentVolume;
@@ -549,9 +608,12 @@ public class SpectatorUI : MonoBehaviour
 
         // Feedback tablet active setting
         bool feedbackTabletIsPresent;
-        if (settings.Contains("feedbackTabletIsPresent")) {
+        if (settings.Contains("feedbackTabletIsPresent"))
+        {
             settings.GetValue("feedbackTabletIsPresent", out feedbackTabletIsPresent);
-        } else {
+        }
+        else
+        {
             feedbackTabletIsPresent = true;
         }
         toggleShowRatingTablet.value = feedbackTabletIsPresent;
@@ -559,9 +621,12 @@ public class SpectatorUI : MonoBehaviour
 
 
         bool ghostsActive;
-        if (settings.Contains("ghostsActive")) {
+        if (settings.Contains("ghostsActive"))
+        {
             settings.GetValue("ghostsActive", out ghostsActive);
-        } else {
+        }
+        else
+        {
             ghostsActive = false;
         }
         toggleDoGhosting.value = ghostsActive;
@@ -623,23 +688,30 @@ public class SpectatorUI : MonoBehaviour
         Settings.Instance.SetValue("spectatorIsFirstPerson", false);
     }
 
-    private void ToggleRadioVisible(ChangeEvent<bool> evt){
+    private void ToggleRadioVisible(ChangeEvent<bool> evt)
+    {
 
         // toggle radio visibility - if the radio isn't active, default to visible when it is activated.
-        if (toggleRadioVisible.value == true) {
+        if (toggleRadioVisible.value == true)
+        {
             radioMeshRenderer.enabled = true;
-        } else if (toggleRadioVisible.value == false) {
+        }
+        else if (toggleRadioVisible.value == false)
+        {
             radioMeshRenderer.enabled = false;
         }
         Settings.Instance.SetValue("radioIsVisible", toggleRadioVisible.value);
     }
 
     private void ToggleAudioSourceVisible(ChangeEvent<bool> evt)
-    {   
+    {
         // toggle audio source visibility - if the radio isn't active, default to visible when it is activated.
-        if (toggleAudioSourceVisible.value == true) {
+        if (toggleAudioSourceVisible.value == true)
+        {
             radioAudioSourceRenderer.enabled = true;
-        } else if (toggleAudioSourceVisible.value == false) {
+        }
+        else if (toggleAudioSourceVisible.value == false)
+        {
             radioAudioSourceRenderer.enabled = false;
         }
         Settings.Instance.SetValue("audioSourceIsVisible", toggleAudioSourceVisible.value);
@@ -648,16 +720,25 @@ public class SpectatorUI : MonoBehaviour
     private void ToggleRadioSound(ChangeEvent<bool> evt)
     {
         // play/stop radio sound. If the radio isn't active, playOnAwake is set.
-        if (toggleRadioSound.value == true) {
-            if (radioAudioSource.isActiveAndEnabled) {
+        if (toggleRadioSound.value == true)
+        {
+            if (radioAudioSource.isActiveAndEnabled)
+            {
                 radioAudioSource.Play();
-            } else {
+            }
+            else
+            {
                 radioAudioSource.playOnAwake = true;
             }
-        } else if (toggleRadioSound.value == false) {
-            if (radioAudioSource.isActiveAndEnabled) {
+        }
+        else if (toggleRadioSound.value == false)
+        {
+            if (radioAudioSource.isActiveAndEnabled)
+            {
                 radioAudioSource.Stop();
-            } else {
+            }
+            else
+            {
                 radioAudioSource.playOnAwake = false;
             }
         }
@@ -666,10 +747,13 @@ public class SpectatorUI : MonoBehaviour
 
     private void ToggleTSNSTablet(ChangeEvent<bool> evt)
     {
-        if (toggleShowTSNSTablet.value == true) {
+        if (toggleShowTSNSTablet.value == true)
+        {
             // Create a new rating tablet from prefab
             RatingTabletToggleable = Instantiate(RatingTabletToggleablePrefab, RatingTabletToggleableSpawnpoint.position, RatingTabletToggleableSpawnpoint.rotation);
-        } else if (toggleShowTSNSTablet.value == false) {
+        }
+        else if (toggleShowTSNSTablet.value == false)
+        {
             // Destroy the rating tablet
             Destroy(RatingTabletToggleable);
         }
@@ -677,9 +761,12 @@ public class SpectatorUI : MonoBehaviour
 
     private void ToggleRatingTablet(ChangeEvent<bool> evt)
     {
-        if (toggleShowRatingTablet.value == true) {
+        if (toggleShowRatingTablet.value == true)
+        {
             RatingTablet.SetActive(true);
-        } else if (toggleShowRatingTablet.value == false) {
+        }
+        else if (toggleShowRatingTablet.value == false)
+        {
             RatingTablet.SetActive(false);
         }
         Settings.Instance.SetValue("feedbackTabletIsPresent", toggleShowRatingTablet.value);
@@ -687,12 +774,17 @@ public class SpectatorUI : MonoBehaviour
 
     private void ToggleDoGhosting(ChangeEvent<bool> evt)
     {
-        if (toggleDoGhosting.value == true) {
-            foreach (PositioningAssistGhost ghost in ghosts) {
+        if (toggleDoGhosting.value == true)
+        {
+            foreach (PositioningAssistGhost ghost in ghosts)
+            {
                 ghost.enabled = true;
             }
-        } else if (toggleDoGhosting.value == false) {
-            foreach (PositioningAssistGhost ghost in ghosts) {
+        }
+        else if (toggleDoGhosting.value == false)
+        {
+            foreach (PositioningAssistGhost ghost in ghosts)
+            {
                 ghost.enabled = false;
             }
         }
@@ -713,7 +805,8 @@ public class SpectatorUI : MonoBehaviour
     private void ChangeRadioVolumeField(ChangeEvent<string> evt)
     {
         // do nothing if the value hasn't changed
-        if (fieldRadioVolume.value == fieldRadioVolumePreviousValue) {
+        if (fieldRadioVolume.value == fieldRadioVolumePreviousValue)
+        {
             return;
         }
 
@@ -723,25 +816,31 @@ public class SpectatorUI : MonoBehaviour
 
         // Check if the input is valid
         int value;
-        if (int.TryParse(input, out value)) {
+        if (int.TryParse(input, out value))
+        {
             // input is valid
 
             // enforce limits
-            if (value < sliderRadioVolume.lowValue) {
+            if (value < sliderRadioVolume.lowValue)
+            {
                 value = Convert.ToInt32(sliderRadioVolume.lowValue);
-            } else if (value > sliderRadioVolume.highValue) {
+            }
+            else if (value > sliderRadioVolume.highValue)
+            {
                 value = Convert.ToInt32(sliderRadioVolume.highValue);
             }
 
             // pass the value to the slider
             sliderRadioVolume.value = value;
-            
+
             // append % sign
             input += '%';
             fieldRadioVolumePreviousValue = input;
             fieldRadioVolume.value = input;
 
-        } else {
+        }
+        else
+        {
             // invalid, restore previous value
             fieldRadioVolume.value = fieldRadioVolumePreviousValue;
         }
@@ -750,10 +849,13 @@ public class SpectatorUI : MonoBehaviour
     private void ToggleChimeSound(ChangeEvent<bool> evt)
     {
         // Enable/disable the chimes playing by themselves.
-        if (toggleChimeSound.value == true) {
+        if (toggleChimeSound.value == true)
+        {
             // on
             chimes.GetComponent<ChimeRandomRinger>().ForceEnabled(true);
-        } else if (toggleChimeSound.value == false) {
+        }
+        else if (toggleChimeSound.value == false)
+        {
             // off
             chimes.GetComponent<ChimeRandomRinger>().ForceEnabled(false);
 
@@ -776,7 +878,8 @@ public class SpectatorUI : MonoBehaviour
     private void ChangeChimeVolumeField(ChangeEvent<string> evt)
     {
         // do nothing if the value hasn't changed
-        if (fieldChimeVolume.value == fieldChimeVolumePreviousValue) {
+        if (fieldChimeVolume.value == fieldChimeVolumePreviousValue)
+        {
             return;
         }
 
@@ -786,13 +889,17 @@ public class SpectatorUI : MonoBehaviour
 
         // Check if the input is valid
         int value;
-        if (int.TryParse(input, out value)) {
+        if (int.TryParse(input, out value))
+        {
             // input is valid
 
             // enforce limits
-            if (value < sliderChimeVolume.lowValue) {
+            if (value < sliderChimeVolume.lowValue)
+            {
                 value = Convert.ToInt32(sliderChimeVolume.lowValue);
-            } else if (value > sliderChimeVolume.highValue) {
+            }
+            else if (value > sliderChimeVolume.highValue)
+            {
                 value = Convert.ToInt32(sliderChimeVolume.highValue);
             }
 
@@ -804,7 +911,9 @@ public class SpectatorUI : MonoBehaviour
             fieldChimeVolumePreviousValue = input;
             fieldChimeVolume.value = input;
 
-        } else {
+        }
+        else
+        {
             // invalid, restore previous value
             fieldChimeVolume.value = fieldChimeVolumePreviousValue;
         }
@@ -815,11 +924,14 @@ public class SpectatorUI : MonoBehaviour
         // mute all environment sound using the AudioMixer.
 
         // known issue: environment sounds are not properly muted here when entering a new scene, currently doing it in Update()
-        if (toggleEnvironmentSound.value == true) {
+        if (toggleEnvironmentSound.value == true)
+        {
             // on
             //Debug.Log("Environment sound on");
             EnvironmentAudioMixer.SetFloat("EnvironmentVolume", ToDecibel(sliderEnvironmentVolume.value));
-        } else if (toggleEnvironmentSound.value == false) {
+        }
+        else if (toggleEnvironmentSound.value == false)
+        {
             // off
             //Debug.Log("Environment sound off");
             EnvironmentAudioMixer.SetFloat("EnvironmentVolume", -80.00f);
@@ -841,7 +953,8 @@ public class SpectatorUI : MonoBehaviour
     private void ChangeEnvironmentVolumeField(ChangeEvent<string> evt)
     {
         // do nothing if the value hasn't changed
-        if (fieldEnvironmentVolume.value == fieldEnvironmentVolumePreviousValue) {
+        if (fieldEnvironmentVolume.value == fieldEnvironmentVolumePreviousValue)
+        {
             return;
         }
 
@@ -851,13 +964,17 @@ public class SpectatorUI : MonoBehaviour
 
         // Check if the input is valid
         int value;
-        if (int.TryParse(input, out value)) {
+        if (int.TryParse(input, out value))
+        {
             // input is valid
 
             // enforce limits
-            if (value < sliderEnvironmentVolume.lowValue) {
+            if (value < sliderEnvironmentVolume.lowValue)
+            {
                 value = Convert.ToInt32(sliderEnvironmentVolume.lowValue);
-            } else if (value > sliderEnvironmentVolume.highValue) {
+            }
+            else if (value > sliderEnvironmentVolume.highValue)
+            {
                 value = Convert.ToInt32(sliderEnvironmentVolume.highValue);
             }
 
@@ -869,7 +986,9 @@ public class SpectatorUI : MonoBehaviour
             fieldEnvironmentVolumePreviousValue = input;
             fieldEnvironmentVolume.value = input;
 
-        } else {
+        }
+        else
+        {
             // invalid, restore previous value
             fieldEnvironmentVolume.value = fieldEnvironmentVolumePreviousValue;
         }
@@ -877,9 +996,12 @@ public class SpectatorUI : MonoBehaviour
 
     private void ToggleBandpass(ChangeEvent<bool> evt)
     {
-        if (toggleBandpassEnable.value == true) {
+        if (toggleBandpassEnable.value == true)
+        {
             bandPassFilter.enabled = true;
-        } else {
+        }
+        else
+        {
             bandPassFilter.enabled = false;
         }
         Settings.Instance.SetValue("radioFilterBandpassIsOn", toggleBandpassEnable.value);
@@ -902,7 +1024,8 @@ public class SpectatorUI : MonoBehaviour
     private void ChangeBandpassFreqField(ChangeEvent<string> evt)
     {
         // do nothing if the value hasn't changed
-        if (fieldBandpassFreq.value == fieldBandpassFreqPreviousValue) {
+        if (fieldBandpassFreq.value == fieldBandpassFreqPreviousValue)
+        {
             return;
         }
 
@@ -913,7 +1036,8 @@ public class SpectatorUI : MonoBehaviour
 
         // Check if the input is valid
         int value;
-        if (int.TryParse(input, out value)) {
+        if (int.TryParse(input, out value))
+        {
             // input is valid
 
             // enforce limits
@@ -926,7 +1050,9 @@ public class SpectatorUI : MonoBehaviour
             fieldBandpassFreq.value = value.ToString() + "Hz";
             fieldBandpassFreqPreviousValue = fieldBandpassFreq.value;
 
-        } else {
+        }
+        else
+        {
             // invalid, restore previous value
             fieldBandpassFreq.value = fieldBandpassFreqPreviousValue;
         }
@@ -945,20 +1071,25 @@ public class SpectatorUI : MonoBehaviour
     private void ChangeBandpassQField(ChangeEvent<string> evt)
     {
         // do nothing if the value hasn't changed
-        if (fieldBandpassQ.value == fieldBandpassQPreviousValue) {
+        if (fieldBandpassQ.value == fieldBandpassQPreviousValue)
+        {
             return;
         }
 
         // Check if the input is valid
         string input = fieldBandpassQ.value;
         float value;
-        if (float.TryParse(input, out value)) {
+        if (float.TryParse(input, out value))
+        {
             // input is valid
 
             // enforce limits
-            if (value < sliderBandpassQ.lowValue) {
+            if (value < sliderBandpassQ.lowValue)
+            {
                 value = sliderBandpassQ.lowValue;
-            } else if (value > sliderBandpassQ.highValue) {
+            }
+            else if (value > sliderBandpassQ.highValue)
+            {
                 value = sliderBandpassQ.highValue;
             }
 
@@ -968,7 +1099,9 @@ public class SpectatorUI : MonoBehaviour
             // pass the value to the slider
             sliderBandpassQ.value = value;
 
-        } else {
+        }
+        else
+        {
             // invalid, restore previous value
             fieldBandpassQ.value = fieldBandpassQPreviousValue;
         }
@@ -977,14 +1110,17 @@ public class SpectatorUI : MonoBehaviour
     private void ToggleParamEQ(ChangeEvent<bool> evt)
     {
         // Disable ParamEQ by setting gain to 1.
-        if (toggleParamEQEnable.value == true) {
+        if (toggleParamEQEnable.value == true)
+        {
             radioMixer.SetFloat("ParamEQGain", sliderParamEQGain.value);
-        } else {
+        }
+        else
+        {
             radioMixer.SetFloat("ParamEQGain", 1.00f);
         }
         Settings.Instance.SetValue("radioFilterParamEQIsOn", toggleParamEQEnable.value);
     }
-    
+
     private void ChangeParamEQFreqSlider(ChangeEvent<float> evt)
     {
         radioMixer.SetFloat("ParamEQFreq", sliderParamEQFreq.value);
@@ -1004,7 +1140,8 @@ public class SpectatorUI : MonoBehaviour
     private void ChangeParamEQFreqField(ChangeEvent<string> evt)
     {
         // do nothing if the value hasn't changed
-        if (fieldParamEQFreq.value == fieldParamEQFreqPreviousValue) {
+        if (fieldParamEQFreq.value == fieldParamEQFreqPreviousValue)
+        {
             return;
         }
 
@@ -1015,7 +1152,8 @@ public class SpectatorUI : MonoBehaviour
 
         // Check if the input is valid
         int value;
-        if (int.TryParse(input, out value)) {
+        if (int.TryParse(input, out value))
+        {
             // input is valid
 
             // enforce limits
@@ -1028,7 +1166,9 @@ public class SpectatorUI : MonoBehaviour
             fieldParamEQFreq.value = value.ToString() + "Hz";
             fieldParamEQFreqPreviousValue = fieldParamEQFreq.value;
 
-        } else {
+        }
+        else
+        {
             // invalid, restore previous value
             fieldParamEQFreq.value = fieldParamEQFreqPreviousValue;
         }
@@ -1046,20 +1186,25 @@ public class SpectatorUI : MonoBehaviour
     private void ChangeParamEQRangeField(ChangeEvent<string> evt)
     {
         // do nothing if the value hasn't changed
-        if (fieldParamEQRange.value == fieldParamEQRangePreviousValue) {
+        if (fieldParamEQRange.value == fieldParamEQRangePreviousValue)
+        {
             return;
         }
 
         // Check if the input is valid
         string input = fieldParamEQRange.value;
         float value;
-        if (float.TryParse(input, out value)) {
+        if (float.TryParse(input, out value))
+        {
             // input is valid
 
             // enforce limits
-            if (value < sliderParamEQRange.lowValue) {
+            if (value < sliderParamEQRange.lowValue)
+            {
                 value = sliderParamEQRange.lowValue;
-            } else if (value > sliderParamEQRange.highValue) {
+            }
+            else if (value > sliderParamEQRange.highValue)
+            {
                 value = sliderParamEQRange.highValue;
             }
 
@@ -1069,7 +1214,9 @@ public class SpectatorUI : MonoBehaviour
             // pass the value to the slider
             sliderParamEQRange.value = value;
 
-        } else {
+        }
+        else
+        {
             // invalid, restore previous value
             fieldParamEQRange.value = fieldParamEQRangePreviousValue;
         }
@@ -1087,20 +1234,25 @@ public class SpectatorUI : MonoBehaviour
     private void ChangeParamEQGainField(ChangeEvent<string> evt)
     {
         // do nothing if the value hasn't changed
-        if (fieldParamEQGain.value == fieldParamEQGainPreviousValue) {
+        if (fieldParamEQGain.value == fieldParamEQGainPreviousValue)
+        {
             return;
         }
 
         // Check if the input is valid
         string input = fieldParamEQGain.value;
         float value;
-        if (float.TryParse(input, out value)) {
+        if (float.TryParse(input, out value))
+        {
             // input is valid
 
             // enforce limits
-            if (value < sliderParamEQGain.lowValue) {
+            if (value < sliderParamEQGain.lowValue)
+            {
                 value = sliderParamEQGain.lowValue;
-            } else if (value > sliderParamEQGain.highValue) {
+            }
+            else if (value > sliderParamEQGain.highValue)
+            {
                 value = sliderParamEQGain.highValue;
             }
 
@@ -1110,7 +1262,9 @@ public class SpectatorUI : MonoBehaviour
             // pass the value to the slider
             sliderParamEQGain.value = value;
 
-        } else {
+        }
+        else
+        {
             // invalid, restore previous value
             fieldParamEQGain.value = fieldParamEQGainPreviousValue;
         }
@@ -1120,9 +1274,12 @@ public class SpectatorUI : MonoBehaviour
     {
         // Convert a percentage (0 to 100) to decibels as used by AudioMixer (-80 to 20)
         // piecewise interpolation such that 50% corresponds to 0 decibels gain.
-        if (percentage < 50) {
+        if (percentage < 50)
+        {
             return Mathf.Lerp(-80, 0, (-0.026f * percentage * percentage + 3.3f * percentage) / 100);
-        } else {
+        }
+        else
+        {
             return Mathf.Lerp(0, 20, (percentage - 50) / 50);
         }
     }
@@ -1148,15 +1305,20 @@ public class SpectatorUI : MonoBehaviour
     private void SaveSettings(ClickEvent evt)
     {
         // save settings with a name chosen by either the New File text field or Existing File dropdown
-        if (newFileIsSelected) {
-            if (fieldNewFile.value.Length > 1) {
+        if (newFileIsSelected)
+        {
+            if (fieldNewFile.value.Length > 1)
+            {
                 Settings.Instance.Save(fieldNewFile.value);
                 // update the dropdown so it shows the new file
                 dropdownExistingFile.choices.Clear();
                 dropdownExistingFile.choices = Settings.Instance.GetSaveFilenames();
             }
-        } else {
-            if ((dropdownExistingFile.value != null) && (dropdownExistingFile.value.Length > 1)) {
+        }
+        else
+        {
+            if ((dropdownExistingFile.value != null) && (dropdownExistingFile.value.Length > 1))
+            {
                 Settings.Instance.Save(dropdownExistingFile.value);
             }
         }
@@ -1165,12 +1327,17 @@ public class SpectatorUI : MonoBehaviour
     private void LoadSettings(ClickEvent evt)
     {
         // load settings with a name chosen by either the New File text field or Existing File dropdown
-        if (newFileIsSelected) {
-            if (fieldNewFile.value.Length > 1) {
+        if (newFileIsSelected)
+        {
+            if (fieldNewFile.value.Length > 1)
+            {
                 Settings.Instance.Load(fieldNewFile.value);
             }
-        } else {
-            if ((dropdownExistingFile.value != null) && (dropdownExistingFile.value.Length > 1)) {
+        }
+        else
+        {
+            if ((dropdownExistingFile.value != null) && (dropdownExistingFile.value.Length > 1))
+            {
                 Settings.Instance.Load(dropdownExistingFile.value);
             }
         }
@@ -1178,12 +1345,14 @@ public class SpectatorUI : MonoBehaviour
 
     private void TryRestoreHeadlockedObject(ClickEvent evt)
     {
-        if (Settings.Instance.Contains("lastHeadlockedObject")) {
+        if (Settings.Instance.Contains("lastHeadlockedObject"))
+        {
             string objectName;
             Settings.Instance.GetValue("lastHeadlockedObject", out objectName);
             ParentSetter headlock = GameObject.Find(objectName).GetComponent<ParentSetter>();
             // Ensure the object isn't already headlocked
-            if (headlock.parent == null) {
+            if (headlock.parent == null)
+            {
                 headlock.TryRestoreLastHeadlock();
             }
         }
@@ -1191,7 +1360,8 @@ public class SpectatorUI : MonoBehaviour
 
     private void ActivateLocationingMode(ClickEvent evt)
     {
-        if (locationingChair != null) {
+        if (locationingChair != null)
+        {
             locationingChair.SetActive(true);
             // relocate fixed spectator camera to locationing position 
             ChangeCameraToLocationing();
@@ -1206,24 +1376,30 @@ public class SpectatorUI : MonoBehaviour
     }
 
     private void DeactivateLocationingMode(ClickEvent evt)
-    {   
-        
-        if (locationingChair != null) {
+    {
+
+        if (locationingChair != null)
+        {
             locationingChair.SetActive(false);
             // relocate fixed spectator camera to locationing position 
             spectator.ToFixedPerspective();
             Settings.Instance.SetValue("spectatorIsFirstPerson", false);
-            
+
             radioPolygon.GetComponent<Rigidbody>().useGravity = true;
             // respawn the radio back to the spawnpoint
             radioPolygon.transform.position = RadioSpawnpoint.position;
             radioPolygon.transform.rotation = RadioSpawnpoint.rotation;
-            // TODO - relocate user??
+            // Relocate Spectator
+            spectator.transform.position = SpectatorLocationingSpawnpoint.position;
+            // Rotate the spectator to face the radio
+            spectator.transform.LookAt(radioPolygon.transform.position);
+
         }
     }
 
-    
-    private void changeRadioLocation(int locationIndex){
+
+    private void changeRadioLocation(int locationIndex)
+    {
         radioPolygon.transform.position = locationingPositions[locationIndex];
         radio.transform.position = locationingPositions[locationIndex];
         // rotate the radio to face the user's intended position
@@ -1234,26 +1410,29 @@ public class SpectatorUI : MonoBehaviour
         radio.transform.rotation = Quaternion.Euler(0, radio.transform.rotation.eulerAngles.y, radio.transform.rotation.eulerAngles.z);
     }
 
-    private void ChangeCameraToLocationing(){
+    private void ChangeCameraToLocationing()
+    {
         spectator.ToLocationingPerspective();
         Settings.Instance.SetValue("spectatorIsFirstPerson", false);
     }
 
-    private void GenerateLocations(){
+    private void GenerateLocations()
+    {
         // collect a 150 degree arc of 5 positions around the locationing chair with a 3m radius
         float radius = 5.0f;
         int numberOfLocations = 5;
         // angle between each position = 120 / (n - 1)
-        float angleStep = 150.0f / (numberOfLocations - 1); 
+        float angleStep = 150.0f / (numberOfLocations - 1);
 
         locationingPositions = new Vector3[numberOfLocations];
 
-        for (int i = 0; i < numberOfLocations; i++) {
+        for (int i = 0; i < numberOfLocations; i++)
+        {
             float angle = -165.0f + (i * angleStep);
             float radian = angle * Mathf.Deg2Rad;
             Vector3 locationingPosition = new Vector3(
                 locationingChair.transform.position.x + radius * Mathf.Cos(radian),
-                1.0f, // fixed height
+                0.67f, // fixed height
                 locationingChair.transform.position.z + radius * Mathf.Sin(radian)
             );
             locationingPositions[i] = locationingPosition;
@@ -1308,10 +1487,14 @@ public class SpectatorUI : MonoBehaviour
     private void Update()
     {
         // cheap fix to ensure evironment sounds are properly muted when loading scene
-        if (EnvironmentAudioMixer != null) {
-            if (toggleEnvironmentSound.value == true) {
+        if (EnvironmentAudioMixer != null)
+        {
+            if (toggleEnvironmentSound.value == true)
+            {
                 EnvironmentAudioMixer.SetFloat("EnvironmentVolume", ToDecibel(sliderEnvironmentVolume.value));
-            } else {
+            }
+            else
+            {
                 EnvironmentAudioMixer.SetFloat("EnvironmentVolume", -80.00f);
             }
         }

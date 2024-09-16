@@ -22,15 +22,15 @@ public class DataLoggingManager : MonoBehaviour
     private bool grabbedRadio;
     private bool headlocked;
     // LocationingMode data captured
-    private bool activatedLocationingMode;
-    private bool pressedLocationingButton;
-    private int RadioPositionIndex;
-    private bool RadioVisible;
-    private bool AudioSourceVisible;
-    private float offsetRadius;
-    private float offsetAzimuth;
-    private float offsetInclination;
-    private float distanceFromAudioSource;
+    private bool activatedLocationingMode; // from SpectatorUI
+    private bool pressedLocationingButton; // from AimingDistanceManager
+    private int RadioPositionIndex; // from SpectatorUI
+    private bool RadioVisible; // from SpectatorUI
+    private bool AudioSourceVisible;// from SpectatorUI
+    private float offsetRadius; // from SpectatorUI
+    private float offsetAzimuth; // from SpectatorUI
+    private float offsetInclination; // from SpectatorUI
+    private float distanceFromAudioSource; // from AimingDistanceManager
 
 
     private enum ObjectName
