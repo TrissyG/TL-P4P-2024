@@ -14,15 +14,16 @@ public class AimingDistanceManager : MonoBehaviour
     public UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor rightHandRayInteractor;
     // public GameObject inputActionManager;
     private InputData _inputData;
-
+    private DataLoggingManager _dataLoggingManager;
     // Cooldown duration in seconds for the MeasureDistanceToTarget method
-    public float cooldownDuration = 2.0f;
+    private float cooldownDuration = 2.0f;
     // Time when MeasureDistanceToTarget was last called
     private float lastCallTime = 0.0f;
 
     // Plane properties for debugging
     private Vector3 planeNormal;
     private Vector3 planePoint;
+
 
 
 
@@ -41,6 +42,7 @@ public class AimingDistanceManager : MonoBehaviour
         {
             Debug.LogError("InputData component not found in the scene.");
         }
+        _dataLoggingManager = FindObjectOfType<DataLoggingManager>();
     }
 
     void Update()

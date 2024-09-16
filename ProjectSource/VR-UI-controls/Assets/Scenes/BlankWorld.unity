@@ -661,7 +661,6 @@ MonoBehaviour:
   rightHandController: {fileID: 1363687444}
   leftHandController: {fileID: 1880628669}
   targetObject: {fileID: 1652615512}
-  pointablePlane: {fileID: 0}
   rightHandRayInteractor: {fileID: 0}
   cooldownDuration: 1
 --- !u!114 &85023941
@@ -720,6 +719,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4897505123406925796, guid: cdd2c818ce6ddbc4fb8366d608318739, type: 3}
+      propertyPath: dataLoggingManager
+      value: 
+      objectReference: {fileID: 1740286508}
+    - target: {fileID: 4897505123406925796, guid: cdd2c818ce6ddbc4fb8366d608318739, type: 3}
       propertyPath: ghosts.Array.data[0]
       value: 
       objectReference: {fileID: 1328860074}
@@ -731,6 +734,10 @@ PrefabInstance:
       propertyPath: audioSourceManagerPrefab
       value: 
       objectReference: {fileID: 1780045419}
+    - target: {fileID: 4897505123406925796, guid: cdd2c818ce6ddbc4fb8366d608318739, type: 3}
+      propertyPath: SpectatorLocationingSpawnpoint
+      value: 
+      objectReference: {fileID: 1997320220}
     - target: {fileID: 4897505123406925796, guid: cdd2c818ce6ddbc4fb8366d608318739, type: 3}
       propertyPath: RatingTabletToggleableSpawnpoint
       value: 
@@ -14710,6 +14717,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1970733330}
   m_CullTransparentMesh: 1
+--- !u!1 &1997320219
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1997320220}
+  m_Layer: 0
+  m_Name: SpectatorLocationingSpawnpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1997320220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997320219}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.29, y: 0.67, z: -3.83}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &2030294488
 GameObject:
   m_ObjectHideFlags: 0

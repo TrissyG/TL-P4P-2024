@@ -38,6 +38,7 @@ public class DataLoggingManager : MonoBehaviour
         Radio,
         RatingTablet,
         RightHandController,
+        SpectatorUI
 
     }
 
@@ -236,19 +237,56 @@ public class DataLoggingManager : MonoBehaviour
     public void pressLocationingButton()
     {
         pressedLocationingButton = true;
-
+        writeEventToFile("pressLocationingButton", ObjectName.RightHandController);
     }
 
     public void releaseLocationingButton()
     {
         pressedLocationingButton = false;
+        writeEventToFile("releaseLocationingButton", ObjectName.RightHandController);
     }
 
     public void activateLocationingMode()
     {
-        activatedLocationingMode = !activatedLocationingMode;
-        writeEventToFile("activateLocationingMode", ObjectName.RightHandController);
+        activatedLocationingMode = true;
+        writeEventToFile("activateLocationingMode", ObjectName.SpectatorUI);
     }
+
+    public void deactivateLocationingMode()
+    {
+        activatedLocationingMode = false;
+        writeEventToFile("deactivateLocationingMode", ObjectName.SpectatorUI);
+    }
+
+    public void setRadioPositionIndex(int index)
+    {
+        RadioPositionIndex = index;
+    }
+
+    public void setRadioVisible(bool visible)
+    {
+        RadioVisible = visible;
+    }
+
+    public void setAudioSourceVisible(bool visible)
+    {
+        AudioSourceVisible = visible;
+    }
+
+    public void setAudioSourceOffset(float radius, float azimuth, float inclination)
+    {
+        offsetRadius = radius;
+        offsetAzimuth = azimuth;
+        offsetInclination = inclination;
+    }
+
+    public void setDistanceFromAudioSource(float distance)
+    {
+        distanceFromAudioSource = distance;
+    }
+
+
+
 
 
 }

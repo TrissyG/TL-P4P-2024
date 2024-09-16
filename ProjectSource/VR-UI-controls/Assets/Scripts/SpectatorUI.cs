@@ -139,8 +139,11 @@ public class SpectatorUI : MonoBehaviour
     // spectator cameras
     private SpectatorCamera spectator;
 
+    private DataLoggingManager _dataLoggingManager;
+
     private void OnEnable()
     {
+        _dataLoggingManager = FindObjectOfType<DataLoggingManager>();
         // The UXML is already instantiated by the UIDocument component
         var uiDocument = GetComponent<UIDocument>();
         VisualElement root = uiDocument.rootVisualElement;
@@ -299,6 +302,8 @@ public class SpectatorUI : MonoBehaviour
         buttonXZ_225.clicked += () => SetAzimuth(225);
         buttonXZ_270.clicked += () => SetAzimuth(270);
         buttonXZ_315.clicked += () => SetAzimuth(315);
+
+
 
         // GameObject audioSourceManager = Instantiate(audioSourceManager, new Vector3(0, 0, 0), Quaternion.identity);
         audioSourceManager = Instantiate(audioSourceManagerPrefab).GetComponent<AudioSourceManager>();
@@ -1371,7 +1376,13 @@ public class SpectatorUI : MonoBehaviour
             radioPolygon.GetComponent<Rigidbody>().useGravity = false;
             changeRadioLocation(2);
             // relocate the user to the chair
-            // TODO / Just get user to navigate and adjust fixed radio height to headset
+            // Relocate Spectator
+            spectator.transform.position = SpectatorLocationingSpawnpoint.position;
+            // Rotate the spectator to face the radio
+            spectator.transform.LookAt(radioPolygon.transform.position);
+
+            _dataLoggingManager.setRadioPositionIndex(3);
+            _dataLoggingManager.activateLocationingMode();
         }
     }
 
@@ -1389,11 +1400,8 @@ public class SpectatorUI : MonoBehaviour
             // respawn the radio back to the spawnpoint
             radioPolygon.transform.position = RadioSpawnpoint.position;
             radioPolygon.transform.rotation = RadioSpawnpoint.rotation;
-            // Relocate Spectator
-            spectator.transform.position = SpectatorLocationingSpawnpoint.position;
-            // Rotate the spectator to face the radio
-            spectator.transform.LookAt(radioPolygon.transform.position);
-
+            _dataLoggingManager.setRadioPositionIndex(-1);
+            _dataLoggingManager.deactivateLocationingMode();
         }
     }
 
@@ -1401,7 +1409,8 @@ public class SpectatorUI : MonoBehaviour
     private void changeRadioLocation(int locationIndex)
     {
         radioPolygon.transform.position = locationingPositions[locationIndex];
-        radio.transform.position = locationingPositions[locationIndex];
+        radio.transform.position = locationingPositions[locationIndex]; // 0-indexed
+        _dataLoggingManager.setRadioPositionIndex(locationIndex + 1); // 1-indexed
         // rotate the radio to face the user's intended position
         radioPolygon.transform.LookAt(locationingChair.transform.position);
         radio.transform.LookAt(locationingChair.transform.position);
@@ -1476,6 +1485,7 @@ public class SpectatorUI : MonoBehaviour
         if (audioSourceManager != null)
         {
             audioSourceManager.SetSphericalCoordinates(radius, inclination, azimuth);
+            _dataLoggingManager.setAudioSourceOffset(radius, inclination, azimuth);
         }
     }
 
