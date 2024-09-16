@@ -43,6 +43,10 @@ public class AimingDistanceManager : MonoBehaviour
             Debug.LogError("InputData component not found in the scene.");
         }
         _dataLoggingManager = FindObjectOfType<DataLoggingManager>();
+        if (_dataLoggingManager == null)
+        {
+            Debug.LogError("DataLoggingManager component not found in the scene.");
+        }
     }
 
     void Update()
@@ -58,6 +62,7 @@ public class AimingDistanceManager : MonoBehaviour
                     MeasureDistanceToTarget();
                     // Update the last call time
                     lastCallTime = Time.time;
+                    _dataLoggingManager.pressLocationingButton();
                 }
             }
         }
@@ -65,17 +70,14 @@ public class AimingDistanceManager : MonoBehaviour
 
     private void MeasureDistanceToTarget()
     {
-        // Create a ray from the controller or camera's position and forward direction
+        // Create a ray from the controller's position in the forward direction to cast towards the target object
         Ray ray = new Ray(rightHandController.transform.position, rightHandController.transform.forward);
 
-        // Get the target object's position
         Vector3 targetPosition = targetObject.transform.position;
         Vector3 rayOrigin = rightHandController.transform.position;
 
-        // Calculate the direction from the user to the target object
+        // Calculate the direction from the user to the target object and set the plane normal to this direction
         Vector3 directionToTarget = (targetPosition - rayOrigin).normalized;
-
-        // Define the plane's normal as the direction to the target
         Vector3 planeNormal = directionToTarget;
 
         // Calculate the intersection point of the ray with the plane
@@ -94,6 +96,12 @@ public class AimingDistanceManager : MonoBehaviour
 
             // Log the distance for debugging
             Debug.Log("Distance from aim point to target object (YZ): " + distanceYZ);
+
+            _dataLoggingManager.setDistanceFromAudioSource(distanceYZ);
+            _dataLoggingManager.setAudioSourceLocation(targetPosition);
+            _dataLoggingManager.setRayOriginPoint(rayOrigin);
+            _dataLoggingManager.setRayIntersectPoint(intersectPoint);
+            _dataLoggingManager.setAudioSourcePlaneNormal(new Vector2(planeNormal.y, planeNormal.z));
         }
         else
         {

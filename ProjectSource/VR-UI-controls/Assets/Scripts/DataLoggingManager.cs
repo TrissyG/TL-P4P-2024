@@ -23,14 +23,19 @@ public class DataLoggingManager : MonoBehaviour
     private bool headlocked;
     // LocationingMode data captured
     private bool activatedLocationingMode; // from SpectatorUI
-    private bool pressedLocationingButton; // from AimingDistanceManager
+
     private int RadioPositionIndex; // from SpectatorUI
-    private bool RadioVisible; // from SpectatorUI
+    private bool RadioVisible = true; // from SpectatorUI
     private bool AudioSourceVisible;// from SpectatorUI
     private float offsetRadius; // from SpectatorUI
     private float offsetAzimuth; // from SpectatorUI
     private float offsetInclination; // from SpectatorUI
+    private bool pressedLocationingButton; // from AimingDistanceManager
     private float distanceFromAudioSource; // from AimingDistanceManager
+    private Vector3 audioSourceLocation; // from AimingDistanceManager
+    private Vector3 rayOriginPoint; // from AimingDistanceManager
+    private Vector3 rayIntersectPoint; // from AimingDistanceManager
+    private Vector2 audioSourcePlaneNormal; // from AimingDistanceManager
 
 
     private enum ObjectName
@@ -57,6 +62,10 @@ public class DataLoggingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if (activatedLocationingMode && pressedLocationingButton)
+        // {
+        //     logLocationingData();
+        // }
     }
 
     private void logPositions()
@@ -107,6 +116,25 @@ public class DataLoggingManager : MonoBehaviour
             cameraWriter.WriteLine(lineToWrite);
             cameraWriter.Flush();
             cameraWriter.Close();
+        }
+
+        if (activatedLocationingMode && pressedLocationingButton)
+        {
+            LogLocationingData();
+            pressedLocationingButton = false;
+        }
+    }
+
+    public void LogLocationingData()
+    {
+        DateTime time = DateTime.Now;
+
+        using (StreamWriter writer = new StreamWriter(locationingPath, true))
+        {
+            string lineToWrite = $"{SceneManager.GetActiveScene().name},{activatedLocationingMode},{pressedLocationingButton},{RadioPositionIndex},{RadioVisible},{AudioSourceVisible},{offsetRadius},{offsetAzimuth},{offsetInclination},{distanceFromAudioSource},{audioSourceLocation.x},{audioSourceLocation.y},{audioSourceLocation.z},{rayOriginPoint.x},{rayOriginPoint.y},{rayOriginPoint.z},{rayIntersectPoint.x},{rayIntersectPoint.y},{rayIntersectPoint.z},{audioSourcePlaneNormal.x},{audioSourcePlaneNormal.y},{time}";
+            writer.WriteLine(lineToWrite);
+            writer.Flush();
+            writer.Close();
         }
     }
 
@@ -193,7 +221,7 @@ public class DataLoggingManager : MonoBehaviour
 
             using (StreamWriter locationingWriter = new StreamWriter(locationingPath, true))
             {
-                string lineToWrite = "Scenario,activatedLocationingMode,PressedLocationingButton,RadioPositionIndex,RadioVisible,AudioSourceVisible,offsetRadius,offsetAzimuth,offsetInclination,distanceFromAudioSource,positionX,positionY,positionZ,rotationX,rotationY,rotationZ,rotationW,Time";
+                string lineToWrite = "Scenario,activatedLocationingMode,PressedLocationingButton,RadioPositionIndex,RadioVisible,AudioSourceVisible,offsetRadius,offsetAzimuth,offsetInclination,distanceFromAudioSource,AudioSourcePositionX,AudioSourcePositionY,AudioSourcePositionZ,rayOriginX,rayOriginY,rayOriginZ,rayIntersectX,rayIntersectY,rayIntersectZ,planeNormalX,planeNormalY,Time";
 
                 locationingWriter.WriteLine(lineToWrite);
                 locationingWriter.Flush();
@@ -283,6 +311,26 @@ public class DataLoggingManager : MonoBehaviour
     public void setDistanceFromAudioSource(float distance)
     {
         distanceFromAudioSource = distance;
+    }
+
+    public void setAudioSourceLocation(Vector3 location)
+    {
+        audioSourceLocation = location;
+    }
+
+    public void setRayOriginPoint(Vector3 point)
+    {
+        rayOriginPoint = point;
+    }
+
+    public void setRayIntersectPoint(Vector3 point)
+    {
+        rayIntersectPoint = point;
+    }
+
+    public void setAudioSourcePlaneNormal(Vector2 normal)
+    {
+        audioSourcePlaneNormal = normal;
     }
 
 

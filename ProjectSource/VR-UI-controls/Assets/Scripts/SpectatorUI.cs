@@ -706,6 +706,7 @@ public class SpectatorUI : MonoBehaviour
             radioMeshRenderer.enabled = false;
         }
         Settings.Instance.SetValue("radioIsVisible", toggleRadioVisible.value);
+        _dataLoggingManager.setRadioVisible(toggleRadioVisible.value);
     }
 
     private void ToggleAudioSourceVisible(ChangeEvent<bool> evt)
@@ -714,10 +715,12 @@ public class SpectatorUI : MonoBehaviour
         if (toggleAudioSourceVisible.value == true)
         {
             radioAudioSourceRenderer.enabled = true;
+            _dataLoggingManager.setAudioSourceVisible(true);
         }
         else if (toggleAudioSourceVisible.value == false)
         {
             radioAudioSourceRenderer.enabled = false;
+            _dataLoggingManager.setAudioSourceVisible(false);
         }
         Settings.Instance.SetValue("audioSourceIsVisible", toggleAudioSourceVisible.value);
     }
@@ -1375,11 +1378,8 @@ public class SpectatorUI : MonoBehaviour
             // relocate the radio to the middle flag
             radioPolygon.GetComponent<Rigidbody>().useGravity = false;
             changeRadioLocation(2);
-            // relocate the user to the chair
-            // Relocate Spectator
-            spectator.transform.position = SpectatorLocationingSpawnpoint.position;
-            // Rotate the spectator to face the radio
-            spectator.transform.LookAt(radioPolygon.transform.position);
+            // deactivate ray detecting for the radio
+
 
             _dataLoggingManager.setRadioPositionIndex(3);
             _dataLoggingManager.activateLocationingMode();
@@ -1410,7 +1410,7 @@ public class SpectatorUI : MonoBehaviour
     {
         radioPolygon.transform.position = locationingPositions[locationIndex];
         radio.transform.position = locationingPositions[locationIndex]; // 0-indexed
-        _dataLoggingManager.setRadioPositionIndex(locationIndex + 1); // 1-indexed
+        _dataLoggingManager.setRadioPositionIndex((locationingPositions.Length - locationIndex)); // 1-indexed
         // rotate the radio to face the user's intended position
         radioPolygon.transform.LookAt(locationingChair.transform.position);
         radio.transform.LookAt(locationingChair.transform.position);
@@ -1441,7 +1441,7 @@ public class SpectatorUI : MonoBehaviour
             float radian = angle * Mathf.Deg2Rad;
             Vector3 locationingPosition = new Vector3(
                 locationingChair.transform.position.x + radius * Mathf.Cos(radian),
-                0.67f, // fixed height
+                0.85f, // fixed height
                 locationingChair.transform.position.z + radius * Mathf.Sin(radian)
             );
             locationingPositions[i] = locationingPosition;
