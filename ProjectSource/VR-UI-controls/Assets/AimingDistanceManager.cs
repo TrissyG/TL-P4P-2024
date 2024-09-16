@@ -12,9 +12,17 @@ public class AimingDistanceManager : MonoBehaviour
     public GameObject targetObject;
     public PointablePlane pointablePlane;
     public UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor rightHandRayInteractor;
-    public GameObject inputActionManager;
-    public InputDevice rightHandDevice;
+    // public GameObject inputActionManager;
+    private InputData _inputData;
 
+    // Cooldown duration in seconds
+    public float cooldownDuration = 2.0f;
+    // Time when MeasureDistanceToTarget was last called
+    private float lastCallTime = 0.0f;
+
+
+    private Vector3 planeNormal;
+    private Vector3 planePoint;
 
 
 
@@ -28,7 +36,7 @@ public class AimingDistanceManager : MonoBehaviour
             {
                 Debug.LogError("PointablePlane component not found on the target object.");
             }
-            Debug.Log("PointablePlane component found on the target object.");
+
         }
 
         // Find the right-hand controller's XRRayInteractor
@@ -37,78 +45,106 @@ public class AimingDistanceManager : MonoBehaviour
         {
             Debug.LogError("XRRayInteractor component not found for the right-hand controller.");
         }
-        Debug.Log("XRRayInteractor component found for the right-hand controller.");
-        // show which parent object the ray interactor is attached to
-        Debug.Log("Right hand ray interactor parent object: " + rightHandRayInteractor.transform.parent.gameObject.name);
-        // show which object the ray interactor is attached to
-        Debug.Log("Right hand ray interactor object: " + rightHandRayInteractor.gameObject.name);
 
-        // Get the right-hand controller's InputDevice
-        // Get the right-hand controller's InputDevice
-        // List<InputDevice> devices = new List<InputDevice>();
-        // InputDevices.GetDevicesAtXRNode(XRNode.RightHand, devices);
-        // if (devices.Count > 0)
-        // {
-        //     rightHandDevice = devices[0];
-        //     Debug.Log("Right hand InputDevice found.");
-        // }
-        // else
-        // {
-        //     Debug.LogError("Right hand InputDevice not found.");
-        // }
-        // UnityEngine.XR.InputDevice device = UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand);
-        // if (device.isValid)
-        // {
-        //     Debug.Log("Device = " + device.name);
-        //     Debug.Log("Device is valid.");
-        // }
-        // else
-        // {
-        //     Debug.Log("Device = " + device.name);
-        //     Debug.Log("Device is not valid.");
-        // }
-
-        // rightHandXRController = rightHandController.GetComponent<XRController>();
-        // if (rightHandXRController == null)
-        // {
-        //     Debug.LogError("XRController component not found on the right-hand controller.");
-        // }
-
+        // Initialize _inputData
+        _inputData = FindObjectOfType<InputData>();
+        if (_inputData == null)
+        {
+            Debug.LogError("InputData component not found in the scene.");
+        }
     }
 
     void Update()
     {
         if (rightHandRayInteractor != null && targetObject != null && pointablePlane != null)
         {
-            // If the XRI Right Hand Interactor is active and the 'A' button is pressed, measure the distance to the target object
-
-            // if (rightHandController.XRController.inputDevice.IsPressed(inputActionManager.GetComponent<UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRSimulatedControllerInputDeviceState>().selectAction.action))
-            // {
-            //     Debug.Log("'A' button pressed on the right-handed controller.");
-            //     MeasureDistanceToTarget();
-            // }
+            if (_inputData._rightController.TryGetFeatureValue(CommonUsages.primaryButton, out bool primaryButtonValue) && primaryButtonValue)
+            {
+                // Check if the cooldown period has passed
+                if (Time.time >= lastCallTime + cooldownDuration)
+                {
+                    Debug.Log("'A' button pressed on the right-handed controller.");
+                    MeasureDistanceToTarget();
+                    // Update the last call time
+                    lastCallTime = Time.time;
+                }
+            }
         }
     }
 
     private void MeasureDistanceToTarget()
     {
-        Ray ray;
-        if (rightHandRayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
+        // Ray ray;
+        // if (rightHandRayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
+        // {
+        //     ray = new Ray(hit.point, hit.normal);
+        //     if (pointablePlane.Raycast(ray, out SurfaceHit surfaceHit, Mathf.Infinity))
+        //     {
+        //         float distance = Vector3.Distance(surfaceHit.Point, targetObject.transform.position);
+        //         Debug.Log("Distance to target object: " + distance);
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("Raycast did not hit the PointablePlane.");
+        //     }
+        // }
+        // else
+        // {
+        //     Debug.Log("Raycast did not hit any object.");
+        // }
+
+        // Create a ray from the controller or camera's position and forward direction
+        Ray ray = new Ray(rightHandController.transform.position, rightHandController.transform.forward);
+
+        // Get the target object's position
+        Vector3 targetPosition = targetObject.transform.position;
+        Vector3 rayOrigin = rightHandController.transform.position;
+
+        // Calculate the direction from the user to the target object
+        Vector3 directionToTarget = (targetPosition - rayOrigin).normalized;
+
+        // Define the plane's normal as the direction to the target
+        Vector3 planeNormal = directionToTarget;
+
+        // Calculate the intersection point of the ray with the plane
+        Plane plane = new Plane(planeNormal, targetPosition);
+        if (plane.Raycast(ray, out float enter))
         {
-            ray = new Ray(hit.point, hit.normal);
-            if (pointablePlane.Raycast(ray, out SurfaceHit surfaceHit, Mathf.Infinity))
-            {
-                float distance = Vector3.Distance(surfaceHit.Point, targetObject.transform.position);
-                Debug.Log("Distance to target object: " + distance);
-            }
-            else
-            {
-                Debug.Log("Raycast did not hit the PointablePlane.");
-            }
+            // Find the point where the ray intersects the plane
+            Vector3 intersectPoint = ray.GetPoint(enter);
+
+            // Get the YZ components of the intersection point and target position
+            Vector2 intersectPointYZ = new Vector2(intersectPoint.y, intersectPoint.z);
+            Vector2 targetPositionYZ = new Vector2(targetPosition.y, targetPosition.z);
+
+            // Calculate the horizontal distance between the intersection point and the target object on the YZ plane
+            float distanceYZ = Vector2.Distance(intersectPointYZ, targetPositionYZ);
+
+            // Log the distance for debugging
+            Debug.Log("Distance from aim point to target object (YZ): " + distanceYZ);
         }
         else
         {
-            Debug.Log("Raycast did not hit any object.");
+            Debug.Log("Ray did not intersect the plane.");
+        }
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        if (planeNormal != Vector3.zero)
+        {
+            // Draw the plane
+            Gizmos.color = Color.green;
+            Vector3 planeCenter = planePoint;
+            Vector3 planeSize = new Vector3(1, 1, 0.01f); // Adjust the size as needed
+
+            // Calculate the plane's orientation
+            Quaternion planeRotation = Quaternion.LookRotation(planeNormal);
+
+            // Draw the plane as a cube
+            Gizmos.matrix = Matrix4x4.TRS(planeCenter, planeRotation, planeSize);
+            Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
         }
     }
 }

@@ -1,3 +1,23 @@
+/** 
+This script is sourced from YouTube channel FistFullOfShrimp's template, which can be found in the link below:
+https://github.com/Fist-Full-of-Shrimp/FFOS-Unity-VR-Template
+It is usable under the MIT License.
+
+MIT License
+
+Copyright (c) 2022 Shelby Drabant
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,13 +25,29 @@ using UnityEngine.XR;
 
 public class InputData : MonoBehaviour
 {
+    private bool _isInitialized = false;
     public InputDevice _rightController;
     public InputDevice _leftController;
     public InputDevice _HMD;
 
+    void Start()
+    {
+        // Start the coroutine to wait for 5 seconds
+        StartCoroutine(WaitForBoot());
+    }
+
+    IEnumerator WaitForBoot()
+    {
+        // Wait for 5 seconds
+        yield return new WaitForSeconds(5f);
+        _isInitialized = true;
+    }
+
 
     void Update()
     {
+        if (!_isInitialized)
+            return;
         if (!_rightController.isValid || !_leftController.isValid || !_HMD.isValid)
             InitializeInputDevices();
     }
@@ -19,14 +55,11 @@ public class InputData : MonoBehaviour
     {
 
         if (!_rightController.isValid)
-            Debug.Log("Right controller is not valid");
-        InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Right, ref _rightController);
+            InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Right, ref _rightController);
         if (!_leftController.isValid)
-            Debug.Log("Left controller is not valid");
-        InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Left, ref _leftController);
+            InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Left, ref _leftController);
         if (!_HMD.isValid)
-            Debug.Log("HMD is not valid");
-        InitializeInputDevice(InputDeviceCharacteristics.HeadMounted, ref _HMD);
+            InitializeInputDevice(InputDeviceCharacteristics.HeadMounted, ref _HMD);
 
     }
 
