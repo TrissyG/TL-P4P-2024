@@ -605,6 +605,7 @@ GameObject:
   - component: {fileID: 85023939}
   - component: {fileID: 85023938}
   - component: {fileID: 85023940}
+  - component: {fileID: 85023941}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -660,6 +661,21 @@ MonoBehaviour:
   rightHandController: {fileID: 1363687444}
   leftHandController: {fileID: 1880628669}
   targetObject: {fileID: 1652615512}
+  pointablePlane: {fileID: 0}
+  rightHandRayInteractor: {fileID: 0}
+  inputActionManager: {fileID: 1006878286}
+--- !u!114 &85023941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85023937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93e5f5f52099e946a982c2bef3f76c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &98933545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8878,7 +8894,7 @@ MonoBehaviour:
   m_TrackingStateInput:
     m_UseReference: 0
     m_Action:
-      m_Name: 
+      m_Name: Tracking State Input
       m_Type: 0
       m_ExpectedControlType: 
       m_Id: 9b2ebeec-5172-4072-976c-15399e453822

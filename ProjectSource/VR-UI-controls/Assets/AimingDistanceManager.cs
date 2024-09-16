@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Oculus.Interaction.Surfaces;
 using UnityEngine;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class AimingDistanceManager : MonoBehaviour
 {
@@ -10,6 +12,10 @@ public class AimingDistanceManager : MonoBehaviour
     public GameObject targetObject;
     public PointablePlane pointablePlane;
     public UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor rightHandRayInteractor;
+    public GameObject inputActionManager;
+    public InputDevice rightHandDevice;
+
+
 
 
     void Start()
@@ -36,18 +42,51 @@ public class AimingDistanceManager : MonoBehaviour
         Debug.Log("Right hand ray interactor parent object: " + rightHandRayInteractor.transform.parent.gameObject.name);
         // show which object the ray interactor is attached to
         Debug.Log("Right hand ray interactor object: " + rightHandRayInteractor.gameObject.name);
-        
+
+        // Get the right-hand controller's InputDevice
+        // Get the right-hand controller's InputDevice
+        // List<InputDevice> devices = new List<InputDevice>();
+        // InputDevices.GetDevicesAtXRNode(XRNode.RightHand, devices);
+        // if (devices.Count > 0)
+        // {
+        //     rightHandDevice = devices[0];
+        //     Debug.Log("Right hand InputDevice found.");
+        // }
+        // else
+        // {
+        //     Debug.LogError("Right hand InputDevice not found.");
+        // }
+        // UnityEngine.XR.InputDevice device = UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand);
+        // if (device.isValid)
+        // {
+        //     Debug.Log("Device = " + device.name);
+        //     Debug.Log("Device is valid.");
+        // }
+        // else
+        // {
+        //     Debug.Log("Device = " + device.name);
+        //     Debug.Log("Device is not valid.");
+        // }
+
+        // rightHandXRController = rightHandController.GetComponent<XRController>();
+        // if (rightHandXRController == null)
+        // {
+        //     Debug.LogError("XRController component not found on the right-hand controller.");
+        // }
+
     }
 
     void Update()
     {
         if (rightHandRayInteractor != null && targetObject != null && pointablePlane != null)
-        {   
-            // Check if the A button is pressed on the right-handed controller
-            if (OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch))
-            {
-                MeasureDistanceToTarget();
-            }
+        {
+            // If the XRI Right Hand Interactor is active and the 'A' button is pressed, measure the distance to the target object
+
+            // if (rightHandController.XRController.inputDevice.IsPressed(inputActionManager.GetComponent<UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRSimulatedControllerInputDeviceState>().selectAction.action))
+            // {
+            //     Debug.Log("'A' button pressed on the right-handed controller.");
+            //     MeasureDistanceToTarget();
+            // }
         }
     }
 
