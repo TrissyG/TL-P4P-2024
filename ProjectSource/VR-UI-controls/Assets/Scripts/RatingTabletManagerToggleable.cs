@@ -24,16 +24,30 @@ public class RatingTabletManagerToggleable : MonoBehaviour
     private TextMeshProUGUI scaleText5;
 
     private int pageIndex = 0;
+    // private string[] questions = new string[]{
+    //     "How much of a problem is your tinnitus at present?",
+    //     "How STRONG or LOUD is tinnitus at present?",
+    //     "How UNCOMFORTABLE is your tinnitus at present, if everything around you is quiet?",
+    //     "How ANNOYING is your tinnitus at present?",
+    //     "How easy is it for you to IGNORE your tinnitus at present?",
+    //     "How UNPLEASANT is your tinnitus at present?"
+    //     };
+
+    // RSQ questions - https://www.nature.com/articles/s41598-022-20524-w/tables/1
     private string[] questions = new string[]{
-        "How much of a problem is your tinnitus at present?",
-        "How STRONG or LOUD is tinnitus at present?",
-        "How UNCOMFORTABLE is your tinnitus at present, if everything around you is quiet?",
-        "How ANNOYING is your tinnitus at present?",
-        "How easy is it for you to IGNORE your tinnitus at present?",
-        "How UNPLEASANT is your tinnitus at present?"
+        "My breathing is faster than usual.",
+        "My heart is beating faster than usual",
+        "My muscles feel tense and cramped.",
+        "My muscles feel relaxed.",
+        "My muscles feel loose.",
+        "I'm feeling very relaxed.",
+        "Right now, I am completely calm.",
+        "I'm feeling sleepy and tired.",
+        "I'm about to doze off.",
+        "I'm feeling refreshed and awake."
         };
 
-    private int[] answers = new int[6];
+    private int[] answers = new int[10];
 
     private string filename;
     private string path;
@@ -87,28 +101,36 @@ public class RatingTabletManagerToggleable : MonoBehaviour
         }
 
         // Certain pages have different rating scales
-        if (pageIndex == 0) {
-            slider.maxValue = 5;
-            scaleText1.text = "Not\na\nproblem";
-            scaleText2.text = "A\nsmall\nproblem";
-            scaleText3.text = "A\nmoderate\nproblem";
-            scaleText4.text = "A\nbig\nproblem";
-            scaleText5.text = "A\nvery big\nproblem";
-        } else if (pageIndex == 4){
-            slider.maxValue = 10;
-            scaleText1.text = "\nVery easy\n1";
-            scaleText2.text = " ";
-            scaleText3.text = " ";
-            scaleText4.text = " ";
-            scaleText5.text = "\nImpossible\n10";
-        } else {
-            slider.maxValue = 10;
-            scaleText1.text = "\nNot at all\n1";
-            scaleText2.text = " ";
-            scaleText3.text = " ";
-            scaleText4.text = " ";
-            scaleText5.text = "\nExtremely\n10";
-        }
+        // if (pageIndex == 0) {
+        //     slider.maxValue = 5;
+        //     scaleText1.text = "Not\na\nproblem";
+        //     scaleText2.text = "A\nsmall\nproblem";
+        //     scaleText3.text = "A\nmoderate\nproblem";
+        //     scaleText4.text = "A\nbig\nproblem";
+        //     scaleText5.text = "A\nvery big\nproblem";
+        // } else if (pageIndex == 4){
+        //     slider.maxValue = 10;
+        //     scaleText1.text = "\nVery easy\n1";
+        //     scaleText2.text = " ";
+        //     scaleText3.text = " ";
+        //     scaleText4.text = " ";
+        //     scaleText5.text = "\nImpossible\n10";
+        // } else {
+        //     slider.maxValue = 10;
+        //     scaleText1.text = "\nNot at all\n1";
+        //     scaleText2.text = " ";
+        //     scaleText3.text = " ";
+        //     scaleText4.text = " ";
+        //     scaleText5.text = "\nExtremely\n10";
+        // }
+
+        // RSQ scale is consistent
+        slider.maxValue = 5;
+        scaleText1.text = "Not\ncorrect\nat all";
+        scaleText2.text = "Rather\nnot\ncorrect";
+        scaleText3.text = "Neither\nnor";
+        scaleText4.text = "Rather\ncorrect";
+        scaleText5.text = "Entirely\ncorrect";
     }
 
     public void previousPage()
