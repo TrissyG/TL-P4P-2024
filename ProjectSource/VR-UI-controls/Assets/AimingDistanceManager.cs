@@ -24,6 +24,8 @@ public class AimingDistanceManager : MonoBehaviour
     private Vector3 planeNormal;
     private Vector3 planePoint;
 
+    private Transform radioPosition;
+
 
 
 
@@ -59,7 +61,7 @@ public class AimingDistanceManager : MonoBehaviour
                 if (Time.time >= lastCallTime + cooldownDuration)
                 {
                     Debug.Log("'A' button pressed on the right-handed controller.");
-                    MeasureDistanceToTarget();
+                    MeasureDisplacementAngle();
                     // Update the last call time
                     lastCallTime = Time.time;
                     _dataLoggingManager.pressLocationingButton();
@@ -68,7 +70,7 @@ public class AimingDistanceManager : MonoBehaviour
         }
     }
 
-    private void MeasureDistanceToTarget()
+    private void MeasureDisplacementAngle()
     {
         // Create a ray from the controller's position in the forward direction to cast towards the target object
         Ray ray = new Ray(rightHandController.transform.position, rightHandController.transform.forward);
@@ -76,38 +78,23 @@ public class AimingDistanceManager : MonoBehaviour
         Vector3 targetPosition = targetObject.transform.position;
         Vector3 rayOrigin = rightHandController.transform.position;
 
-        // Calculate the direction from the user to the target object and set the plane normal to this direction
+        // Calculate the direction from the user to the target object
         Vector3 directionToTarget = (targetPosition - rayOrigin).normalized;
-        Vector3 planeNormal = directionToTarget;
 
-        // Calculate the intersection point of the ray with the plane
-        Plane plane = new Plane(planeNormal, targetPosition);
-        if (plane.Raycast(ray, out float enter))
-        {
-            // Find the point where the ray intersects the plane
-            Vector3 intersectPoint = ray.GetPoint(enter);
+        // Calculate the displacement angle between the user's aim and the vector to the target object
+        float displacementAngle = Vector3.Angle(ray.direction, directionToTarget);
 
-            // Get the YZ components of the intersection point and target position
-            Vector2 intersectPointYZ = new Vector2(intersectPoint.y, intersectPoint.z);
-            Vector2 targetPositionYZ = new Vector2(targetPosition.y, targetPosition.z);
+        // Log the displacement angle for debugging
+        Debug.Log("Displacement angle between aim and target object: " + displacementAngle);
 
-            // Calculate the horizontal distance between the intersection point and the target object on the YZ plane
-            float distanceYZ = Vector2.Distance(intersectPointYZ, targetPositionYZ);
-
-            // Log the distance for debugging
-            Debug.Log("Distance from aim point to target object (YZ): " + distanceYZ);
-
-            _dataLoggingManager.setDistanceFromAudioSource(distanceYZ);
-            _dataLoggingManager.setAudioSourceLocation(targetPosition);
-            _dataLoggingManager.setRayOriginPoint(rayOrigin);
-            _dataLoggingManager.setRayIntersectPoint(intersectPoint);
-            _dataLoggingManager.setAudioSourcePlaneNormal(new Vector2(planeNormal.y, planeNormal.z));
-        }
-        else
-        {
-            Debug.Log("Ray did not intersect the plane.");
-        }
+        // Update DataLoggingManager with the calculated values
+        _dataLoggingManager.setDisplacementAngle(displacementAngle);
+        _dataLoggingManager.setAudioSourceLocation(targetPosition);
+        _dataLoggingManager.setRayOriginPoint(rayOrigin);
+        _dataLoggingManager.setRayIntersectPoint(targetPosition); // Use target position as the intersect point
+        _dataLoggingManager.setAudioSourcePlaneNormal(new Vector2(directionToTarget.y, directionToTarget.z)); // Use the y and z components of the direction vector as the plane normal
     }
+
 
 
     private void OnDrawGizmos()
