@@ -662,7 +662,6 @@ MonoBehaviour:
   leftHandController: {fileID: 1880628669}
   targetObject: {fileID: 1652615512}
   rightHandRayInteractor: {fileID: 0}
-  cooldownDuration: 1
 --- !u!114 &85023941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12588,6 +12587,10 @@ PrefabInstance:
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 829176214, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 829176215, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
       propertyPath: rb
       value: 
@@ -13014,15 +13017,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7467293960597961414, guid: 29eb9cdec523f4944b46fcfae81dc9c8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.67
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 7467293960597961414, guid: 29eb9cdec523f4944b46fcfae81dc9c8, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.67
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 7467293960597961414, guid: 29eb9cdec523f4944b46fcfae81dc9c8, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.67
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 7467293960597961414, guid: 29eb9cdec523f4944b46fcfae81dc9c8, type: 3}
       propertyPath: m_LocalPosition.x

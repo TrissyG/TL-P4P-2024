@@ -36,6 +36,7 @@ public class DataLoggingManager : MonoBehaviour
     private Vector3 rayOriginPoint; // from AimingDistanceManager
     private Vector3 rayIntersectPoint; // from AimingDistanceManager
     private Vector2 audioSourcePlaneNormal; // from AimingDistanceManager
+    private float displacementAngle; // from AimingDistanceManager
 
 
     private enum ObjectName
@@ -128,10 +129,11 @@ public class DataLoggingManager : MonoBehaviour
     public void LogLocationingData()
     {
         DateTime time = DateTime.Now;
-
+        Vector3 radioPosition = radio.transform.position;
+        Quaternion radioRotation = radio.transform.rotation;
         using (StreamWriter writer = new StreamWriter(locationingPath, true))
         {
-            string lineToWrite = $"{SceneManager.GetActiveScene().name},{activatedLocationingMode},{pressedLocationingButton},{RadioPositionIndex},{RadioVisible},{AudioSourceVisible},{offsetRadius},{offsetAzimuth},{offsetInclination},{distanceFromAudioSource},{audioSourceLocation.x},{audioSourceLocation.y},{audioSourceLocation.z},{rayOriginPoint.x},{rayOriginPoint.y},{rayOriginPoint.z},{rayIntersectPoint.x},{rayIntersectPoint.y},{rayIntersectPoint.z},{audioSourcePlaneNormal.x},{audioSourcePlaneNormal.y},{time}";
+            string lineToWrite = $"{SceneManager.GetActiveScene().name},{activatedLocationingMode},{pressedLocationingButton},{RadioPositionIndex},{RadioVisible},{AudioSourceVisible},{offsetRadius},{offsetAzimuth},{offsetInclination},{displacementAngle},{audioSourceLocation.x},{audioSourceLocation.y},{audioSourceLocation.z},{rayOriginPoint.x},{rayOriginPoint.y},{rayOriginPoint.z},{rayIntersectPoint.x},{rayIntersectPoint.y},{radioPosition.x},{radioPosition.y},{radioPosition.z},{time}";
             writer.WriteLine(lineToWrite);
             writer.Flush();
             writer.Close();
@@ -221,7 +223,7 @@ public class DataLoggingManager : MonoBehaviour
 
             using (StreamWriter locationingWriter = new StreamWriter(locationingPath, true))
             {
-                string lineToWrite = "Scenario,activatedLocationingMode,PressedLocationingButton,RadioPositionIndex,RadioVisible,AudioSourceVisible,offsetRadius,offsetAzimuth,offsetInclination,distanceFromAudioSource,AudioSourcePositionX,AudioSourcePositionY,AudioSourcePositionZ,rayOriginX,rayOriginY,rayOriginZ,rayIntersectX,rayIntersectY,rayIntersectZ,planeNormalX,planeNormalY,Time";
+                string lineToWrite = "Scenario,activatedLocationingMode,PressedLocationingButton,RadioPositionIndex,RadioVisible,AudioSourceVisible,offsetRadius,offsetAzimuth,offsetInclination,displacementAngle,AudioSourcePositionX,AudioSourcePositionY,AudioSourcePositionZ,rayOriginX,rayOriginY,rayOriginZ,rayDirectionX,rayDirectionY,rayDirectionZ,radioPositionX,radioPositionY,radioPositionZ,Time";
 
                 locationingWriter.WriteLine(lineToWrite);
                 locationingWriter.Flush();
@@ -333,6 +335,10 @@ public class DataLoggingManager : MonoBehaviour
         audioSourcePlaneNormal = normal;
     }
 
+    public void setDisplacementAngle(float angle)
+    {
+        displacementAngle = angle;
+    }
 
 
 
