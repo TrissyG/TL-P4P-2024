@@ -5,19 +5,20 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TutorialScene.unity
     guid: 0a96f8a3fd7632642933ffe593dbf9cf
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BlankWorld.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BeachWorld.unity
     guid: 64dad44aaa7e5b24a830fe7d2042dea7
   - enabled: 1
     path: Assets/Scenes/ForestWorld.unity
     guid: 0a4242d4142401547a6c60cb0a90409e
   m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e0fd39e4448b30349b587f6e088ab972, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 3fe18cfcadf85b64b9e9d8d679b7fa56, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 1c717763babd9a44db4689a0236a4717, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 5dcb22b18bf25e647b5b7f8de6fac83d, type: 2}
