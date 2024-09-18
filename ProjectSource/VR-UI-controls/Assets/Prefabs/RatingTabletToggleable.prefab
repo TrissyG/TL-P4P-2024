@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8755027630871625682}
   - component: {fileID: 8755027630871625681}
   - component: {fileID: 8755027630871625680}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: NextButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 8755027630895486965}
   - component: {fileID: 8755027630895486967}
   - component: {fileID: 8755027630895486966}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: ScaleText5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 8755027630919924936}
   - component: {fileID: 8755027630919924938}
   - component: {fileID: 8755027630919924937}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: ScaleText4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +420,7 @@ GameObject:
   - component: {fileID: 8755027630946605822}
   - component: {fileID: 8755027630946605821}
   - component: {fileID: 8755027630946605820}
-  m_Layer: 7
+  m_Layer: 5
   m_Name: RatingCuboid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   - component: {fileID: 8755027631048552274}
   - component: {fileID: 8755027631048552284}
   - component: {fileID: 8755027631048552275}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: ButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -651,7 +651,7 @@ GameObject:
   - component: {fileID: 8755027631113166290}
   - component: {fileID: 8755027631113166300}
   - component: {fileID: 8755027631113166291}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: QuestionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -788,7 +788,7 @@ GameObject:
   - component: {fileID: 8755027631182020646}
   - component: {fileID: 8755027631182020645}
   - component: {fileID: 8755027631182020644}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: CompleteCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -908,7 +908,7 @@ GameObject:
   - component: {fileID: 8755027631283995190}
   - component: {fileID: 8755027631283995184}
   - component: {fileID: 8755027631283995191}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,7 +984,7 @@ GameObject:
   - component: {fileID: 8755027631415123294}
   - component: {fileID: 8755027631415123288}
   - component: {fileID: 8755027631415123295}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: RatingText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1119,7 +1119,7 @@ GameObject:
   - component: {fileID: 8755027631466942343}
   - component: {fileID: 8755027631466942337}
   - component: {fileID: 8755027631466942336}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: ScaleText1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1258,7 +1258,7 @@ GameObject:
   - component: {fileID: 8755027631818794547}
   - component: {fileID: 8755027631818794557}
   - component: {fileID: 8755027631818794556}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: PageIndexText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1393,7 +1393,7 @@ GameObject:
   - component: {fileID: 8755027631832264359}
   - component: {fileID: 8755027631832264353}
   - component: {fileID: 8755027631832264352}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: ScaleText3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1528,7 +1528,7 @@ GameObject:
   - component: {fileID: 8755027631938899322}
   - component: {fileID: 8755027631938899300}
   - component: {fileID: 8755027631938899323}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: ScaleText2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1665,7 +1665,7 @@ GameObject:
   - component: {fileID: 8755027631958073319}
   - component: {fileID: 8755027631958073318}
   - component: {fileID: 8755027631958073317}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: RatingCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1795,7 +1795,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8755027631964823333}
-  m_Layer: 7
+  m_Layer: 5
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1828,7 +1828,7 @@ GameObject:
   - component: {fileID: 8755027632111288053}
   - component: {fileID: 8755027632111288055}
   - component: {fileID: 8755027632111288054}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: CompleteText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1963,7 +1963,7 @@ GameObject:
   - component: {fileID: 8755027632129872204}
   - component: {fileID: 8755027632129872206}
   - component: {fileID: 8755027632129872205}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: RatingValueDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2098,7 +2098,7 @@ GameObject:
   - component: {fileID: 8755027632223048230}
   - component: {fileID: 8755027632223048224}
   - component: {fileID: 8755027632223048231}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2174,7 +2174,7 @@ GameObject:
   - component: {fileID: 8755027632283834872}
   - component: {fileID: 8755027632283834874}
   - component: {fileID: 8755027632283834873}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: RatingValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2308,7 +2308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8755027632321220713}
   - component: {fileID: 8755027632321220714}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RatingTabletManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2351,7 +2351,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8755027632337222348}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2389,7 +2389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8755027632339696763}
   - component: {fileID: 8755027632339696762}
-  m_Layer: 7
+  m_Layer: 5
   m_Name: RatingTabletToggleable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2444,7 +2444,7 @@ GameObject:
   - component: {fileID: 8755027632457443726}
   - component: {fileID: 8755027632457443720}
   - component: {fileID: 8755027632457443727}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2520,7 +2520,7 @@ GameObject:
   - component: {fileID: 8755027632510505771}
   - component: {fileID: 8755027632510505749}
   - component: {fileID: 8755027632510505748}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: RatingSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2636,7 +2636,7 @@ GameObject:
   - component: {fileID: 8755027632536945122}
   - component: {fileID: 8755027632536945132}
   - component: {fileID: 8755027632536945123}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: NextButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2769,7 +2769,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8755027632670921275}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2809,7 +2809,7 @@ GameObject:
   - component: {fileID: 8755027632711118865}
   - component: {fileID: 8755027632711118864}
   - component: {fileID: 8755027632711118871}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: BackButtonRatingCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2943,7 +2943,7 @@ GameObject:
   - component: {fileID: 9133200856433857847}
   - component: {fileID: 8358975093710564287}
   - component: {fileID: 6478081574381638648}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SignPost
   m_TagString: Untagged
   m_Icon: {fileID: 0}

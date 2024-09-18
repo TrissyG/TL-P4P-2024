@@ -10,7 +10,7 @@ public class TutorialManager : MonoBehaviour
 {
     public GameObject[] popups;
     public GameObject exampleCube;
-    public GameObject exampleRatingTablet;
+
     public GameObject exampleAudioObject;
 
     private GameObject beginButton;
@@ -18,19 +18,19 @@ public class TutorialManager : MonoBehaviour
     private int popupIndex;
 
     private static int GRAB_OBJECT = 2;
-    private static int QUESTIONNAIRE_OBJECT = 7;
-    private static int SOUND_EXAMPLE = 9;
-    private static int TUTORIAL_COMPLETE = 12;
+    private static int QUESTIONNAIRE_OBJECT = 4;
+    private static int SOUND_EXAMPLE = 6;
+    private static int TUTORIAL_COMPLETE = 8;
     // Start is called before the first frame update
     void Awake()
     {
         // ensure initialised to false
-        exampleRatingTablet.SetActive(false);
         exampleCube.SetActive(false);
         exampleAudioObject.SetActive(false);
 
         // Get a reference to the 'Begin' button
-        if (gameObject.transform.root.Find("Canvas/Tutorial12 - Complete/BeginButton") != null) {
+        if (gameObject.transform.root.Find("Canvas/Tutorial12 - Complete/BeginButton") != null)
+        {
             beginButton = gameObject.transform.root.Find("Canvas/Tutorial12 - Complete/BeginButton").gameObject;
         }
     }
@@ -43,7 +43,9 @@ public class TutorialManager : MonoBehaviour
             if (i == popupIndex)
             {
                 popups[i].SetActive(true);
-            } else {
+            }
+            else
+            {
                 popups[i].SetActive(false);
             }
         }
@@ -51,29 +53,36 @@ public class TutorialManager : MonoBehaviour
         if (popupIndex >= GRAB_OBJECT && popupIndex < QUESTIONNAIRE_OBJECT)
         {
             exampleCube.SetActive(true);
-            exampleRatingTablet.SetActive(false);
-        } else if (popupIndex >= QUESTIONNAIRE_OBJECT && popupIndex < SOUND_EXAMPLE)
+        }
+        else if (popupIndex >= QUESTIONNAIRE_OBJECT && popupIndex < SOUND_EXAMPLE)
         {
-            exampleRatingTablet.SetActive(true);
+            // Enable rating sign here
+
+
             exampleCube.SetActive(false);
         }
 
-        if (popupIndex == SOUND_EXAMPLE) {
-            exampleRatingTablet.SetActive(false);
+        if (popupIndex == SOUND_EXAMPLE)
+        {
+            // Hide rating sign here
             exampleCube.SetActive(false);
             exampleAudioObject.SetActive(true);
-        } else {
+        }
+        else
+        {
             exampleAudioObject.SetActive(false);
         }
 
-        if (popupIndex == TUTORIAL_COMPLETE) {
+        if (popupIndex == TUTORIAL_COMPLETE)
+        {
             // Begin button deliberately disabled here for user study
             // Only the spectator is able to change scenes.
-            if (beginButton != null) {
+            if (beginButton != null)
+            {
                 beginButton.SetActive(false);
             }
         }
-        
+
     }
 
     public void nextTutorialPage()
