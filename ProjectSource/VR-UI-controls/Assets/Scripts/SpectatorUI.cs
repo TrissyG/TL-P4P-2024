@@ -63,6 +63,8 @@ public class SpectatorUI : MonoBehaviour
     // Locationing mode buttons
     private Button buttonLocationingModeOn;
     private Button buttonLocationingModeOff;
+
+    private TextField fieldLocationingPreset;
     private Button buttonSetRadioPosition1;
     private Button buttonSetRadioPosition2;
     private Button buttonSetRadioPosition3;
@@ -203,6 +205,8 @@ public class SpectatorUI : MonoBehaviour
         buttonLocationingModeOn = root.Q("buttonLocationingModeOn") as Button;
         buttonLocationingModeOff = root.Q("buttonLocationingModeOff") as Button;
 
+        buttonLocationingPreset = root.Q("fieldLocationingPreset") as TextField;
+
         buttonSetRadioPosition1 = root.Q<Button>("buttonSetRadioPosition1");
         buttonSetRadioPosition2 = root.Q<Button>("buttonSetRadioPosition2");
         buttonSetRadioPosition3 = root.Q<Button>("buttonSetRadioPosition3");
@@ -283,6 +287,8 @@ public class SpectatorUI : MonoBehaviour
 
         buttonLocationingModeOn.RegisterCallback<ClickEvent>(ActivateLocationingMode);
         buttonLocationingModeOff.RegisterCallback<ClickEvent>(DeactivateLocationingMode);
+
+        fieldLocationingPreset.RegisterValueChangedCallback<int>();
 
         buttonSetRadioPosition1.clicked += () => changeRadioLocation(4);
         buttonSetRadioPosition2.clicked += () => changeRadioLocation(3);
@@ -1545,6 +1551,15 @@ public class SpectatorUI : MonoBehaviour
         {
             audioSourceManager.SetSphericalCoordinates(radius, inclination, azimuth);
             _dataLoggingManager.setAudioSourceOffset(radius, inclination, azimuth);
+        }
+    }
+
+    public void SetOffsetPreset(int index)
+    {
+        if (audioSourceManager != null)
+        {
+            audioSourceManager.setOffsetPreset(index);
+            _dataLoggingManager.setAudioSourceOffsetPreset(index);
         }
     }
 
