@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.0082
   m_LinearFogStart: 52.9
   m_LinearFogEnd: 489.1
-  m_AmbientSkyColor: {r: 0, g: 0.8224823, b: 1.6207738, a: 3.33}
+  m_AmbientSkyColor: {r: 0.18536092, g: 0.8894998, b: 1.5718608, a: 3.33}
   m_AmbientEquatorColor: {r: 0.3820755, g: 0.8589736, b: 1, a: 3.33}
   m_AmbientGroundColor: {r: 0.049928807, g: 0.3026737, b: 0.6226415, a: 3.33}
   m_AmbientIntensity: 2.5
@@ -14304,7 +14304,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: How many bird species do you notice?
+  m_text: How many types of birds do you notice?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -15709,7 +15709,7 @@ WindZone:
   m_Enabled: 1
   m_Mode: 0
   m_Radius: 20
-  m_WindMain: 1
+  m_WindMain: 2
   m_WindTurbulence: 1
   m_WindPulseMagnitude: 0.5
   m_WindPulseFrequency: 0.01
