@@ -61,7 +61,7 @@ public class RatingTabletManagerToggleable : MonoBehaviour
         "I felt pressured while doing these." // 22
         };
 
-    private int[] answers = new int[10];
+    private int[] answers = new int[22];
 
     private string filename;
     private string path;
@@ -138,16 +138,19 @@ public class RatingTabletManagerToggleable : MonoBehaviour
         //     scaleText5.text = "\nExtremely\n10";
         // }
 
-        if (pageIndex == 0) {
+        if (pageIndex == 0)
+        {
             // First 10 questions are the RSQ
-                    slider.maxValue = 5;
-        scaleText1.text = "Not\ncorrect\nat all";
-        scaleText2.text = "Rather\nnot\ncorrect";
-        scaleText3.text = "Neither\nnor";
-        scaleText4.text = "Rather\ncorrect";
-        scaleText5.text = "Entirely\ncorrect";
+            slider.maxValue = 5;
+            scaleText1.text = "Not\ncorrect\nat all";
+            scaleText2.text = "Rather\nnot\ncorrect";
+            scaleText3.text = "Neither\nnor";
+            scaleText4.text = "Rather\ncorrect";
+            scaleText5.text = "Entirely\ncorrect";
 
-        } else if (pageIndex == 10) {
+        }
+        else if (pageIndex == 10)
+        {
             // 11th question, start of IMI
             slider.maxValue = 7; // IMI rating goes from 1 to 7
             scaleText1.text = "Not at\nall true\n1";
@@ -173,17 +176,41 @@ public class RatingTabletManagerToggleable : MonoBehaviour
             backButton.SetActive(false);
         }
 
+        // Update slider to saved value
+        slider.value = answers[pageIndex];
+
         nextButtonText.text = "Next";
     }
 
     public void nextPage()
     {
+        // Save answer
         Debug.Log((int)slider.value);
         answers[pageIndex] = (int)slider.value;
 
         if (pageIndex < questions.Length - 1)
         {
             pageIndex++;
+
+
+            // Update slider to middle value, as long as there is no saved answer already
+            if (answers[pageIndex] == 0)
+            {
+                if (pageIndex < 10)
+                {
+                    // RSQ
+                    slider.value = 3;
+                }
+                else
+                {
+                    // IMI
+                    slider.value = 4;
+                }
+            }
+            else
+            {
+                slider.value = answers[pageIndex];
+            }
         }
         else
         {
@@ -255,7 +282,7 @@ public class RatingTabletManagerToggleable : MonoBehaviour
         if (TSNSExperimentData.Filename == null)
         {
             TSNSExperimentData.ExperimentStartTime = DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss");
-            TSNSExperimentData.Filename = "TSNS_results-" + TSNSExperimentData.ExperimentStartTime + ".csv";
+            TSNSExperimentData.Filename = "RSQ_IMI_22q_results-" + TSNSExperimentData.ExperimentStartTime + ".csv";
             firstScene = true;
         }
 
@@ -265,7 +292,7 @@ public class RatingTabletManagerToggleable : MonoBehaviour
         {
             using (StreamWriter writer = new StreamWriter(path, true))
             {
-                string lineToWrite = "Scenario,1,2,3,4,5,6,startTime,endTime";
+                string lineToWrite = "Scenario,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,startTime,endTime";
 
                 writer.WriteLine(lineToWrite);
                 writer.Flush();
