@@ -66,6 +66,9 @@
                 <ui:Button text="ON" display-tooltip-when-elided="true" name="buttonLocationingModeOn" style="width: 100px; height: 50px; margin-right: 10px;" />
                 <ui:Button text="OFF" display-tooltip-when-elided="true" name="buttonLocationingModeOff" style="width: 100px; height: 50px;" />
             </ui:VisualElement>
+            <ui:VisualElement>
+                <ui:TextField picking-mode="Ignore" label="Locationing Preset" text="0" name="fieldLocationingPreset" is-delayed="true" max-length="4" style="align-items: center; justify-content: flex-start;" />
+            </ui:VisualElement>
             <ui:Label text="Radio Positions" display-tooltip-when-elided="true" style="margin-top: 10px; margin-bottom: 5px;"/>
             <ui:VisualElement style="flex-direction: row; align-items: left; width: 200px;">
                 <ui:Image style="--unity-image: url(../Images/locationingPosition1.png); width: 70px; height: 70px;" name="locationingPosition1Image"/>
