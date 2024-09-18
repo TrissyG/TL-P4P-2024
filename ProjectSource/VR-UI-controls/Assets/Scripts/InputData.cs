@@ -30,10 +30,16 @@ public class InputData : MonoBehaviour
     public InputDevice _leftController;
     public InputDevice _HMD;
 
+    public XRInteractorLineVisual rightLineVisual;
+    public XRInteractorLineVisual leftLineVisual;
+    public Gradient invalidColorGradient;
+    public Gradient validColorGradient;
+
     void Start()
     {
         // Start the coroutine to wait for 5 seconds
         StartCoroutine(WaitForBoot());
+
     }
 
     IEnumerator WaitForBoot()
@@ -56,8 +62,12 @@ public class InputData : MonoBehaviour
 
         if (!_rightController.isValid)
             InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Right, ref _rightController);
+            rightLineVisual = _rightController.GetComponent<XRInteractorLineVisual>();
+            invalidColorGradient = rightLineVisual.invalidColorGradient;
+            validColorGradient = rightLineVisual.validColorGradient;
         if (!_leftController.isValid)
             InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Left, ref _leftController);
+            leftLineVisual = _leftController.GetComponent<XRInteractorLineVisual>();
         if (!_HMD.isValid)
             InitializeInputDevice(InputDeviceCharacteristics.HeadMounted, ref _HMD);
 
@@ -92,7 +102,7 @@ public void activateControllerObjectDetection()
             if (lineVisual != null)
             {
                 // Restore the original validColorGradient if needed
-                lineVisual.validColorGradient = originalValidColorGradient;
+                lineVisual.validColorGradient.set = validColorGradient;
             }
         }
     }
@@ -105,7 +115,7 @@ public void activateControllerObjectDetection()
             if (lineVisual != null)
             {
                 // Set the validColorGradient to the same as the invalidColorGradient
-                lineVisual.validColorGradient = lineVisual.invalidColorGradient;
+                lineVisual.validColorGradient.set = invalidColorGradient;
             }
         }
     }
