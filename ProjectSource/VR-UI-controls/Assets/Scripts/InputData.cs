@@ -26,12 +26,15 @@ using UnityEngine.XR;
 public class InputData : MonoBehaviour
 {
     private bool _isInitialized = false;
+    private List<GameObject> controllers = new List<GameObject>();
     public InputDevice _rightController;
+    public GameObject _rightControllerObject;
     public InputDevice _leftController;
+    public GameObject _leftControllerObject;
     public InputDevice _HMD;
 
-    public XRInteractorLineVisual rightLineVisual;
-    public XRInteractorLineVisual leftLineVisual;
+    public UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual rightLineVisual;
+    public UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual leftLineVisual;
     public Gradient invalidColorGradient;
     public Gradient validColorGradient;
 
@@ -39,7 +42,10 @@ public class InputData : MonoBehaviour
     {
         // Start the coroutine to wait for 5 seconds
         StartCoroutine(WaitForBoot());
-
+        _rightControllerObject = GameObject.Find("RightHand Controller");
+        controllers.Add(_rightControllerObject);
+        _leftControllerObject = GameObject.Find("LeftHand Controller");
+        controllers.Add(_leftControllerObject);
     }
 
     IEnumerator WaitForBoot()
@@ -58,16 +64,16 @@ public class InputData : MonoBehaviour
             InitializeInputDevices();
     }
     private void InitializeInputDevices()
-    {
+    {   
 
         if (!_rightController.isValid)
             InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Right, ref _rightController);
-            rightLineVisual = _rightController.GetComponent<XRInteractorLineVisual>();
+            rightLineVisual = _rightControllerObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
             invalidColorGradient = rightLineVisual.invalidColorGradient;
             validColorGradient = rightLineVisual.validColorGradient;
         if (!_leftController.isValid)
             InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Left, ref _leftController);
-            leftLineVisual = _leftController.GetComponent<XRInteractorLineVisual>();
+            leftLineVisual = _leftControllerObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
         if (!_HMD.isValid)
             InitializeInputDevice(InputDeviceCharacteristics.HeadMounted, ref _HMD);
 
@@ -94,15 +100,20 @@ public class InputData : MonoBehaviour
 
     }
 
-public void activateControllerObjectDetection()
-    {
+    public void activateControllerObjectDetection(){
+
         foreach (GameObject controller in controllers)
-        {
-            XRInteractorLineVisual lineVisual = controller.GetComponent<XRInteractorLineVisual>();
-            if (lineVisual != null)
-            {
-                // Restore the original validColorGradient if needed
-                lineVisual.validColorGradient.set = validColorGradient;
+        {   
+            try {
+                UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual lineVisual = controller.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
+                if (lineVisual != null)
+                    {
+                        // Set the validColorGradient to the same as the invalidColorGradient
+                        lineVisual.validColorGradient = invalidColorGradient;
+                    }
+                } catch (System.Exception e) {
+                Debug.Log("Error: " + e);
+                continue;
             }
         }
     }
@@ -111,11 +122,11 @@ public void activateControllerObjectDetection()
     {
         foreach (GameObject controller in controllers)
         {
-            XRInteractorLineVisual lineVisual = controller.GetComponent<XRInteractorLineVisual>();
+            UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual lineVisual = controller.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
             if (lineVisual != null)
             {
                 // Set the validColorGradient to the same as the invalidColorGradient
-                lineVisual.validColorGradient.set = invalidColorGradient;
+                lineVisual.validColorGradient = invalidColorGradient;
             }
         }
     }
