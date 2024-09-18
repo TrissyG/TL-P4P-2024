@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using System;
 using AudioSourceManagement;
 
@@ -141,14 +142,18 @@ public class SpectatorUI : MonoBehaviour
 
     private DataLoggingManager _dataLoggingManager;
 
+    GameObject rightController;
+    GameObject leftController;
+
     private void OnEnable()
-    {
+    {   
+        rightController = GameObject.Find("RightHand Controller");
+        leftController = GameObject.Find("LeftHand Controller");
         _dataLoggingManager = FindObjectOfType<DataLoggingManager>();
         // The UXML is already instantiated by the UIDocument component
         var uiDocument = GetComponent<UIDocument>();
         VisualElement root = uiDocument.rootVisualElement;
-
-
+        
         buttonSceneTutorial = root.Q("buttonSceneTutorial") as Button;
         buttonScene1 = root.Q("buttonScene1") as Button;
         buttonScene2 = root.Q("buttonScene2") as Button;
@@ -1433,7 +1438,7 @@ public class SpectatorUI : MonoBehaviour
             radioPolygon.GetComponent<Rigidbody>().useGravity = false;
             changeRadioLocation(2);
             // deactivate ray detecting for the radio
-
+            XRRayInteractor rightRayInteractor = rightController.GetComponent<XRRayInteractor>();
 
             _dataLoggingManager.setRadioPositionIndex(3);
             _dataLoggingManager.activateLocationingMode();

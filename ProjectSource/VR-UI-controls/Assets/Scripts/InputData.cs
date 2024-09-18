@@ -84,4 +84,31 @@ public class InputData : MonoBehaviour
 
     }
 
+public void activateControllerObjectDetection()
+    {
+        foreach (GameObject controller in controllers)
+        {
+            XRInteractorLineVisual lineVisual = controller.GetComponent<XRInteractorLineVisual>();
+            if (lineVisual != null)
+            {
+                // Restore the original validColorGradient if needed
+                lineVisual.validColorGradient = originalValidColorGradient;
+            }
+        }
+    }
+
+    public void deactivateControllerObjectDetection()
+    {
+        foreach (GameObject controller in controllers)
+        {
+            XRInteractorLineVisual lineVisual = controller.GetComponent<XRInteractorLineVisual>();
+            if (lineVisual != null)
+            {
+                // Set the validColorGradient to the same as the invalidColorGradient
+                lineVisual.validColorGradient = lineVisual.invalidColorGradient;
+            }
+        }
+    }
+
+
 }

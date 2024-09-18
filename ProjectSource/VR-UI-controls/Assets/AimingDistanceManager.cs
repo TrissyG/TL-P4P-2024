@@ -24,11 +24,6 @@ public class AimingDistanceManager : MonoBehaviour
     private Vector3 planeNormal;
     private Vector3 planePoint;
 
-    private Transform radioPosition;
-
-
-
-
     void Start()
     {
         // Find the right-hand controller's XRRayInteractor
@@ -94,8 +89,6 @@ public class AimingDistanceManager : MonoBehaviour
         _dataLoggingManager.setRayIntersectPoint(targetPosition); // Use target position as the intersect point
         _dataLoggingManager.setAudioSourcePlaneNormal(new Vector2(directionToTarget.y, directionToTarget.z)); // Use the y and z components of the direction vector as the plane normal
     }
-
-
 
     private void OnDrawGizmos()
     {
