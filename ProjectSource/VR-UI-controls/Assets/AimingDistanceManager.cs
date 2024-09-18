@@ -10,9 +10,10 @@ public class AimingDistanceManager : MonoBehaviour
     public GameObject rightHandController;
     public GameObject leftHandController;
     public GameObject targetObject;
-    // public PointablePlane pointablePlane;
+
     public UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor rightHandRayInteractor;
-    // public GameObject inputActionManager;
+    public Gradient activeGradient; 
+    public Gradient inactiveGradient;
     private InputData _inputData;
     private DataLoggingManager _dataLoggingManager;
     // Cooldown duration in seconds for the MeasureDistanceToTarget method
@@ -28,6 +29,7 @@ public class AimingDistanceManager : MonoBehaviour
     {
         // Find the right-hand controller's XRRayInteractor
         rightHandRayInteractor = FindObjectOfType<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>();
+
         if (rightHandRayInteractor == null)
         {
             Debug.LogError("XRRayInteractor component not found for the right-hand controller.");
@@ -35,6 +37,8 @@ public class AimingDistanceManager : MonoBehaviour
 
         // Initialize _inputData
         _inputData = FindObjectOfType<InputData>();
+        activeGradient = _inputData.validColorGradient;
+        inactiveGradient = _inputData.invalidColorGradient;
         if (_inputData == null)
         {
             Debug.LogError("InputData component not found in the scene.");
