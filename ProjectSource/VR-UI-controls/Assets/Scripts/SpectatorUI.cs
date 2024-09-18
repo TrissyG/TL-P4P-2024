@@ -304,18 +304,72 @@ public class SpectatorUI : MonoBehaviour
         buttonXZ_315.clicked += () => SetAzimuth(315);
 
 
-
-        // GameObject audioSourceManager = Instantiate(audioSourceManager, new Vector3(0, 0, 0), Quaternion.identity);
-        audioSourceManager = Instantiate(audioSourceManagerPrefab).GetComponent<AudioSourceManager>();
-        if (audioSourceManager == null)
+        if (SceneManager.GetActiveScene().name == "BlankWorld")
         {
-            Debug.LogWarning("AudioSourceManager not found in the scene.");
-            return;
+            buttonLocationingModeOn.SetEnabled(true);
+            buttonLocationingModeOff.SetEnabled(true);
+            buttonSetRadioPosition1.SetEnabled(true);
+            buttonSetRadioPosition2.SetEnabled(true);
+            buttonSetRadioPosition3.SetEnabled(true);
+            buttonSetRadioPosition4.SetEnabled(true);
+            buttonSetRadioPosition5.SetEnabled(true);
+            sliderSoundOffsetRadius.SetEnabled(true);
+            buttonYZ_0.SetEnabled(true);
+            buttonYZ_45.SetEnabled(true);
+            buttonYZ_90.SetEnabled(true);
+            buttonYZ_135.SetEnabled(true);
+            buttonYZ_180.SetEnabled(true);
+            buttonYZ_225.SetEnabled(true);
+            buttonYZ_270.SetEnabled(true);
+            buttonYZ_315.SetEnabled(true);
+            buttonXZ_0.SetEnabled(true);
+            buttonXZ_45.SetEnabled(true);
+            buttonXZ_90.SetEnabled(true);
+            buttonXZ_135.SetEnabled(true);
+            buttonXZ_180.SetEnabled(true);
+            buttonXZ_225.SetEnabled(true);
+            buttonXZ_270.SetEnabled(true);
+            buttonXZ_315.SetEnabled(true);
+            
+            audioSourceManager = Instantiate(audioSourceManagerPrefab).GetComponent<AudioSourceManager>();
+            if (audioSourceManager == null)
+            {
+                Debug.LogWarning("AudioSourceManager not found in the scene.");
+                return;
+            }
+            SetSphericalCoordinates(radius, inclination, azimuth); // should be zero
         }
-        SetSphericalCoordinates(radius, inclination, azimuth); // should be zero
+        else
+        {
+            buttonLocationingModeOn.SetEnabled(false);
+            buttonLocationingModeOff.SetEnabled(false);
+            buttonSetRadioPosition1.SetEnabled(false);
+            buttonSetRadioPosition2.SetEnabled(false);
+            buttonSetRadioPosition3.SetEnabled(false);
+            buttonSetRadioPosition4.SetEnabled(false);
+            buttonSetRadioPosition5.SetEnabled(false);
+            sliderSoundOffsetRadius.SetEnabled(false);
+            buttonYZ_0.SetEnabled(false);
+            buttonYZ_45.SetEnabled(false);
+            buttonYZ_90.SetEnabled(false);
+            buttonYZ_135.SetEnabled(false);
+            buttonYZ_180.SetEnabled(false);
+            buttonYZ_225.SetEnabled(false);
+            buttonYZ_270.SetEnabled(false);
+            buttonYZ_315.SetEnabled(false);
+            buttonXZ_0.SetEnabled(false);
+            buttonXZ_45.SetEnabled(false);
+            buttonXZ_90.SetEnabled(false);
+            buttonXZ_135.SetEnabled(false);
+            buttonXZ_180.SetEnabled(false);
+            buttonXZ_225.SetEnabled(false);
+            buttonXZ_270.SetEnabled(false);
+            buttonXZ_315.SetEnabled(false);
+        }
+
 
         buttonExitApplication.RegisterCallback<ClickEvent>(ExitApplication);
-
+        
         // Get the mesh renderer of the radio, which allows us to toggle visibility without disabling the object.
         // meshrenderer of parent object, not the audio source "Radio" in this script
         if (SceneManager.GetActiveScene().name != "TutorialScene")
