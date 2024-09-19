@@ -67,25 +67,26 @@ public class InputData : MonoBehaviour
     }
     private void InitializeInputDevices()
     {
-        Debug.Log("Initializing input devices");
+        //Debug.Log("Initializing input devices");
         if (!_rightController.isValid)
         {
-            Debug.Log("Initializing right controller");
+            //Debug.Log("Initializing right controller");
             InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Right, ref _rightController);
             // rightLineVisual = _rightControllerObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
             // validColorGradient = rightLineVisual.validColorGradient;
+
         }
 
         if (!_leftController.isValid)
         {
-            Debug.Log("Initializing left controller");
+            //Debug.Log("Initializing left controller");
             InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Left, ref _leftController);
             //leftLineVisual = _leftControllerObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
         }
 
         if (!_HMD.isValid)
         {
-            Debug.Log("Initializing HMD");
+            //Debug.Log("Initializing HMD");
             InitializeInputDevice(InputDeviceCharacteristics.HeadMounted, ref _HMD);
         }
 
@@ -103,7 +104,7 @@ public class InputData : MonoBehaviour
         {
             inputDevice = devices[0];
         }
-        //Debug.Log("Input device initialized");
+        //Debug.Log("Input device initialized");sss
         // List all the input devices
         foreach (var device in devices)
         {

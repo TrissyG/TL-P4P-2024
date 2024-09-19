@@ -62,13 +62,13 @@ public class AimingDistanceManager : MonoBehaviour
         {
             if (_inputData == null)
             {
-                Debug.LogError("InputData is null.");
+                //Debug.LogError("InputData is null.");
                 return;
             }
 
             if (!_inputData._rightController.isValid)
             {
-                Debug.LogError("Right controller is not valid.");
+                //Debug.LogError("Right controller is not valid.");
                 return;
             }
 
