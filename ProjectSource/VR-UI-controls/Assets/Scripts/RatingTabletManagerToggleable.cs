@@ -24,16 +24,44 @@ public class RatingTabletManagerToggleable : MonoBehaviour
     private TextMeshProUGUI scaleText5;
 
     private int pageIndex = 0;
+    // private string[] questions = new string[]{
+    //     "How much of a problem is your tinnitus at present?",
+    //     "How STRONG or LOUD is tinnitus at present?",
+    //     "How UNCOMFORTABLE is your tinnitus at present, if everything around you is quiet?",
+    //     "How ANNOYING is your tinnitus at present?",
+    //     "How easy is it for you to IGNORE your tinnitus at present?",
+    //     "How UNPLEASANT is your tinnitus at present?"
+    //     };
+
     private string[] questions = new string[]{
-        "How much of a problem is your tinnitus at present?",
-        "How STRONG or LOUD is tinnitus at present?",
-        "How UNCOMFORTABLE is your tinnitus at present, if everything around you is quiet?",
-        "How ANNOYING is your tinnitus at present?",
-        "How easy is it for you to IGNORE your tinnitus at present?",
-        "How UNPLEASANT is your tinnitus at present?"
+        // RSQ questions - https://www.nature.com/articles/s41598-022-20524-w/tables/1
+        "My breathing is faster than usual.", // 1
+        "My heart is beating faster than usual", // 2
+        "My muscles feel tense and cramped.", // 3
+        "My muscles feel relaxed.", // 4
+        "My muscles feel loose.", // 5
+        "I'm feeling very relaxed.", // 6
+        "Right now, I am completely calm.", // 7
+        "I'm feeling sleepy and tired.", // 8
+        "I'm about to doze off.", // 9
+        "I'm feeling refreshed and awake.", // 10
+        // IMI - Interest/Enjoyment
+        "I enjoyed doing this activity very much.", // 11
+        "This activity was fun to do.", // 12
+        "I thought this was a boring activity.", // 13
+        "This activity did not hold my attention at all.", // 14
+        "I would describe this activity as very interesting.", // 15
+        "I thought this activity was quite enjoyable.", // 16
+        "While I was doing this activity, I was thinking about how much I enjoyed it.", // 17
+        // IMI - Pressure/Tension
+        "I did not feel nervous at all while doing this.", // 18
+        "I felt very tense while doing this activity.", // 19
+        "I was very relaxed in doing these.", // 20
+        "I was anxious while working on this task.", // 21
+        "I felt pressured while doing these." // 22
         };
 
-    private int[] answers = new int[6];
+    private int[] answers = new int[22];
 
     private string filename;
     private string path;
@@ -87,28 +115,51 @@ public class RatingTabletManagerToggleable : MonoBehaviour
         }
 
         // Certain pages have different rating scales
-        if (pageIndex == 0) {
+        // if (pageIndex == 0) {
+        //     slider.maxValue = 5;
+        //     scaleText1.text = "Not\na\nproblem";
+        //     scaleText2.text = "A\nsmall\nproblem";
+        //     scaleText3.text = "A\nmoderate\nproblem";
+        //     scaleText4.text = "A\nbig\nproblem";
+        //     scaleText5.text = "A\nvery big\nproblem";
+        // } else if (pageIndex == 4){
+        //     slider.maxValue = 10;
+        //     scaleText1.text = "\nVery easy\n1";
+        //     scaleText2.text = " ";
+        //     scaleText3.text = " ";
+        //     scaleText4.text = " ";
+        //     scaleText5.text = "\nImpossible\n10";
+        // } else {
+        //     slider.maxValue = 10;
+        //     scaleText1.text = "\nNot at all\n1";
+        //     scaleText2.text = " ";
+        //     scaleText3.text = " ";
+        //     scaleText4.text = " ";
+        //     scaleText5.text = "\nExtremely\n10";
+        // }
+
+        if (pageIndex == 0)
+        {
+            // First 10 questions are the RSQ
             slider.maxValue = 5;
-            scaleText1.text = "Not\na\nproblem";
-            scaleText2.text = "A\nsmall\nproblem";
-            scaleText3.text = "A\nmoderate\nproblem";
-            scaleText4.text = "A\nbig\nproblem";
-            scaleText5.text = "A\nvery big\nproblem";
-        } else if (pageIndex == 4){
-            slider.maxValue = 10;
-            scaleText1.text = "\nVery easy\n1";
-            scaleText2.text = " ";
-            scaleText3.text = " ";
-            scaleText4.text = " ";
-            scaleText5.text = "\nImpossible\n10";
-        } else {
-            slider.maxValue = 10;
-            scaleText1.text = "\nNot at all\n1";
-            scaleText2.text = " ";
-            scaleText3.text = " ";
-            scaleText4.text = " ";
-            scaleText5.text = "\nExtremely\n10";
+            scaleText1.text = "Not\ncorrect\nat all";
+            scaleText2.text = "Rather\nnot\ncorrect";
+            scaleText3.text = "Neither\nnor";
+            scaleText4.text = "Rather\ncorrect";
+            scaleText5.text = "Entirely\ncorrect";
+
         }
+        else if (pageIndex == 10)
+        {
+            // 11th question, start of IMI
+            slider.maxValue = 7; // IMI rating goes from 1 to 7
+            scaleText1.text = "Not at\nall true\n1";
+            scaleText2.text = "";
+            scaleText3.text = "Somewhat\ntrue\n4";
+            scaleText4.text = "";
+            scaleText5.text = "Very\ntrue\n7";
+        }
+
     }
 
     public void previousPage()
@@ -125,17 +176,41 @@ public class RatingTabletManagerToggleable : MonoBehaviour
             backButton.SetActive(false);
         }
 
+        // Update slider to saved value
+        slider.value = answers[pageIndex];
+
         nextButtonText.text = "Next";
     }
 
     public void nextPage()
     {
+        // Save answer
         Debug.Log((int)slider.value);
         answers[pageIndex] = (int)slider.value;
 
         if (pageIndex < questions.Length - 1)
         {
             pageIndex++;
+
+
+            // Update slider to middle value, as long as there is no saved answer already
+            if (answers[pageIndex] == 0)
+            {
+                if (pageIndex < 10)
+                {
+                    // RSQ
+                    slider.value = 3;
+                }
+                else
+                {
+                    // IMI
+                    slider.value = 4;
+                }
+            }
+            else
+            {
+                slider.value = answers[pageIndex];
+            }
         }
         else
         {
@@ -207,7 +282,7 @@ public class RatingTabletManagerToggleable : MonoBehaviour
         if (TSNSExperimentData.Filename == null)
         {
             TSNSExperimentData.ExperimentStartTime = DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss");
-            TSNSExperimentData.Filename = "TSNS_results-" + TSNSExperimentData.ExperimentStartTime + ".csv";
+            TSNSExperimentData.Filename = "RSQ_IMI_22q_results-" + TSNSExperimentData.ExperimentStartTime + ".csv";
             firstScene = true;
         }
 
@@ -217,7 +292,7 @@ public class RatingTabletManagerToggleable : MonoBehaviour
         {
             using (StreamWriter writer = new StreamWriter(path, true))
             {
-                string lineToWrite = "Scenario,1,2,3,4,5,6,startTime,endTime";
+                string lineToWrite = "Scenario,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,startTime,endTime";
 
                 writer.WriteLine(lineToWrite);
                 writer.Flush();
