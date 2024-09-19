@@ -62,6 +62,8 @@ public class SpectatorUI : MonoBehaviour
     // Locationing mode buttons
     private Button buttonLocationingModeOn;
     private Button buttonLocationingModeOff;
+
+    private TextField fieldLocationingPreset;
     private Button buttonSetRadioPosition1;
     private Button buttonSetRadioPosition2;
     private Button buttonSetRadioPosition3;
@@ -104,7 +106,7 @@ public class SpectatorUI : MonoBehaviour
     public GameObject radio; // the 'Audio Source' GameObject child of the rendered object
 
     public GameObject audioSourceManagerPrefab;
-    private AudioSourceManager audioSourceManager;
+    public AudioSourceManager audioSourceManager;
     private MeshRenderer radioAudioSourceRenderer; // if we want to toggle visibility of the audio source
     private AudioSource radioAudioSource;
 
@@ -137,6 +139,7 @@ public class SpectatorUI : MonoBehaviour
 
     // spectator cameras
     private SpectatorCamera spectator;
+    private DataLoggingManager _dataLoggingManager;
 
     private void OnEnable()
     {
@@ -193,6 +196,8 @@ public class SpectatorUI : MonoBehaviour
 
         buttonLocationingModeOn = root.Q("buttonLocationingModeOn") as Button;
         buttonLocationingModeOff = root.Q("buttonLocationingModeOff") as Button;
+
+        fieldLocationingPreset = root.Q("fieldLocationingPreset") as TextField;
 
         buttonSetRadioPosition1 = root.Q<Button>("buttonSetRadioPosition1");
         buttonSetRadioPosition2 = root.Q<Button>("buttonSetRadioPosition2");
@@ -275,6 +280,8 @@ public class SpectatorUI : MonoBehaviour
         buttonLocationingModeOn.RegisterCallback<ClickEvent>(ActivateLocationingMode);
         buttonLocationingModeOff.RegisterCallback<ClickEvent>(DeactivateLocationingMode);
 
+        fieldLocationingPreset.RegisterValueChangedCallback<string>(SetOffsetPreset);
+
         buttonSetRadioPosition1.clicked += () => changeRadioLocation(4);
         buttonSetRadioPosition2.clicked += () => changeRadioLocation(3);
         buttonSetRadioPosition3.clicked += () => changeRadioLocation(2);
@@ -299,14 +306,70 @@ public class SpectatorUI : MonoBehaviour
         buttonXZ_270.clicked += () => SetAzimuth(270);
         buttonXZ_315.clicked += () => SetAzimuth(315);
 
-        // GameObject audioSourceManager = Instantiate(audioSourceManager, new Vector3(0, 0, 0), Quaternion.identity);
-        audioSourceManager = Instantiate(audioSourceManagerPrefab).GetComponent<AudioSourceManager>();
-        if (audioSourceManager == null)
+        if (SceneManager.GetActiveScene().name == "BlankWorld")
         {
-            Debug.LogWarning("AudioSourceManager not found in the scene.");
-            return;
+            //_inputData = FindObjectOfType<InputData>();
+            buttonLocationingModeOn.SetEnabled(true);
+            buttonLocationingModeOff.SetEnabled(true);
+            buttonSetRadioPosition1.SetEnabled(true);
+            buttonSetRadioPosition2.SetEnabled(true);
+            buttonSetRadioPosition3.SetEnabled(true);
+            buttonSetRadioPosition4.SetEnabled(true);
+            buttonSetRadioPosition5.SetEnabled(true);
+            sliderSoundOffsetRadius.SetEnabled(true);
+            buttonYZ_0.SetEnabled(true);
+            buttonYZ_45.SetEnabled(true);
+            buttonYZ_90.SetEnabled(true);
+            buttonYZ_135.SetEnabled(true);
+            buttonYZ_180.SetEnabled(true);
+            buttonYZ_225.SetEnabled(true);
+            buttonYZ_270.SetEnabled(true);
+            buttonYZ_315.SetEnabled(true);
+            buttonXZ_0.SetEnabled(true);
+            buttonXZ_45.SetEnabled(true);
+            buttonXZ_90.SetEnabled(true);
+            buttonXZ_135.SetEnabled(true);
+            buttonXZ_180.SetEnabled(true);
+            buttonXZ_225.SetEnabled(true);
+            buttonXZ_270.SetEnabled(true);
+            buttonXZ_315.SetEnabled(true);
+
+            //audioSourceManager = Instantiate(audioSourceManagerPrefab).GetComponent<AudioSourceManager>();
+            if (audioSourceManager == null)
+            {
+                Debug.LogWarning("AudioSourceManager not found in the scene.");
+                return;
+            }
+
+            SetSphericalCoordinates(radius, inclination, azimuth); // should be zero
         }
-        SetSphericalCoordinates(radius, inclination, azimuth); // should be zero
+        else
+        {
+            buttonLocationingModeOn.SetEnabled(false);
+            buttonLocationingModeOff.SetEnabled(false);
+            buttonSetRadioPosition1.SetEnabled(false);
+            buttonSetRadioPosition2.SetEnabled(false);
+            buttonSetRadioPosition3.SetEnabled(false);
+            buttonSetRadioPosition4.SetEnabled(false);
+            buttonSetRadioPosition5.SetEnabled(false);
+            sliderSoundOffsetRadius.SetEnabled(false);
+            buttonYZ_0.SetEnabled(false);
+            buttonYZ_45.SetEnabled(false);
+            buttonYZ_90.SetEnabled(false);
+            buttonYZ_135.SetEnabled(false);
+            buttonYZ_180.SetEnabled(false);
+            buttonYZ_225.SetEnabled(false);
+            buttonYZ_270.SetEnabled(false);
+            buttonYZ_315.SetEnabled(false);
+            buttonXZ_0.SetEnabled(false);
+            buttonXZ_45.SetEnabled(false);
+            buttonXZ_90.SetEnabled(false);
+            buttonXZ_135.SetEnabled(false);
+            buttonXZ_180.SetEnabled(false);
+            buttonXZ_225.SetEnabled(false);
+            buttonXZ_270.SetEnabled(false);
+            buttonXZ_315.SetEnabled(false);
+        }
 
         buttonExitApplication.RegisterCallback<ClickEvent>(ExitApplication);
 
@@ -1470,7 +1533,68 @@ public class SpectatorUI : MonoBehaviour
     {
         if (audioSourceManager != null)
         {
+
             audioSourceManager.SetSphericalCoordinates(radius, inclination, azimuth);
+
+            _dataLoggingManager.setAudioSourceOffset(radius, inclination, azimuth);
+        }
+    }
+
+    public void SetOffsetPreset(ChangeEvent<string> evt)
+    {
+        string input = evt.newValue;
+
+        // Check if the input is valid
+        int index;
+        if (int.TryParse(input, out index))
+        {
+            Debug.Log("Offset preset index: " + index);
+            // Input is valid, enforce limits if necessary
+            // Assuming you have some predefined limits for the index
+            int minIndex = 0; // Replace with your actual minimum index
+            int maxIndex = 36; // Replace with your actual maximum index
+
+            if (index < minIndex)
+            {
+                index = minIndex;
+            }
+            else if (index > maxIndex)
+            {
+                index = maxIndex;
+            }
+
+            // Call the setOffsetPreset method on the audioSourceManager and _dataLoggingManager
+            if (audioSourceManager != null)
+            {
+                if (index <= 18)
+                {
+                    toggleRadioVisible.value = true;
+                }
+                else
+                {
+                    toggleRadioVisible.value = false;
+                }
+
+                if (((index > 0) && (index <= 6)) || ((index > 18) && (index <= 24)))
+                {
+                    changeRadioLocation(1);
+                }
+                else if (((index > 6) && (index <= 12)) || ((index > 24) && (index <= 30)))
+                {
+                    changeRadioLocation(2);
+                }
+                else if (((index > 12) && (index <= 18)) || ((index > 30) && (index <= 36)))
+                {
+                    changeRadioLocation(3);
+                }
+                audioSourceManager.setOffsetPreset(index);
+                _dataLoggingManager.setOffsetPreset(index);
+            }
+        }
+        else
+        {
+            // Invalid input, handle accordingly
+            Debug.LogWarning("Invalid input for offset preset.");
         }
     }
 

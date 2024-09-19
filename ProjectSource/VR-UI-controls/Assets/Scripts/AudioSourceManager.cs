@@ -59,7 +59,7 @@ namespace AudioSourceManagement
             if (preset != null)
             {
                 SetSphericalCoordinates(preset.Radius, preset.Inclination, 0);
-                //Debug.Log("Preset: " + index + " Radius: " + preset.Radius + " Inclination: " + preset.Inclination);
+                Debug.Log("Preset: " + index + " Radius: " + preset.Radius + " Inclination: " + preset.Inclination);
             }
             else
             {
