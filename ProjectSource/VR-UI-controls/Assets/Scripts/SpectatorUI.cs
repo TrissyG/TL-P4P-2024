@@ -138,8 +138,15 @@ public class SpectatorUI : MonoBehaviour
     // spectator cameras
     private SpectatorCamera spectator;
 
+    private DataLoggingManager _dataLoggingManager;
+    private InputData _inputData;
+
+    GameObject rightController;
+    GameObject leftController;
+
     private void OnEnable()
-    {
+    {   
+        _dataLoggingManager = FindObjectOfType<DataLoggingManager>();
         // The UXML is already instantiated by the UIDocument component
         var uiDocument = GetComponent<UIDocument>();
         VisualElement root = uiDocument.rootVisualElement;
@@ -1369,6 +1376,11 @@ public class SpectatorUI : MonoBehaviour
             // relocate the radio to the middle flag
             radioPolygon.GetComponent<Rigidbody>().useGravity = false;
             changeRadioLocation(2);
+            radioPolygon.layer = 2; // ignore raycast
+
+            _dataLoggingManager.setRadioPositionIndex(3);
+            _dataLoggingManager.activateLocationingMode();
+
             // relocate the user to the chair
             // TODO / Just get user to navigate and adjust fixed radio height to headset
         }
@@ -1388,6 +1400,10 @@ public class SpectatorUI : MonoBehaviour
             // respawn the radio back to the spawnpoint
             radioPolygon.transform.position = RadioSpawnpoint.position;
             radioPolygon.transform.rotation = RadioSpawnpoint.rotation;
+            radioPolygon.layer = 8; // right-hand grab only (default layer)
+
+            _dataLoggingManager.setRadioPositionIndex(-1);
+            _dataLoggingManager.deactivateLocationingMode();
             // TODO - relocate user??
         }
     }
