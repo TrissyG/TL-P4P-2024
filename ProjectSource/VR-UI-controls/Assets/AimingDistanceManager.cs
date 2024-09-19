@@ -42,9 +42,9 @@ public class AimingDistanceManager : MonoBehaviour
         // Initialize _inputData
         _inputData = FindObjectOfType<InputData>();
         activeGradient = _inputData.validColorGradient;
-        Debug.Log("Active Gradient = " + _inputData.validColorGradient);
+        Debug.Log("Active Gradient = " + activeGradient);
         inactiveGradient = _inputData.invalidColorGradient;
-        Debug.Log("Inactive Gradient = " + _inputData.validColorGradient);
+        Debug.Log("Inactive Gradient = " + inactiveGradient);
         if (_inputData == null)
         {
             Debug.LogError("InputData component not found in the scene.");
@@ -101,7 +101,7 @@ public class AimingDistanceManager : MonoBehaviour
         _dataLoggingManager.setDisplacementAngleFromRadio(displacementAngleFromRadio);
         _dataLoggingManager.setAudioSourceLocation(targetPosition);
         _dataLoggingManager.setRayOriginPoint(rayOrigin);
-        _dataLoggingManager.setRayIntersectPoint(targetPosition); // Use target position as the intersect point
+        _dataLoggingManager.setRayDirection(ray.direction);
     }
 
     private void OnDrawGizmos()

@@ -33,7 +33,7 @@ public class DataLoggingManager : MonoBehaviour
     private bool pressedLocationingButton; // from AimingDistanceManager
     private Vector3 audioSourceLocation; // from AimingDistanceManager
     private Vector3 rayOriginPoint; // from AimingDistanceManager
-    private Vector3 rayIntersectPoint; // from AimingDistanceManager
+    private Vector3 rayDirection; // from AimingDistanceManager
     private float displacementAngleFromAudioSource; // from AimingDistanceManager
     private float displacementAngleFromRadio; // from AimingDistanceManager
     private int OffsetPresetIndex; // from AimingDistanceManager
@@ -129,7 +129,7 @@ public class DataLoggingManager : MonoBehaviour
         Quaternion radioRotation = radio.transform.rotation;
         using (StreamWriter writer = new StreamWriter(locationingPath, true))
         {
-            string lineToWrite = $"{SceneManager.GetActiveScene().name},{activatedLocationingMode},{pressedLocationingButton},{OffsetPresetIndex}{RadioPositionIndex},{RadioVisible},{AudioSourceVisible},{offsetRadius},{offsetAzimuth},{offsetInclination},{displacementAngleFromAudioSource},{displacementAngleFromRadio},{audioSourceLocation.x},{audioSourceLocation.y},{audioSourceLocation.z},{rayOriginPoint.x},{rayOriginPoint.y},{rayOriginPoint.z},{rayIntersectPoint.x},{rayIntersectPoint.y},{radioPosition.x},{radioPosition.y},{radioPosition.z},{time}";
+            string lineToWrite = $"{SceneManager.GetActiveScene().name},{activatedLocationingMode},{pressedLocationingButton},{OffsetPresetIndex},{RadioPositionIndex},{RadioVisible},{AudioSourceVisible},{offsetRadius},{offsetAzimuth},{offsetInclination},{displacementAngleFromAudioSource},{displacementAngleFromRadio},{audioSourceLocation.x},{audioSourceLocation.y},{audioSourceLocation.z},{rayOriginPoint.x},{rayOriginPoint.y},{rayOriginPoint.z},{rayDirection.x},{rayDirection.y},{rayDirection.z},{radioPosition.x},{radioPosition.y},{radioPosition.z},{time}";
             writer.WriteLine(lineToWrite);
             writer.Flush();
             writer.Close();
@@ -316,9 +316,9 @@ public class DataLoggingManager : MonoBehaviour
         rayOriginPoint = point;
     }
 
-    public void setRayIntersectPoint(Vector3 point)
+    public void setRayDirection(Vector3 direction)
     {
-        rayIntersectPoint = point;
+        rayDirection = direction;
     }
 
 

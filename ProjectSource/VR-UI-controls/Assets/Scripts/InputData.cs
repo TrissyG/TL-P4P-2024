@@ -69,8 +69,8 @@ public class InputData : MonoBehaviour
         if (!_rightController.isValid)
             InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Right, ref _rightController);
             rightLineVisual = _rightControllerObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
-            invalidColorGradient = rightLineVisual.invalidColorGradient;
-            validColorGradient = rightLineVisual.validColorGradient;
+            invalidColorGradient = rightLineVisual.invalidColorGradient.colorKeys;
+            validColorGradient = rightLineVisual.validColorGradient.colorKeys;
         if (!_leftController.isValid)
             InitializeInputDevice(InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.Left, ref _leftController);
             leftLineVisual = _leftControllerObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
@@ -100,6 +100,14 @@ public class InputData : MonoBehaviour
 
     }
 
+    private void ChangeRayColor(Gradient gradient)
+    {
+        if (lineVisual != null)
+        {
+            lineVisual.validColorGradient = gradient;
+        }
+    }
+
     public void activateControllerObjectDetection(){
 
         foreach (GameObject controller in controllers)
@@ -108,8 +116,7 @@ public class InputData : MonoBehaviour
                 UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual lineVisual = controller.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
                 if (lineVisual != null)
                     {
-                        // Set the validColorGradient to the same as the invalidColorGradient
-                        lineVisual.validColorGradient = invalidColorGradient;
+                        lineVisual.validColorGradient
                     }
                 } catch (System.Exception e) {
                 Debug.Log("Error: " + e);
