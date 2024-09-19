@@ -42,7 +42,9 @@ public class AimingDistanceManager : MonoBehaviour
         // Initialize _inputData
         _inputData = FindObjectOfType<InputData>();
         activeGradient = _inputData.validColorGradient;
+        Debug.Log("Active Gradient = " + _inputData.validColorGradient);
         inactiveGradient = _inputData.invalidColorGradient;
+        Debug.Log("Inactive Gradient = " + _inputData.validColorGradient);
         if (_inputData == null)
         {
             Debug.LogError("InputData component not found in the scene.");
@@ -67,6 +69,7 @@ public class AimingDistanceManager : MonoBehaviour
                     MeasureDisplacementAngle();
                     // Update the last call time
                     lastCallTime = Time.time;
+                    
                     _dataLoggingManager.pressLocationingButton();
                 }
             }

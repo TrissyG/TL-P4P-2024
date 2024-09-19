@@ -143,6 +143,7 @@ public class SpectatorUI : MonoBehaviour
     private SpectatorCamera spectator;
 
     private DataLoggingManager _dataLoggingManager;
+    private InputData _inputData;
 
     GameObject rightController;
     GameObject leftController;
@@ -152,6 +153,7 @@ public class SpectatorUI : MonoBehaviour
         rightController = GameObject.Find("RightHand Controller");
         leftController = GameObject.Find("LeftHand Controller");
         _dataLoggingManager = FindObjectOfType<DataLoggingManager>();
+        
         // The UXML is already instantiated by the UIDocument component
         var uiDocument = GetComponent<UIDocument>();
         VisualElement root = uiDocument.rootVisualElement;
@@ -317,6 +319,7 @@ public class SpectatorUI : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "BlankWorld")
         {
+            _inputData = FindObjectOfType<InputData>();
             buttonLocationingModeOn.SetEnabled(true);
             buttonLocationingModeOff.SetEnabled(true);
             buttonSetRadioPosition1.SetEnabled(true);
@@ -1445,7 +1448,7 @@ public class SpectatorUI : MonoBehaviour
             changeRadioLocation(2);
             // deactivate ray detecting for the radio
             XRRayInteractor rightRayInteractor = rightController.GetComponent<XRRayInteractor>();
-
+            _inputData.deactivateControllerObjectDetection();
             _dataLoggingManager.setRadioPositionIndex(3);
             _dataLoggingManager.activateLocationingMode();
         }
@@ -1465,6 +1468,8 @@ public class SpectatorUI : MonoBehaviour
             // respawn the radio back to the spawnpoint
             radioPolygon.transform.position = RadioSpawnpoint.position;
             radioPolygon.transform.rotation = RadioSpawnpoint.rotation;
+
+            _inputData.activateControllerObjectDetection();
             _dataLoggingManager.setRadioPositionIndex(-1);
             _dataLoggingManager.deactivateLocationingMode();
         }
