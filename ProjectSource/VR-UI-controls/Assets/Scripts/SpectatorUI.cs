@@ -205,7 +205,7 @@ public class SpectatorUI : MonoBehaviour
         buttonLocationingModeOn = root.Q("buttonLocationingModeOn") as Button;
         buttonLocationingModeOff = root.Q("buttonLocationingModeOff") as Button;
 
-        buttonLocationingPreset = root.Q("fieldLocationingPreset") as TextField;
+        fieldLocationingPreset = root.Q("fieldLocationingPreset") as TextField;
 
         buttonSetRadioPosition1 = root.Q<Button>("buttonSetRadioPosition1");
         buttonSetRadioPosition2 = root.Q<Button>("buttonSetRadioPosition2");
@@ -288,7 +288,7 @@ public class SpectatorUI : MonoBehaviour
         buttonLocationingModeOn.RegisterCallback<ClickEvent>(ActivateLocationingMode);
         buttonLocationingModeOff.RegisterCallback<ClickEvent>(DeactivateLocationingMode);
 
-        fieldLocationingPreset.RegisterValueChangedCallback<int>();
+        fieldLocationingPreset.RegisterValueChangedCallback<string>(SetOffsetPreset);
 
         buttonSetRadioPosition1.clicked += () => changeRadioLocation(4);
         buttonSetRadioPosition2.clicked += () => changeRadioLocation(3);
@@ -1554,14 +1554,60 @@ public class SpectatorUI : MonoBehaviour
         }
     }
 
-    public void SetOffsetPreset(int index)
+public void SetOffsetPreset(ChangeEvent<string> evt)
+{
+    string input = evt.newValue;
+
+    // Check if the input is valid
+    int index;
+    if (int.TryParse(input, out index))
     {
-        if (audioSourceManager != null)
+        Debug.Log("Offset preset index: " + index);
+        // Input is valid, enforce limits if necessary
+        // Assuming you have some predefined limits for the index
+        int minIndex = 0; // Replace with your actual minimum index
+        int maxIndex = 36; // Replace with your actual maximum index
+
+        if (index < minIndex)
         {
+            index = minIndex;
+        }
+        else if (index > maxIndex)
+        {
+            index = maxIndex;
+        }
+
+        // Call the setOffsetPreset method on the audioSourceManager and _dataLoggingManager
+        if (audioSourceManager != null)
+        {   
+            if (index <= 18){
+                toggleRadioVisible.value = true;
+            }
+            else{
+                toggleRadioVisible.value = false;
+            }
+
+            if (((index > 0) && (index <=6)) || ((index > 18) && (index <= 24))){
+                changeRadioLocation(1);
+            }
+            else if (((index > 6) && (index <= 12)) || ((index > 24) && (index <= 30))){
+                changeRadioLocation(2);
+            }
+            else if (((index > 12) && (index <= 18)) || ((index > 30) && (index <= 36))){
+                changeRadioLocation(3);
+            }
             audioSourceManager.setOffsetPreset(index);
-            _dataLoggingManager.setAudioSourceOffsetPreset(index);
+            _dataLoggingManager.setOffsetPreset(index);
         }
     }
+    else
+    {
+        // Invalid input, handle accordingly
+        Debug.LogWarning("Invalid input for offset preset.");
+    }
+}
+
+    
 
     private void ExitApplication(ClickEvent evt)
     {

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using System.Collections.Generic;
 
 namespace AudioSourceManagement {
     public class AudioSourceManager : MonoBehaviour
@@ -10,10 +11,11 @@ namespace AudioSourceManagement {
         public GameObject radio; // the 'Audio Source' GameObject child of the rendered object, to be offset
         public AudioSource audioSource;
         private Polar polarOffset; // (radius, inclination, azimuth) of the sound object relative to the radioPolygon
-
+        private List<PresetData> presetDataList;
         private void Awake()
         {
             this.polarOffset = new Polar(0f, 0f, 0f);
+            presetDataList = DataReadingManager.ReadCSV("../VR-UI-controls/Assets/Resources/vr_locationing_combinations.csv");
         }
 
 
@@ -48,6 +50,20 @@ namespace AudioSourceManagement {
             this.polarOffset.inclination = inclination;
             this.polarOffset.azimuth = azimuth;
             UpdateSoundObjectPosition();
+        }
+
+        public void setOffsetPreset(int index)
+        {
+            PresetData preset = presetDataList.Find(p => p.Index == index);
+            if (preset != null)
+            {   
+                
+                SetSphericalCoordinates(preset.Radius, preset.RadioPosition, preset.Inclination);
+            }
+            else
+            {
+                Debug.LogWarning("Invalid index for offset preset.");
+            }
         }
 
         private void UpdateSoundObjectPosition()
@@ -89,3 +105,4 @@ namespace AudioSourceManagement {
         }
     }
 }
+

@@ -10,6 +10,7 @@ public class AimingDistanceManager : MonoBehaviour
     public GameObject rightHandController;
     public GameObject leftHandController;
     public GameObject targetObject;
+    public GameObject radio;
 
     public UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor rightHandRayInteractor;
     public Gradient activeGradient; 
@@ -29,12 +30,15 @@ public class AimingDistanceManager : MonoBehaviour
     {
         // Find the right-hand controller's XRRayInteractor
         rightHandRayInteractor = FindObjectOfType<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>();
-
         if (rightHandRayInteractor == null)
         {
             Debug.LogError("XRRayInteractor component not found for the right-hand controller.");
         }
-
+        radio = GameObject.Find("Radio");
+        if (radio == null)
+        {
+            Debug.LogError("Radio object not found in the scene.");
+        }
         // Initialize _inputData
         _inputData = FindObjectOfType<InputData>();
         activeGradient = _inputData.validColorGradient;
@@ -79,19 +83,22 @@ public class AimingDistanceManager : MonoBehaviour
 
         // Calculate the direction from the user to the target object
         Vector3 directionToTarget = (targetPosition - rayOrigin).normalized;
+        Vector3 directionToRadio = (radio.transform.position - rayOrigin).normalized;
 
         // Calculate the displacement angle between the user's aim and the vector to the target object
-        float displacementAngle = Vector3.Angle(ray.direction, directionToTarget);
+        float displacementAngleFromAudioSource = Vector3.Angle(ray.direction, directionToTarget);
+        float displacementAngleFromRadio = Vector3.Angle(ray.direction, directionToRadio);
 
         // Log the displacement angle for debugging
-        Debug.Log("Displacement angle between aim and target object: " + displacementAngle);
+        Debug.Log("Displacement angle between aim and target object: " + displacementAngleFromAudioSource);
+        Debug.Log("Displacement angle between aim and radio: " + displacementAngleFromRadio);
 
         // Update DataLoggingManager with the calculated values
-        _dataLoggingManager.setDisplacementAngle(displacementAngle);
+        _dataLoggingManager.setDisplacementAngleFromAudioSource(displacementAngleFromAudioSource);
+        _dataLoggingManager.setDisplacementAngleFromRadio(displacementAngleFromRadio);
         _dataLoggingManager.setAudioSourceLocation(targetPosition);
         _dataLoggingManager.setRayOriginPoint(rayOrigin);
         _dataLoggingManager.setRayIntersectPoint(targetPosition); // Use target position as the intersect point
-        _dataLoggingManager.setAudioSourcePlaneNormal(new Vector2(directionToTarget.y, directionToTarget.z)); // Use the y and z components of the direction vector as the plane normal
     }
 
     private void OnDrawGizmos()

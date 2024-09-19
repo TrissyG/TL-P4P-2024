@@ -31,12 +31,12 @@ public class DataLoggingManager : MonoBehaviour
     private float offsetAzimuth; // from SpectatorUI
     private float offsetInclination; // from SpectatorUI
     private bool pressedLocationingButton; // from AimingDistanceManager
-    private float distanceFromAudioSource; // from AimingDistanceManager
     private Vector3 audioSourceLocation; // from AimingDistanceManager
     private Vector3 rayOriginPoint; // from AimingDistanceManager
     private Vector3 rayIntersectPoint; // from AimingDistanceManager
-    private Vector2 audioSourcePlaneNormal; // from AimingDistanceManager
-    private float displacementAngle; // from AimingDistanceManager
+    private float displacementAngleFromAudioSource; // from AimingDistanceManager
+    private float displacementAngleFromRadio; // from AimingDistanceManager
+    private int OffsetPresetIndex; // from AimingDistanceManager
 
 
     private enum ObjectName
@@ -129,7 +129,7 @@ public class DataLoggingManager : MonoBehaviour
         Quaternion radioRotation = radio.transform.rotation;
         using (StreamWriter writer = new StreamWriter(locationingPath, true))
         {
-            string lineToWrite = $"{SceneManager.GetActiveScene().name},{activatedLocationingMode},{pressedLocationingButton},{RadioPositionIndex},{RadioVisible},{AudioSourceVisible},{offsetRadius},{offsetAzimuth},{offsetInclination},{displacementAngle},{audioSourceLocation.x},{audioSourceLocation.y},{audioSourceLocation.z},{rayOriginPoint.x},{rayOriginPoint.y},{rayOriginPoint.z},{rayIntersectPoint.x},{rayIntersectPoint.y},{radioPosition.x},{radioPosition.y},{radioPosition.z},{time}";
+            string lineToWrite = $"{SceneManager.GetActiveScene().name},{activatedLocationingMode},{pressedLocationingButton},{OffsetPresetIndex}{RadioPositionIndex},{RadioVisible},{AudioSourceVisible},{offsetRadius},{offsetAzimuth},{offsetInclination},{displacementAngleFromAudioSource},{displacementAngleFromRadio},{audioSourceLocation.x},{audioSourceLocation.y},{audioSourceLocation.z},{rayOriginPoint.x},{rayOriginPoint.y},{rayOriginPoint.z},{rayIntersectPoint.x},{rayIntersectPoint.y},{radioPosition.x},{radioPosition.y},{radioPosition.z},{time}";
             writer.WriteLine(lineToWrite);
             writer.Flush();
             writer.Close();
@@ -219,7 +219,7 @@ public class DataLoggingManager : MonoBehaviour
 
             using (StreamWriter locationingWriter = new StreamWriter(locationingPath, true))
             {
-                string lineToWrite = "Scenario,activatedLocationingMode,PressedLocationingButton,RadioPositionIndex,RadioVisible,AudioSourceVisible,offsetRadius,offsetAzimuth,offsetInclination,displacementAngle,AudioSourcePositionX,AudioSourcePositionY,AudioSourcePositionZ,rayOriginX,rayOriginY,rayOriginZ,rayDirectionX,rayDirectionY,rayDirectionZ,radioPositionX,radioPositionY,radioPositionZ,Time";
+                string lineToWrite = "Scenario,LocationingMode,PressedLocationingButton,OffsetPresetIndex,RadioPositionIndex,RadioVisible,AudioSourceVisible,offsetRadius,offsetAzimuth,offsetInclination,displacementAngleAS,displacementAngleR,AudioSourcePositionX,AudioSourcePositionY,AudioSourcePositionZ,rayOriginX,rayOriginY,rayOriginZ,rayDirectionX,rayDirectionY,rayDirectionZ,radioPositionX,radioPositionY,radioPositionZ,Time";
 
                 locationingWriter.WriteLine(lineToWrite);
                 locationingWriter.Flush();
@@ -306,11 +306,6 @@ public class DataLoggingManager : MonoBehaviour
         offsetInclination = inclination;
     }
 
-    public void setDistanceFromAudioSource(float distance)
-    {
-        distanceFromAudioSource = distance;
-    }
-
     public void setAudioSourceLocation(Vector3 location)
     {
         audioSourceLocation = location;
@@ -326,14 +321,20 @@ public class DataLoggingManager : MonoBehaviour
         rayIntersectPoint = point;
     }
 
-    public void setAudioSourcePlaneNormal(Vector2 normal)
+
+    public void setDisplacementAngleFromAudioSource(float angle)
     {
-        audioSourcePlaneNormal = normal;
+        displacementAngleFromAudioSource = angle;
     }
 
-    public void setDisplacementAngle(float angle)
+    public void setDisplacementAngleFromRadio(float angle)
     {
-        displacementAngle = angle;
+        displacementAngleFromRadio = angle;
+    }
+
+    public void setOffsetPreset(int index)
+    {
+        OffsetPresetIndex = index;
     }
 
 
