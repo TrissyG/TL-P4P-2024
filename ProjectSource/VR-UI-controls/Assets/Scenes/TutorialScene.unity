@@ -9475,6 +9475,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1375053892}
     - target: {fileID: 4897505123406925796, guid: cdd2c818ce6ddbc4fb8366d608318739, type: 3}
+      propertyPath: RatingTablet
+      value: 
+      objectReference: {fileID: 1414153176}
+    - target: {fileID: 4897505123406925796, guid: cdd2c818ce6ddbc4fb8366d608318739, type: 3}
       propertyPath: RatingTabletToggleableSpawnpoint
       value: 
       objectReference: {fileID: 72171119}
