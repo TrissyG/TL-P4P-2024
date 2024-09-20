@@ -1,34 +1,42 @@
+using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 public class DataReadingManager : MonoBehaviour
 {
     public static List<PresetData> ReadCSV(string filePath)
     {
-        List<PresetData> presetDataList = new List<PresetData>();
-
-        using (StreamReader sr = new StreamReader(filePath))
+        TextAsset csvFile = Resources.Load<TextAsset>(filePath);
+        if (csvFile == null)
         {
-            string line;
-            // Skip the header line
-            sr.ReadLine();
-            while ((line = sr.ReadLine()) != null)
-            {
-                string[] values = line.Split(',');
-                PresetData data = new PresetData
-                {
-                    Index = int.Parse(values[0]),
-                    RadioVisibility = values[1],
-                    RadioPosition = int.Parse(values[2]),
-                    Radius = float.Parse(values[3]),
-                    Inclination = float.Parse(values[4])
-                };
-                presetDataList.Add(data);
-            }
+            Debug.LogError("CSV file not found at path: " + filePath);
+            return null;
         }
 
-        return presetDataList;
+        List<PresetData> data = new List<PresetData>();
+        StringReader reader = new StringReader(csvFile.text);
+        string line;
+        bool isFirstLine = true;
+        while ((line = reader.ReadLine()) != null)
+        {
+            if (isFirstLine)
+            {
+                isFirstLine = false;
+                continue; // Skip the header line
+            }
+
+            string[] values = line.Split(',');
+            PresetData presetData = new PresetData
+            {
+                Index = int.Parse(values[0]),
+                RadioVisibility = values[1],
+                RadioPosition = int.Parse(values[2]),
+                Radius = float.Parse(values[3]),
+                Inclination = float.Parse(values[4])
+            };
+            data.Add(presetData);
+        }
+        return data;
     }
 }
 

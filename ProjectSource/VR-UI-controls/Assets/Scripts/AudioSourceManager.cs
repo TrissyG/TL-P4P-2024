@@ -16,7 +16,7 @@ namespace AudioSourceManagement
         private void Awake()
         {
             this.polarOffset = new Polar(0f, 0f, 0f);
-            presetDataList = DataReadingManager.ReadCSV("../VR-UI-controls/Assets/Resources/vr_locationing_combinations.csv");
+             presetDataList = DataReadingManager.ReadCSV("vr_locationing_combinations");
         }
 
 
