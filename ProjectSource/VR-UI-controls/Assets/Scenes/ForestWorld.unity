@@ -7092,6 +7092,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 886591792}
     - target: {fileID: 4897505123406925796, guid: cdd2c818ce6ddbc4fb8366d608318739, type: 3}
+      propertyPath: radioPolygon
+      value: 
+      objectReference: {fileID: 2069944408}
+    - target: {fileID: 4897505123406925796, guid: cdd2c818ce6ddbc4fb8366d608318739, type: 3}
       propertyPath: EnvironmentAudioMixer
       value: 
       objectReference: {fileID: 24100000, guid: d4ffc1187466bf44496dd5896e8c55d8, type: 2}
@@ -11072,6 +11076,7 @@ GameObject:
   - component: {fileID: 673413770}
   - component: {fileID: 673413769}
   - component: {fileID: 673413768}
+  - component: {fileID: 673413771}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -11139,6 +11144,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &673413771
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673413767}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1001 &674187122
 PrefabInstance:
   m_ObjectHideFlags: 0

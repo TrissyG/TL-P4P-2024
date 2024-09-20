@@ -61,7 +61,7 @@
 	};
 				
 	sampler2D _MainTex;
-	sampler2D_float _CameraDepthTexture;
+	UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);;
 	sampler2D _VelTex;
 	sampler2D _NeighbourMaxTex;
 	sampler2D _NoiseTex;

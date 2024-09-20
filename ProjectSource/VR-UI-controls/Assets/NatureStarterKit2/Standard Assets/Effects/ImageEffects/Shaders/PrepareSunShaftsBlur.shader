@@ -18,7 +18,7 @@ Shader "Hidden/PrepareSunShaftsBlur" {
 	
 	sampler2D _MainTex;
 	sampler2D _Skybox; 
-	sampler2D_float _CameraDepthTexture;
+	UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);;
 	
 	uniform half _NoSkyBoxMask;
 	uniform half4 _SunPosition; 

@@ -28,7 +28,7 @@ Pass {
 		float4 screen : TEXCOORD0;
 	};
 
-	sampler2D_float _CameraDepthTexture;
+	UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);;
 
 	ps_input vert (vs_input v)
 	{

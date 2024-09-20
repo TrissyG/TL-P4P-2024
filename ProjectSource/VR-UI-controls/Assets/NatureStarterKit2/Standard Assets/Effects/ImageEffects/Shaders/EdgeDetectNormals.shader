@@ -24,7 +24,7 @@ Shader "Hidden/EdgeDetect" {
 	uniform float4 _MainTex_TexelSize;
 
 	sampler2D _CameraDepthNormalsTexture;
-	sampler2D_float _CameraDepthTexture;
+	UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);;
 
 	uniform half4 _Sensitivity; 
 	uniform half4 _BgColor;
