@@ -1588,19 +1588,24 @@ public void SetOffsetPreset(ChangeEvent<string> evt)
         {   
             if (index <= 18){
                 toggleRadioVisible.value = true;
+                _dataLoggingManager.setRadioVisible(true);
             }
             else{
                 toggleRadioVisible.value = false;
+                _dataLoggingManager.setRadioVisible(false);
             }
 
             if (((index > 0) && (index <=6)) || ((index > 18) && (index <= 24))){
                 changeRadioLocation(1);
+                _dataLoggingManager.setRadioPositionIndex(4);
             }
             else if (((index > 6) && (index <= 12)) || ((index > 24) && (index <= 30))){
                 changeRadioLocation(2);
+                _dataLoggingManager.setRadioPositionIndex(3);
             }
             else if (((index > 12) && (index <= 18)) || ((index > 30) && (index <= 36))){
                 changeRadioLocation(3);
+                _dataLoggingManager.setRadioPositionIndex(2);
             }
             audioSourceManager.setOffsetPreset(index);
             _dataLoggingManager.setOffsetPreset(index);

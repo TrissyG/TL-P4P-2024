@@ -11,11 +11,14 @@ namespace AudioSourceManagement
         public GameObject radioPolygon; // the rendered radio object 'Radio', around which the sound object will be placed
         public GameObject radio; // the 'Audio Source' GameObject child of the rendered object, to be offset
         public AudioSource audioSource;
+        private DataLoggingManager _dataLoggingManager;
         private Polar polarOffset; // (radius, inclination, azimuth) of the sound object relative to the radioPolygon
         private List<PresetData> presetDataList;
+
         private void Awake()
         {
             this.polarOffset = new Polar(0f, 0f, 0f);
+            _dataLoggingManager = FindObjectOfType<DataLoggingManager>();
              presetDataList = DataReadingManager.ReadCSV("vr_locationing_combinations");
         }
 
@@ -50,6 +53,7 @@ namespace AudioSourceManagement
             this.polarOffset.radius = radius;
             this.polarOffset.inclination = inclination;
             this.polarOffset.azimuth = azimuth;
+            _dataLoggingManager.setAudioSourceOffset(radius, inclination, azimuth);
             UpdateSoundObjectPosition();
         }
 
