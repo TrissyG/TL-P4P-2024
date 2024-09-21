@@ -42,9 +42,9 @@ public class AimingDistanceManager : MonoBehaviour
         // Initialize _inputData
         _inputData = FindObjectOfType<InputData>();
         activeGradient = _inputData.validColorGradient;
-        Debug.Log("Active Gradient = " + activeGradient);
+        //Debug.Log("Active Gradient = " + activeGradient);
         inactiveGradient = _inputData.invalidColorGradient;
-        Debug.Log("Inactive Gradient = " + inactiveGradient);
+        //Debug.Log("Inactive Gradient = " + inactiveGradient);
         if (_inputData == null)
         {
             Debug.LogError("InputData component not found in the scene.");
