@@ -458,7 +458,6 @@ public class SpectatorUI : MonoBehaviour
             sliderChimeVolume.SetEnabled(false);
             fieldChimeVolume.SetEnabled(false);
         }
-        Debug.Log("#0.1 toggleEnvironmentSound: " + toggleEnvironmentSound.value);
         if (EnvironmentAudioMixer == null)
         {
             toggleEnvironmentSound.SetEnabled(false);
@@ -466,7 +465,6 @@ public class SpectatorUI : MonoBehaviour
             fieldEnvironmentVolume.SetEnabled(false);
         }
 
-        Debug.Log("#0.2 toggleEnvironmentSound: " + toggleEnvironmentSound.value);
 
         if (RatingTablet == null)
         {
@@ -654,28 +652,23 @@ public class SpectatorUI : MonoBehaviour
         sliderChimeVolume.value = chimesVolume;
         if (chimes != null) ChangeChimeVolumeSlider(null);
 
-        Debug.Log("#-1 toggleEnvironmentSound: " + toggleEnvironmentSound.value);
         // Environment settings
         bool environmentIsPlaying;
         if (SceneManager.GetActiveScene().name == "BeachWorld" || SceneManager.GetActiveScene().name == "ForestWorld")
         {
-            Debug.Log("Maybe Reached");
             environmentIsPlaying = true;
             settings.SetValue("environmentIsPlaying", true);
         }
         else if (settings.Contains("environmentIsPlaying"))
         {
-            Debug.Log("Reached");
             settings.GetValue("environmentIsPlaying", out environmentIsPlaying);
         }
         else
         {
-            Debug.Log("Also Reached");
             environmentIsPlaying = false;
             settings.SetValue("environmentIsPlaying", false);
         }
         toggleEnvironmentSound.value = environmentIsPlaying;
-        Debug.Log("#1 toggleEnvironmentSound: " + toggleEnvironmentSound.value);
         if (EnvironmentAudioMixer != null) ToggleEnvironmentSound(null);
 
         float environmentVolume;
@@ -1009,7 +1002,6 @@ public class SpectatorUI : MonoBehaviour
 
     private void ToggleEnvironmentSound(ChangeEvent<bool> evt)
     {
-        Debug.Log("#2 ToggleEnvironmentSound: " + toggleEnvironmentSound.value);
 
         // mute all environment sound using the AudioMixer.
 
@@ -1027,7 +1019,6 @@ public class SpectatorUI : MonoBehaviour
             EnvironmentAudioMixer.SetFloat("EnvironmentVolume", -80.00f);
         }
         Settings.Instance.SetValue("environmentIsPlaying", toggleEnvironmentSound.value);
-        Debug.Log("#3 ToggleEnvironmentSound: " + toggleEnvironmentSound.value);
     }
 
     private void ChangeEnvironmentVolumeSlider(ChangeEvent<float> evt)
@@ -1467,6 +1458,9 @@ public class SpectatorUI : MonoBehaviour
             //_inputData.deactivateControllerObjectDetection();
             _dataLoggingManager.setRadioPositionIndex(3);
             _dataLoggingManager.activateLocationingMode();
+
+            GameObject player = GameObject.Find("XR Origin");
+            
         }
     }
 

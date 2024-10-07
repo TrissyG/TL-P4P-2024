@@ -12705,6 +12705,10 @@ PrefabInstance:
       propertyPath: rb
       value: 
       objectReference: {fileID: 1328860066}
+    - target: {fileID: 1810465366, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1810465367, guid: a7dbdd508737b0d49b444c4263d812f1, type: 3}
       propertyPath: m_RootOrder
       value: 0
