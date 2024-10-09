@@ -124,7 +124,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.047369767
+  - screenRelativeHeight: 0
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2389710}
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: Tree Data
   m_EditorClassIdentifier: 
   _uniqueID: 399
-  materialHash: 4ea7f039a7c99931247a6536e00fe5b6215482368
+  materialHash: 344df529d3afec0b6619d9edd26636bd215482368
   root:
     _uniqueID: 1
     seed: 1234
