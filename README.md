@@ -2,7 +2,15 @@
 
 _Tristan Mona and Luca Eastwood_
 
-## How To Run:
+## Instructions
+
+### Specifications
+
+The following hardware was used to operate the VR Tinnitus application:
+
+1. Meta Quest 2 HMD and Handheld Controllers
+
+### How to Run
 
 1. Download this repository to your local machine or clone the repository using git by entering the console command: `git clone https://github.com/TrissyG/TL-P4P-2024.git`
 1. To utilise the application as intended for a patient user, you must connect a valid Virtual Reality HMD and controller system. The following instructions describe the process for
