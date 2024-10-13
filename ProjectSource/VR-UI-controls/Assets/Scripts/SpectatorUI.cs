@@ -191,7 +191,6 @@ public class SpectatorUI : MonoBehaviour
 
         toggleShowTSNSTablet = root.Q("toggleShowTSNSTablet") as Toggle;
         toggleShowRatingTablet = root.Q("toggleShowRatingTablet") as Toggle;
-
         toggleDoGhosting = root.Q("toggleDoGhosting") as Toggle;
 
 
@@ -465,6 +464,8 @@ public class SpectatorUI : MonoBehaviour
             sliderEnvironmentVolume.SetEnabled(false);
             fieldEnvironmentVolume.SetEnabled(false);
         }
+
+
         if (RatingTablet == null)
         {
             toggleShowRatingTablet.SetEnabled(false);
@@ -651,10 +652,14 @@ public class SpectatorUI : MonoBehaviour
         sliderChimeVolume.value = chimesVolume;
         if (chimes != null) ChangeChimeVolumeSlider(null);
 
-
         // Environment settings
         bool environmentIsPlaying;
-        if (settings.Contains("environmentIsPlaying"))
+        if (SceneManager.GetActiveScene().name == "BeachWorld" || SceneManager.GetActiveScene().name == "ForestWorld")
+        {
+            environmentIsPlaying = true;
+            settings.SetValue("environmentIsPlaying", true);
+        }
+        else if (settings.Contains("environmentIsPlaying"))
         {
             settings.GetValue("environmentIsPlaying", out environmentIsPlaying);
         }
@@ -680,16 +685,16 @@ public class SpectatorUI : MonoBehaviour
 
 
         // Feedback tablet active setting
-        bool feedbackTabletIsPresent;
-        if (settings.Contains("feedbackTabletIsPresent"))
-        {
-            settings.GetValue("feedbackTabletIsPresent", out feedbackTabletIsPresent);
-        }
-        else
-        {
-            feedbackTabletIsPresent = true;
-        }
-        toggleShowRatingTablet.value = feedbackTabletIsPresent;
+        // bool feedbackTabletIsPresent;
+        // if (settings.Contains("feedbackTabletIsPresent"))
+        // {
+        //     settings.GetValue("feedbackTabletIsPresent", out feedbackTabletIsPresent);
+        // }
+        // else
+        // {
+        //     feedbackTabletIsPresent = true;
+        // }
+        //toggleShowRatingTablet.value = feedbackTabletIsPresent;
         if (RatingTablet != null) ToggleRatingTablet(null);
 
 
@@ -997,6 +1002,7 @@ public class SpectatorUI : MonoBehaviour
 
     private void ToggleEnvironmentSound(ChangeEvent<bool> evt)
     {
+
         // mute all environment sound using the AudioMixer.
 
         // known issue: environment sounds are not properly muted here when entering a new scene, currently doing it in Update()
@@ -1452,6 +1458,9 @@ public class SpectatorUI : MonoBehaviour
             //_inputData.deactivateControllerObjectDetection();
             _dataLoggingManager.setRadioPositionIndex(3);
             _dataLoggingManager.activateLocationingMode();
+
+            GameObject player = GameObject.Find("XR Origin");
+            
         }
     }
 
