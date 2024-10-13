@@ -46,19 +46,20 @@ _We are assessing using:_
 Thus, we have made the addition of the following features:
 
 **RQ1:**
-Forest-bathing-inspired features:
-Mindfulness-promoting activities around the Forest environment, presented on signs
-Seven bird species with sounds flying around the Forest and landing in two different areas
-Additional items designed to increase engagement/interest including birdhouses
-In-app questionnaire rating signs, which appear on clinician command, in the Tutorial, Forest and Beach worlds. They are currently configured to prompt both RSQ and IMI questionnaires where the user selects likert scale options after experiencing environments.
+
+- Forest-bathing-inspired features
+  - Mindfulness-promoting activities around the Forest environment, presented on signs
+  - Seven bird species with sounds flying around the Forest and landing in two different areas
+  - Additional items designed to increase engagement/interest including birdhouses
+  - In-app questionnaire rating signs, which appear on clinician command, in the Tutorial, Forest and Beach worlds. They are currently configured to prompt both RSQ and IMI questionnaires where the user selects likert scale options after experiencing environments.
 
 **RQ2:**
 
 - 'Locationing Mode' Experimental set-up in Blank World for testing presence of ventriloquism
-- Patient moves to a designated point (the in-game chair), where the radio has been positioned 3m directly ahead at chest-level to a seated patient
-- Patient is prompted by clinician to aim with the controller ray to where they perceive the activated masking sound to be originating from
-- The patient presses ‘A’ to confirm their guess and audibly notifies the clinician that they have made their guess. The displacement angle (how far ‘off’ a user is) between the controller ray and the direction vector towards the true audio source is recorded. The displacement angle between the controller ray and the radio location is also recorded.
-- For each measurement recorded through patient’s button-pressing, we collect: Offset Preset Index, Radio Position Index, isRadioVisible, XY angle offset, Inclination (YZ), Displacement Angle from Audio, Displacement Angle from Radio, Audio Source Position, Controller Ray Origin point & Direction, Radio Position vector, Timestamp
+  - Patient moves to a designated point (the in-game chair), where the radio has been positioned 3m directly ahead at chest-level to a seated patient
+  - Patient is prompted by clinician to aim with the controller ray to where they perceive the activated masking sound to be originating from
+  - The patient presses ‘A’ to confirm their guess and audibly notifies the clinician that they have made their guess. The displacement angle (how far ‘off’ a user is) between the controller ray and the direction vector towards the true audio source is recorded. The displacement angle between the controller ray and the radio location is also recorded.
+  - For each measurement recorded through patient’s button-pressing, we collect: Offset Preset Index, Radio Position Index, isRadioVisible, XY angle offset, Inclination (YZ), Displacement Angle from Audio, Displacement Angle from Radio, Audio Source Position, Controller Ray Origin point & Direction, Radio Position vector, Timestamp
 
 **RQ3:**
 
