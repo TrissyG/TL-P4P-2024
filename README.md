@@ -8,26 +8,15 @@ _Tristan Mona and Luca Eastwood_
 
 The following hardware was used to operate the VR Tinnitus application:
 
-1. Meta Quest 2 HMD and Handheld Controllers
+1. Meta Quest 2 head mounted dispay (HMD) and handheld controllers.
+2. Computer meeting minimum requirements for Meta Quest Link (https://www.meta.com/en-gb/help/quest/articles/headsets-and-accessories/oculus-link/requirements-quest-link/).
+3. USB C 3.0 cable of suitable length to connect HMD to computer.
 
 ### How to Run
 
-1. Download this repository to your local machine or clone the repository using git by entering the console command: `git clone https://github.com/TrissyG/TL-P4P-2024.git`
-1. To utilise the application as intended for a patient user, you must connect a valid Virtual Reality HMD and controller system. The following instructions describe the process for
-   1.
-1.
-
-## Project Additions
-
-### Forest Scene
-
-- [x] Add Crest library (https://github.com/wave-harmonic/crest)
-- [x] Add water
-- [x] Add water sound effects
-- [x] Add birds
-- [x] Update sound effects to match bird movement
-- [x] Add signs (https://www.youtube.com/watch?v=JDwkDRym800)
-- [x] Add "mindfulness" pathway
+1. Clone this repository to your local machine.
+2. Connect a Virtual Reality headset and controller system. The application has been developed and tested with a Meta Quest 2 headset. Other headsets will work but will likely require minor changes to the source code. See https://www.meta.com/en-gb/help/quest/articles/headsets-and-accessories/oculus-link/connect-with-air-link/ for instructions on connecting a Meta Quest 2 headset.
+3. Open any of the forest, beach, blank or tutorial scenes and use the play button in Unity to run the application. Alternatively, the aforementioned scenes can be built and run as an executable using build tools in Unity.
 
 # Research and Implementation
 
@@ -63,10 +52,10 @@ Thus, we have made the addition of the following features:
 **RQ1:**
 
 - Forest-bathing-inspired features
-  - Mindfulness-promoting activities around the Forest environment, presented on signs
+  - Mindfulness/forest bathing promoting activities around the Forest environment, presented on signs
   - Seven bird species with sounds flying around the Forest and landing in two different areas
   - Additional items designed to increase engagement/interest including birdhouses
-  - In-app questionnaire rating signs, which appear on clinician command, in the Tutorial, Forest and Beach worlds. They are currently configured to prompt both RSQ and IMI questionnaires where the user selects likert scale options after experiencing environments.
+  - In-app questionnaire rating signs, which appear on clinician command, in the Tutorial, Forest and Beach worlds. They are currently configured to prompt both RSQ and two IMI sub-scale questionnaires where the user selects likert scale options after experiencing environments.
 
 **RQ2:**
 
