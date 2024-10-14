@@ -13,6 +13,7 @@ The following hardware was used to operate the VR Tinnitus application:
 3. USB C 3.0 cable of suitable length to connect HMD to computer.
 
 ### How to Run
+You will need Meta Quest Link and the Unity editor version 2021.3.43f1 (the 2021 LTS version). The application will likely open with newer versions of Unity. However, packages and scripts will need to be updated. 
 
 1. Clone this repository to your local machine.
 2. Connect a Virtual Reality headset and controller system. The application has been developed and tested with a Meta Quest 2 headset. Other headsets will work but will likely require minor changes to the source code. See https://www.meta.com/en-gb/help/quest/articles/headsets-and-accessories/oculus-link/connect-with-air-link/ for instructions on connecting a Meta Quest 2 headset.
